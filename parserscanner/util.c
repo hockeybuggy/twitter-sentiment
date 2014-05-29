@@ -22,6 +22,9 @@ void printToken(int token_type, char* token_str){
         case HASHTAG:
             fprintf(output_file, "hashtag: %s ", token_str);
             break;
+        case URL:
+            fprintf(output_file, "url: %s ", token_str);
+            break;
         default: fprintf(output_file, "Unknown Token: %s", token_str);
     }
 }
