@@ -43,6 +43,7 @@ void parse(void){
 %token USER
 %token HASHTAG
 %token URL
+%token PUNCT
  /* Danger Will Robinson; danger*/
 %token ERROR
 

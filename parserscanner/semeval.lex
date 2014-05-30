@@ -25,6 +25,7 @@ number      {digit}+
 letter      [_a-zA-Z]
 newline     \n
 whitespace  [ \t]+
+punct       [\+&%?!:,.;"]
 word        ('|-|{digit}|{letter})+
 url         https?:\/\/*[-A-Za-z0-9\+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]
 hashtag     #{word}
@@ -37,7 +38,9 @@ user        @{word}
 {hashtag} {return HASHTAG;}
 {user}    {return USER;}
 {word}    {return WORD;}
- /*Emoticons*/
+{punct}   {return PUNCT;}
+
+ /*TODO Emoticons*/
 
 {whitespace}    { /* Whitespace */ }
 {newline}       { /* Newline */ }
