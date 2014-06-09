@@ -12,7 +12,6 @@
 #include "parse.h"
 #include "util.h"
 
-#define NO_PARSE 1
 
 FILE* data_file;
 FILE* output_file;
@@ -21,18 +20,11 @@ void parse_input(){
     init_parser(); // Set up the input and output of the parser
     fprintf(output_file, "\nBeginning Parsing\n");
 
-#if NO_PARSE==1
     int token_type;
     while((token_type = get_token()) != 0){
         printToken(token_type, token_string);
         fprintf(output_file, "\n");
     }
-#else
-
-    parse(); // invoke the parser
-
-    fprintf(output_file, "\n");
-#endif
     fclose(data_file);
 }
 
