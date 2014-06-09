@@ -9,15 +9,13 @@
 
 #include "globals.h"
 #include "scan.h"
-#include "parse.h"
 #include "util.h"
-
 
 FILE* data_file;
 FILE* output_file;
 
 void parse_input(){
-    init_parser(); // Set up the input and output of the parser
+    init_scanner(); // Set up the input and output of the parser
     fprintf(output_file, "\nBeginning Parsing\n");
 
     int token_type;

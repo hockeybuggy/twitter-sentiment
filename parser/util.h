@@ -3,5 +3,6 @@
  * Author     : Douglas Anderson
  * Description: Declarations of utility functions
  */
+#include "scan.h"
 
-void printToken(int token_type, char* token_str);
+void printToken(token_t token_type, char* token_str);

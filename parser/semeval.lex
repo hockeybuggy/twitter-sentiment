@@ -1,7 +1,7 @@
 /*
  * File       : cminus.lex
  * Author     : Douglas Anderson
- * Description: Lex specification for parser scanner
+ * Description: Lex specification for parser
  */
 
 %{
@@ -10,7 +10,6 @@
 
 #include "globals.h"
 #include "scan.h"
-#include "y.tab.h"
 
 // Definition of global lineno
 int lineno;
@@ -48,7 +47,7 @@ user        @{word}
 
 %%
 
-void init_parser(){
+void init_scanner(){
     yyin  = data_file;
     yyout = output_file;
 }
@@ -59,3 +58,4 @@ int get_token(){
     strncpy(token_string, yytext, MAX_TOKEN_LEN);
     return currentToken;
 }
+

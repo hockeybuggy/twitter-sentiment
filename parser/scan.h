@@ -7,8 +7,17 @@
 #ifndef _SCAN_H
 #define _SCAN_H
 
+typedef enum {
+    URL,
+    HASHTAG,
+    USER,
+    WORD,
+    PUNCT,
+    ERROR
+} token_t;
+
 // This function tells the lexer which files to use as input and output
-void init_parser();
+void init_scanner();
 
 // This function copies the current yytext into the global token_string
 int get_token();
