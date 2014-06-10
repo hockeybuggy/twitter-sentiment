@@ -1,7 +1,7 @@
 
 # File        : Makefile
 # Author      : Douglas Anderson
-# Description : Makefile for semantic eval parser
+# Description : Makefile for semantic eval scanner
 
 # --- Programs ---
 CC = gcc
@@ -14,12 +14,14 @@ SPEC = semeval.lex
 CFLAGS = -g -Wall
 OBJS = lex.yy.o util.o main.o
 LIBS = -ll
-EXE = parser
+EXE = scanner
 
 # --- Targets ---
-all: clean parser
+all: clean scanner
 
-parser: $(OBJS)
+py: clean module
+
+scanner: $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(EXE) $(LIBS)
 
 lex.yy.c: $(SPEC)
@@ -34,7 +36,10 @@ main.o: main.c globals.h scan.h util.h
 util.o: globals.h scan.h
 	$(CC) $(CFLAGS) -c util.c
 
-.PHONY: clean
+module: globals.h scan.h
+	$(CC) -shared -I/usr/include/python2.7/ -lpython2.7 -Wall -fPIC -o scanner_module.so scanner_module.c
+
+.PHONY: clean all py
 
 clean:
 	rm -f $(EXE) $(OBJS) lex.yy.c

@@ -4,5 +4,4 @@
 *.log
 *.pdf
 *.o
-y.tab.*
 lex.yy.*

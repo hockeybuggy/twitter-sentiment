@@ -27,12 +27,15 @@ void parse_input(){
 }
 
 int main(int argc, char* argv[]){
-    if (argc != 2) {
+    if (argc == 1) {
+        data_file = stdin;
+    } else if (argc == 2) {
+        data_file = fopen(argv[1], "r");
+    } else {
         fprintf(stderr,"Usage: %s <filename>\n", argv[0]);
         return(1);
     }
 
-    data_file = fopen(argv[1], "r");
     output_file = stdout;
 
     if(data_file == NULL){
