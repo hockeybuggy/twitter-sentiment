@@ -17,7 +17,7 @@ typedef enum {
 } token_t;
 
 // This function tells the lexer which files to use as input and output
-void init_scanner();
+void init_scanner(char* inputstr);
 
 // This function copies the current yytext into the global token_string
 int get_token();

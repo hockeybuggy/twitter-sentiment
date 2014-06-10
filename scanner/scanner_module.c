@@ -6,12 +6,14 @@
 
 #include <Python.h>
 #include <stdlib.h>
+#include "scan.h"
 
 static PyObject* py_init_scanner(PyObject* self , PyObject* args){
     char *s = NULL;
     int result = 0;
     PyArg_Parse(args, "s", &s);
-    printf("%s\n", s);
+    printf("Init input: %s\n", s);
+    init_scanner(s);
     return Py_BuildValue("i", result);
 }
 
@@ -21,7 +23,7 @@ static PyObject* py_get_token(PyObject* self , PyObject* args){
 }
 
 static PyMethodDef scanner_module_methods[] = {
-    {"init_scanner", py_init_scanner},
+    {"init_scan", py_init_scanner},
     {"get_token", py_get_token},
     {NULL, NULL}
 };

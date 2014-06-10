@@ -5,3 +5,5 @@
 *.pdf
 *.o
 lex.yy.*
+*.pyc
+*.so
