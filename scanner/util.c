@@ -17,7 +17,7 @@ void printToken(token_t token_type, char* token_str){
             fprintf(output_file, "word\t%s\n", token_str);
             break;
         case NUMBER:
-            fprintf(output_file, "num \t%s\n ", token_str);
+            fprintf(output_file, "num \t%s\n", token_str);
             break;
         case USER:
             fprintf(output_file, "user\t%s\n", token_str);
@@ -35,7 +35,7 @@ void printToken(token_t token_type, char* token_str){
             fprintf(output_file, "punc\t%s\n", token_str);
             break;
         case ERROR:
-            /*fprintf(output_file, "ERROR\t%s ", token_str); // Hiding the error*/
+            /*fprintf(output_file, "ERROR\t%s  \n", token_str); // Hiding the error*/
             break;
         default: fprintf(output_file, "Unknown Token\t%s\n", token_str);
     }

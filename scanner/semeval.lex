@@ -11,8 +11,6 @@
 #include "globals.h"
 #include "scan.h"
 
-// Definition of global lineno
-int lineno;
 // Definition of global token_string
 char token_string[MAX_TOKEN_LEN+1];
 
@@ -24,22 +22,22 @@ number      ({digit}*\.)?{digit}+
 letter      [_a-zA-Z]
 newline     \n
 whitespace  [ \t]+
-punct       [\+&$%?!:,.;"(){}\[\]]|\.{2,3}
-word        ('|-|{digit}|{letter})+
+punct       [\+&$%?\-_!:,.;"\(\)\{\}\[\]]|\.{2,3}
+wordpart    ({digit}|{letter})+
+word        {wordpart}('{wordpart}|-{wordpart})*
 url         https?:\/\/*[-A-Za-z0-9\+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]
 emot        :D|:\)
 hashtag     #{word}
 user        @{word}
 
 %%
- /*Stolen from http://stackoverflow.com/questions/161738 */
 
 {url}     {return URL;}
 {hashtag} {return HASHTAG;}
 {user}    {return USER;}
-{word}    {return WORD;}
 {number}  {return NUMBER;}
 {punct}   {return PUNCT;}
+{word}    {return WORD;}
 {emot}    {return EMOTICON;}
 
 {whitespace}    { /* Whitespace */ }
