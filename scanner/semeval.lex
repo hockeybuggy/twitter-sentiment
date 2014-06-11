@@ -22,11 +22,11 @@ number      ({digit}*\.)?{digit}+
 letter      [_a-zA-Z]
 newline     \n
 whitespace  [ \t]+
-punct       [\+&$%?\-_!:,.;"\(\)\{\}\[\]]|\.{2,3}
+punct       [\+&$%?\-_!:,.;<>'"\(\)\{\}\[\]]|\.{2,3}
 wordpart    ({digit}|{letter})+
 word        {wordpart}('{wordpart}|-{wordpart})*
 url         https?:\/\/*[-A-Za-z0-9\+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]
-emot        :D|:\)
+emot        :D|:\)|;\)|;D|:\(|B\)|:-\)|:-\(|<+3+
 hashtag     #{word}
 user        @{word}
 
