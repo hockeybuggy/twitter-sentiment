@@ -20,7 +20,6 @@ void parse_input(){
     int token_type;
     while((token_type = get_token()) != 0){
         printToken(token_type, token_string);
-        fprintf(output_file, "\n");
     }
     fclose(data_file);
 }

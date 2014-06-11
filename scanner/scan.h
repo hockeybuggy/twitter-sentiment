@@ -8,6 +8,7 @@
 #define _SCAN_H
 
 typedef enum {
+    NIL,
     URL,
     HASHTAG,
     USER,

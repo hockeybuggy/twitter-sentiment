@@ -24,7 +24,7 @@ number      ({digit}*\.)?{digit}+
 letter      [_a-zA-Z]
 newline     \n
 whitespace  [ \t]+
-punct       [\+&$%?!:,.;"(){}\[\]]
+punct       [\+&$%?!:,.;"(){}\[\]]|\.{2,3}
 word        ('|-|{digit}|{letter})+
 url         https?:\/\/*[-A-Za-z0-9\+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]
 emot        :D|:\)
@@ -38,7 +38,7 @@ user        @{word}
 {hashtag} {return HASHTAG;}
 {user}    {return USER;}
 {word}    {return WORD;}
-{number}     {return NUMBER;}
+{number}  {return NUMBER;}
 {punct}   {return PUNCT;}
 {emot}    {return EMOTICON;}
 
