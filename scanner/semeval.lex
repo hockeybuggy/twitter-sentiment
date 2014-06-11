@@ -25,10 +25,17 @@ whitespace  [ \t]+
 punct       [\+&$%?\-_!:,.;<>'"\(\)\{\}\[\]]|\.{2,3}
 wordpart    ({digit}|{letter})+
 word        {wordpart}('{wordpart}|-{wordpart})*
-url         https?:\/\/*[-A-Za-z0-9\+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]
-emot        :D|:\)|;\)|;D|:\(|B\)|:-\)|:-\(|<+3+
+
 hashtag     #{word}
 user        @{word}
+
+happy       :-?D+|:-?\)+|B-?\)+|8-?\)+|:-?p+
+sad         :-?\(+|8-\(+|:'\(|;-?\)
+wink        ;-?\)+|;-?D|;-?D|;-?p+
+other       <+3+
+emoticon    {happy}|{sad}|{wink}|{other}
+
+url         https?:\/\/*[-A-Za-z0-9\+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]
 
 %%
 
@@ -38,7 +45,7 @@ user        @{word}
 {number}  {return NUMBER;}
 {punct}   {return PUNCT;}
 {word}    {return WORD;}
-{emot}    {return EMOTICON;}
+{emoticon}    {return EMOTICON;}
 
 {whitespace}    { /* Whitespace */ }
 {newline}       { /* Newline */ }

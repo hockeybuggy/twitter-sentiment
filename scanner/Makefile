@@ -37,5 +37,5 @@ util.o: globals.h scan.h
 .PHONY: clean all py
 
 clean:
-	rm -f $(EXE) $(OBJS) lex.yy.c
+	rm -f $(EXE) $(OBJS) lex.yy.c *.pyc
 
