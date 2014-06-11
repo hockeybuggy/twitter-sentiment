@@ -47,5 +47,15 @@ user        @{word}
 
 %%
 
- /*Literal block here*/
+void init_scanner(char *inputstr){
+    yyin  = data_file;
+    yyout = output_file;
+}
+
+int get_token(){
+    token_t currentToken;
+    currentToken = yylex();
+    strncpy(token_string, yytext, MAX_TOKEN_LEN);
+    return currentToken;
+}
 

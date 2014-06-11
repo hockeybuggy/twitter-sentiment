@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import csv
-from ScannerWrapper import ScannerWrapper
+import subprocess
+
+scanner_path = "scanner"
 
 #count = 0
 #limit = 2
@@ -12,9 +14,6 @@ from ScannerWrapper import ScannerWrapper
             #count += 1
             #print tweet[3]
 
+tweet = "This is the message. It needs to be tokenized #foreal"
 
-sw = ScannerWrapper("This is a test")
-print sw.get_token()
-
-#for i in range(5):
-    #print sw.get_token()
+subprocess.call([scanner_path], stdin=tweet)

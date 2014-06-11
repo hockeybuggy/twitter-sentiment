@@ -12,12 +12,12 @@ SPEC = semeval.lex
 
 # --- Miscellaneous ---
 CFLAGS = -g -Wall
-OBJS = lex.yy.o util.o scan.o main.o
+OBJS = lex.yy.o util.o main.o
 LIBS = -ll
 EXE = scanner
 
 # --- Targets ---
-all: clean scanner module
+all: clean scanner
 
 scanner: $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(EXE) $(LIBS)
@@ -31,14 +31,8 @@ lex.yy.o: lex.yy.c
 main.o: main.c globals.h scan.h util.h
 	$(CC) $(CFLAGS) -c main.c
 
-scan.o: lex.yy.h scan.h globals.h
-	$(CC) $(CFLAGS) -c scan.c
-
 util.o: globals.h scan.h
 	$(CC) $(CFLAGS) -c util.c
-
-module: globals.h scan.h
-	$(CC) -shared -I/usr/include/python2.7/ -lpython2.7 -Wall -fPIC -o scanner_module.so scanner_module.c
 
 .PHONY: clean all py
 
