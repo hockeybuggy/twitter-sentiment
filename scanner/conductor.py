@@ -8,7 +8,7 @@ import os, sys
 from Token import Token
 
 import tokenize
-import replaceseq
+import normalize
 import argparse
 
 def parse_args():
@@ -24,6 +24,7 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     tokens = tokenize.open_tweets_file("../data/b.tsv", args.start, args.end)
-    tokens = replaceseq.__call__(tokens)
+    tokens = normalize.__call__(tokens)
     for token in tokens:
         print token.__unicode__()
+
