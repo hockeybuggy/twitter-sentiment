@@ -20,7 +20,7 @@ char token_string[MAX_TOKEN_LEN+1];
 
 
 digit       [0-9]
-number      {digit}*\.?{digit}*
+number      ({digit}*\.)?{digit}+
 letter      [_a-zA-Z]
 newline     \n
 whitespace  [ \t]+
