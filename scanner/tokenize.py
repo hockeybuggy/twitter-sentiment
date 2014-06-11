@@ -16,17 +16,19 @@ def scan_text(intext):
     tmp_f.close()
 
 
-#count = 0
-#limit = 2
-#with open("../data/b.tsv") as f:
-    #r = csv.reader(f, delimiter="\t")
-    #for tweet in r:
-        #if count < limit:
-            #count += 1
-            #print tweet[3]
+count = 0
+start = 2
+end = 3
+with open("../data/b.tsv") as f:
+    r = csv.DictReader(f, delimiter="\t")
+    for tweet in r:
+        if count >= start and count < end:
+            print
+            print tweet["text"]
+            scan_text(tweet["text"])
+        count += 1
 
-tweet = "This is the message. It needs to be tokenized #foreal"
 
-scan_text(tweet)
-
+#tweet = "This is the message. It needs to be tokenized #foreal"
+#scan_text(tweet)
 

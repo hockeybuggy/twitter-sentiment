@@ -12,7 +12,9 @@ typedef enum {
     HASHTAG,
     USER,
     WORD,
+    NUMBER,
     PUNCT,
+    EMOTICON,
     ERROR
 } token_t;
 

@@ -14,24 +14,30 @@
 void printToken(token_t token_type, char* token_str){
     switch(token_type){
         case WORD:
-            fprintf(output_file, "word: %s ", token_str);
+            fprintf(output_file, "word\t%s", token_str);
+            break;
+        case NUMBER:
+            fprintf(output_file, "num \t%s ", token_str);
             break;
         case USER:
-            fprintf(output_file, "user: %s ", token_str);
+            fprintf(output_file, "user\t%s ", token_str);
             break;
         case HASHTAG:
-            fprintf(output_file, "hashtag: %s ", token_str);
+            fprintf(output_file, "hash\t%s ", token_str);
             break;
         case URL:
-            fprintf(output_file, "url: %s ", token_str);
+            fprintf(output_file, "url \t%s ", token_str);
+            break;
+        case EMOTICON:
+            fprintf(output_file, "emot\t%s ", token_str);
             break;
         case PUNCT:
-            fprintf(output_file, "punct: %s ", token_str);
+            fprintf(output_file, "punc\t%s ", token_str);
             break;
         case ERROR:
-            fprintf(output_file, "ERROR: %s ", token_str);
+            fprintf(output_file, "ERROR\t%s ", token_str);
             break;
-        default: fprintf(output_file, "Unknown Token: %s", token_str);
+        default: fprintf(output_file, "Unknown Token\t%s", token_str);
     }
 }
 
