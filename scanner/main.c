@@ -16,7 +16,6 @@ FILE* output_file;
 
 void parse_input(){
     init_scanner(NULL); // Set up the input and output of the parser
-    fprintf(output_file, "\nBeginning Parsing\n");
 
     int token_type;
     while((token_type = get_token()) != 0){

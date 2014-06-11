@@ -1,9 +1,20 @@
 #!/usr/bin/env python
 
+import os, sys
 import csv
 import subprocess
+import tempfile
 
-scanner_path = "scanner"
+scanner_path = "./scanner"
+
+def scan_text(intext):
+    tmp_f = os.tmpfile()
+    tmp_f.write(intext)
+    tmp_f.seek(0)
+    subprocess.call([scanner_path], stdin=tmp_f)
+    #subprocess.call(["cat"], stdin=tmp_f)
+    tmp_f.close()
+
 
 #count = 0
 #limit = 2
@@ -16,4 +27,6 @@ scanner_path = "scanner"
 
 tweet = "This is the message. It needs to be tokenized #foreal"
 
-subprocess.call([scanner_path], stdin=tweet)
+scan_text(tweet)
+
+
