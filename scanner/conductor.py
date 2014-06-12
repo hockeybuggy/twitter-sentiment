@@ -30,10 +30,11 @@ if __name__ == "__main__":
     stats  = statsify.__call__(tokens) # Count each category of token
 
     tokens = normalize.__call__(tokens) # Normalize the tokens
-    tokens = wordselection.__call__(tokens) # Remove tokens that will not help much
+    #tokens = wordselection.__call__(tokens) # Remove tokens that will not help much
 
-    for k in stats:
-        print k, ": ", stats[k]
+    #for k in stats:
+        #print k, ": ", stats[k]
+
     #for token in tokens:
         #print token.__unicode__()
 

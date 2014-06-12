@@ -15,7 +15,7 @@ def __call__(tokens):
         else:
             final[currentid] = collapse_tokens(token_buffer)
             currentid = t.tweetid
-            token_buffer = []
+            token_buffer = [t.text]
     final[currentid] = collapse_tokens(token_buffer)
     return final
 
