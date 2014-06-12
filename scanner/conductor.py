@@ -5,11 +5,12 @@
 # Description: Driver for my parser implementation
 
 import os, sys
-from Token import Token
+import argparse
 
 import tokenize
 import normalize
-import argparse
+import statsify
+from Token import Token
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Scan a tweet to determin it's tokens")
@@ -25,6 +26,10 @@ if __name__ == "__main__":
     args = parse_args()
     tokens = tokenize.open_tweets_file("../data/b.tsv", args.start, args.end)
     tokens = normalize.__call__(tokens)
-    for token in tokens:
-        print token.__unicode__()
+    stats  = statsify.__call__(tokens)
+
+    for k in stats:
+        print k, ": ", stats[k]
+    #for token in tokens:
+        #print token.__unicode__()
 
