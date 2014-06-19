@@ -8,9 +8,9 @@ from InvertedList import InvertedList
 
 def __call__(tokens):
     stats = {}
-    il = InvertedList()
+    #il = InvertedList()
     for t in tokens:
-        il.add(t)
+        #il.add(t)
         try:
             stats[t.tweetid]["total"] += 1
         except KeyError:
