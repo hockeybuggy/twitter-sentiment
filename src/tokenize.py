@@ -12,7 +12,7 @@ from Token import Token
 
 scanner_path = "./scanner"
 
-def scan_text(tweetid, intext):
+def scan_text(tweetid, label, intext):
     tokens = []
     tmp_f = os.tmpfile()
     tmp_f.write(intext)
@@ -24,7 +24,7 @@ def scan_text(tweetid, intext):
     for line in outlines:
         try:
             tokentype, text = line.split("\t")
-            tokens.append(Token(tweetid, tokentype, text))
+            tokens.append(Token(tweetid, label, tokentype, text))
         except ValueError:
             pass
     return tokens
@@ -42,7 +42,7 @@ def open_tweets_file(filename, start, end):
             if count >= start and count < end:
                 #print
                 #print tweet["text"]
-                newtokens = scan_text(create_tweetid(tweet["sid"], tweet["uid"]), tweet["text"])
+                newtokens = scan_text(create_tweetid(tweet["sid"], tweet["uid"]), tweet["class"], tweet["text"])
                 tokens += newtokens
             count += 1
     return tokens

@@ -31,7 +31,7 @@ user        @{word}
 
 happy       :-?D+|:-?\)+|B-?\)+|8-?\)+|:-?p+
 sad         :-?\(+|8-\(+|:'\(|;-?\)
-wink        ;-?\)+|;-?D|;-?D|;-?p+
+wink        ;-?\)+|;-?D|;-?D|;-?p
 other       <+3+
 emoticon    {happy}|{sad}|{wink}|{other}
 

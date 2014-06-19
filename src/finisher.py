@@ -7,17 +7,21 @@
 def __call__(tokens):
     final = {}
     token_buffer = []
+    currentlabel = tokens[0].label
     currentid = tokens[0].tweetid
 
     for t in tokens:
         if t.tweetid == currentid:
             token_buffer.append(t.text)
         else:
-            final[currentid] = collapse_tokens(token_buffer)
+            final[currentid] = [create_feature_dict(token_buffer), currentlabel]
             currentid = t.tweetid
+            currentlabel = t.label
             token_buffer = [t.text]
-    final[currentid] = collapse_tokens(token_buffer)
-    return final
+    final[currentid] = [create_feature_dict(token_buffer), currentlabel]
+    return [final[k] for k in final]
+    #return final
 
-def collapse_tokens(token_buffer):
-    return " ".join(token_buffer)
+def create_feature_dict(token_buffer):
+    return dict([(word, True) for word in token_buffer])
+

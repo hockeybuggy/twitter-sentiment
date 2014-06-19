@@ -12,6 +12,7 @@ import normalize
 import statsify
 import wordselection
 import finisher
+from train import train
 from Token import Token
 
 def parse_args():
@@ -27,7 +28,7 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     tokens = tokenize.open_tweets_file("../data/b.tsv", args.start, args.end)
-    stats  = statsify.__call__(tokens) # Count each category of token
+    #stats  = statsify.__call__(tokens) # Count each category of token
 
     tokens = normalize.__call__(tokens) # Normalize the tokens
     #tokens = wordselection.__call__(tokens) # Remove tokens that will not help much
@@ -39,6 +40,10 @@ if __name__ == "__main__":
         #print token.__unicode__()
 
     final = finisher.__call__(tokens)
-    for tweetid in final:
-        print tweetid, ": ", final[tweetid]
+    for row in final:
+        print row
+    #for tweetid in final:
+        #print tweetid, ": ", final[tweetid]
+
+    train(final)
 

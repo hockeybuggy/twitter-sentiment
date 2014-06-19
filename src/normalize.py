@@ -50,10 +50,12 @@ def normalize_emoticons(tokens):
                 t.text = "EM_SAD"
             elif wink.match(t.text):
                 t.text = "EM_WINK"
-            elif surprise.match(t.text):
-                t.text = "EM_SURPRISE"
+            #elif surprise.match(t.text):
+                #t.text = "EM_SURPRISE"
             elif love.match(t.text):
                 t.text = "EM_LOVE"
+            else:
+                print "ERROR. Unrecognized emticon"
 
 def normalize_words(tokens):
     for t in tokens:
