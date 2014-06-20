@@ -6,6 +6,7 @@
 
 import os, sys
 import argparse
+import math
 
 import tokenize
 import normalize
@@ -42,8 +43,11 @@ if __name__ == "__main__":
     final = finisher.__call__(tokens)
     for row in final:
         print row
-    #for tweetid in final:
-        #print tweetid, ": ", final[tweetid]
 
-    train(final)
+    split_point = int(math.ceil(len(final) * 0.8))
+    print split_point
+    train_set = final[:split_point]
+    test_set = final[split_point:]
+
+    train(train_set, test_set)
 
