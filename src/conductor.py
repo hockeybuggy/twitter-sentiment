@@ -13,7 +13,7 @@ import normalize
 import statsify
 import wordselection
 import finisher
-from train import maxent_classifer
+from train import maxent_classifier
 from Token import Token
 
 def parse_args():
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     for i in train_set:
         print i
 
-    classifer = maxent_classifer(train_set)
-    classifer.test(test_set)
-    classifer.inspect_errors(test_set)
+    classifier = maxent_classifier(train_set)
+    classifier.test(test_set)
+    #classifer.inspect_errors(test_set)
 

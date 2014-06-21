@@ -4,12 +4,13 @@ import nltk
 
 from nltk.featstruct import FeatStruct
 
-class maxent_classifer:
+class maxent_classifier:
     def __init__(self, train_set):
         self.classifier = nltk.MaxentClassifier.train(train_set)
 
     def test(self, test_set):
         print nltk.classify.accuracy(self.classifier, test_set)
+        self.classifier.show_most_informative_features()
 
     def inspect_errors(self, test_set):
         errors = []
