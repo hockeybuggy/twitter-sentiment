@@ -13,8 +13,8 @@ import normalize
 import statsify
 import wordselection
 import finisher
-from train import maxent_classifier
 from Token import Token
+from train import multi_label_classifier, binary_classifier
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Scan a tweet to determine it's tokens")
@@ -52,7 +52,11 @@ if __name__ == "__main__":
     for i in train_set:
         print i
 
-    classifier = maxent_classifier(train_set)
+    #classifier = multi_label_classifier(train_set)
+    #classifier.test(test_set)
+    #classifer.inspect_errors(test_set)
+
+    classifier = binary_classifier(train_set)
     classifier.test(test_set)
     #classifer.inspect_errors(test_set)
 

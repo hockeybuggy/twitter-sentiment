@@ -25,3 +25,12 @@ def __call__(tokens):
 def create_feature_dict(token_buffer):
     return dict([(word, True) for word in token_buffer])
 
+def binarize_labels(data_set, selected_label):
+    new_data_set = []
+    for k in data_set:
+        if k[1] == selected_label:
+            new_data_set.append([k[0], "true"])
+        else:
+            new_data_set.append([k[0], "false"])
+    return new_data_set
+
