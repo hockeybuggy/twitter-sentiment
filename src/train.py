@@ -7,7 +7,7 @@ from nltk.featstruct import FeatStruct
 
 class multi_label_classifier:
     def __init__(self, train_set):
-        self.classifier = nltk.MaxentClassifier.train(train_set)
+        self.classifier = nltk.MaxentClassifier.train(train_set, min_lldelta=0.01)
 
     def test(self, test_set):
         print nltk.classify.accuracy(self.classifier, test_set)

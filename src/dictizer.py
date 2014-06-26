@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-# File       : finisher.py
+# File       : dictizer.py
 # Author     : Douglas Anderson
-# Description: This file cleans up the tokens and outputs strings for each tweet
+# Description: This file cleans up the tokens and outputs a dictionary for each tweet
 
 def __call__(tokens):
     final = {}
@@ -20,7 +20,6 @@ def __call__(tokens):
             token_buffer = [t.text]
     final[currentid] = [create_feature_dict(token_buffer), currentlabel]
     return [final[k] for k in final]
-    #return final
 
 def create_feature_dict(token_buffer):
     return dict([(word, True) for word in token_buffer])

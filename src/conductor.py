@@ -12,7 +12,7 @@ import tokenize
 import normalize
 import statsify
 import wordselection
-import finisher
+import dictizer
 from Token import Token
 from train import multi_label_classifier, binary_classifier
 
@@ -32,7 +32,6 @@ if __name__ == "__main__":
     #stats  = statsify.__call__(tokens) # Count each category of token
 
     tokens = normalize.__call__(tokens) # Normalize the tokens
-    #tokens = wordselection.__call__(tokens) # Remove tokens that will not help much
 
     #for k in stats:
         #print k, ": ", stats[k]
@@ -40,23 +39,25 @@ if __name__ == "__main__":
     #for token in tokens:
         #print token.__unicode__()
 
-    final = finisher.__call__(tokens)
-    for row in final:
+    feature_list = dictizer.__call__(tokens)
+
+    feature_list = wordselection.__call__(feature_list)
+
+    for row in feature_list:
         print row
 
-    split_point = int(math.ceil(len(final) * 0.8))
+    split_point = int(math.ceil(len(feature_list) * 0.8))
     print split_point
-    train_set = final[:split_point]
-    test_set = final[split_point:]
+    train_set = feature_list[:split_point]
+    test_set = feature_list[split_point:]
 
     for i in train_set:
         print i
 
-    #classifier = multi_label_classifier(train_set)
-    #classifier.test(test_set)
-    #classifer.inspect_errors(test_set)
-
-    classifier = binary_classifier(train_set)
+    classifier = multi_label_classifier(train_set)
     classifier.test(test_set)
-    #classifer.inspect_errors(test_set)
+    #classifier.inspect_errors(test_set)
+
+    #classifier = binary_classifier(train_set)
+    #classifier.test(test_set)
 
