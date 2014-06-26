@@ -28,9 +28,11 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
+    print "Opening dataset..."
     tokens = tokenize.open_tweets_file("../data/b.tsv", args.start, args.end)
     #stats  = statsify.__call__(tokens) # Count each category of token
 
+    print "Normalizing dataset..."
     tokens = normalize.__call__(tokens) # Normalize the tokens
 
     #for k in stats:
@@ -39,20 +41,22 @@ if __name__ == "__main__":
     #for token in tokens:
         #print token.__unicode__()
 
+    print "Transforming dataset..."
     feature_list = dictizer.__call__(tokens)
 
+    print "Selecting features from the dataset..."
     feature_list = wordselection.__call__(feature_list)
 
     for row in feature_list:
         print row
 
     split_point = int(math.ceil(len(feature_list) * 0.8))
-    print split_point
+    #print split_point
     train_set = feature_list[:split_point]
     test_set = feature_list[split_point:]
 
-    for i in train_set:
-        print i
+    #for i in train_set:
+        #print i
 
     classifier = multi_label_classifier(train_set)
     classifier.test(test_set)
