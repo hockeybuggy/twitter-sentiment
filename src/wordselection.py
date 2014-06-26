@@ -7,7 +7,7 @@
 
 def __call__(input_list):
     interm_list = remove_stopwords(input_list)
-    output_list = remove_uncommon(interm_list, 1)
+    output_list = remove_uncommon(interm_list, 2)
     return output_list
 
 

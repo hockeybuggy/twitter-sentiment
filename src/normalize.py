@@ -12,6 +12,7 @@ def __call__(tokens):
     normalize_emoticons(tokens)
     normalize_users(tokens)
     normalize_hashtags(tokens)
+    normalize_nums(tokens)
     normalize_urls(tokens)
     return tokens
 
@@ -25,6 +26,10 @@ def normalize_urls(tokens):
         if t.tokentype == "url ":
             t.text = "@URL"
 
+def normalize_nums(tokens):
+    for t in tokens:
+        if t.tokentype == "num ":
+            t.text = "#NUM"
 
 def normalize_hashtags(tokens):
     for t in tokens:
@@ -36,6 +41,13 @@ def normalize_ellipsis(tokens):
         if t.tokentype == "punc":
             if t.text == ".." or t.text == "...":
                 t.text = "ELLIPSIS"
+            if t.text == "!":
+                t.text = "BANG"
+            if t.text == "?":
+                t.text = "QUESTION"
+            for punct in """.,:;+-_=*&^%$"'~`<>[]{}()""":
+                if t.text == punct:
+                    t.text = "PUNCT"
 
 def normalize_emoticons(tokens):
     happy= re.compile(":-?\)+|:-?D+|B-?\)+|8-?\)+|:-?p+")
