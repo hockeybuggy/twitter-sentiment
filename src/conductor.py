@@ -47,8 +47,8 @@ if __name__ == "__main__":
     print "Selecting features from the dataset..."
     feature_list = wordselection.__call__(feature_list)
 
-    for row in feature_list:
-        print row
+    #for row in feature_list:
+        #print row
 
     split_point = int(math.ceil(len(feature_list) * 0.8))
     #print split_point

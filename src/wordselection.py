@@ -7,8 +7,9 @@
 
 def __call__(input_list):
     interm_list = remove_stopwords(input_list)
-    output_list = remove_uncommon(interm_list, 2)
+    output_list = remove_uncommon(interm_list, 1)
     return output_list
+    #return interm_list
 
 
 def remove_stopwords(input_list):
@@ -41,10 +42,13 @@ def remove_uncommon(input_list, count=1):
             else:
                 word_docfreq[k] += 1
 
-    print "Selected Words"
+    num_features = 0
+    #print "Selected Words"
     for word in word_docfreq:
         if word_docfreq[word] > count:
-            print word, ":\t", word_docfreq[word]
+            #print word, ":\t", word_docfreq[word]
+            num_features += 1
+    print "Num features:", num_features
 
     # Keep only the common words
     for pair in input_list:
