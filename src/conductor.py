@@ -10,6 +10,7 @@ import math
 
 import tokenize
 import normalize
+import labelselect
 import statsify
 import wordselection
 import dictizer
@@ -31,6 +32,9 @@ if __name__ == "__main__":
     print "Opening dataset..."
     tokens = tokenize.open_tweets_file("../data/b.tsv", args.start, args.end)
     #stats  = statsify.__call__(tokens) # Count each category of token
+
+    print "Selecting labels..."
+    tokens = labelselect.__call__(tokens) # Select only the labels
 
     print "Normalizing dataset..."
     tokens = normalize.__call__(tokens) # Normalize the tokens
