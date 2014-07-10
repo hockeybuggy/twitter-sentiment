@@ -14,7 +14,7 @@ def selectPosNegNeu(tokens):
     for t in tokens:
         if t.label == "positive":
             selected_tokens.append(t)
-        elif t.label == "negitive":
+        elif t.label == "negative":
             selected_tokens.append(t)
         elif t.label == "neutral":
             selected_tokens.append(t)

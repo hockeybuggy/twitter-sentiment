@@ -46,6 +46,15 @@ if __name__ == "__main__":
     print "Transforming dataset..."
     feature_list = dictizer.__call__(tokens)
 
+    num_docs = len(feature_list)
+    print "Number of documents:", num_docs
+    num_pos = len([x for x in feature_list if x[1] == "positive"])
+    print "% positive :", num_pos / float(num_docs)
+    num_neu = len([x for x in feature_list if x[1] == "neutral"])
+    print "% neutral  :", num_neu / float(num_docs)
+    num_neg = len([x for x in feature_list if x[1] == "negative"])
+    print "% negative :", num_neg / float(num_docs)
+
     print "Selecting features from the dataset..."
     feature_list = wordselection.__call__(feature_list)
 
@@ -65,6 +74,8 @@ if __name__ == "__main__":
     else:
         classifier = multi_label_naive_bayes_classifier(train_set)
 
+    #classifier.show_informitive_features()
+    print "\nTesting"
     classifier.test(test_set)
     #classifier.inspect_errors(test_set)
 

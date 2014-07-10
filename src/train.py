@@ -10,7 +10,32 @@ class classifier:
         pass
 
     def test(self, test_set):
-        pass
+        cc = {
+                "positive": {"positive": 0, "neutral": 0, "negative": 0},
+                "neutral":  {"positive": 0, "neutral": 0, "negative": 0},
+                "negative": {"positive": 0, "neutral": 0, "negative": 0},
+                }
+        for item, intended_label in test_set:
+            result = self.classifier.classify(item)
+            cc[result][intended_label] += 1
+
+        # This ulgy blob prints a confusion matrix
+        print "\n   \tpos\tneu\tneg"
+        print "pos\t", cc["positive"]["positive"], "\t",cc["positive"]["neutral"], "\t", cc["positive"]["negative"]
+        print "neu\t", cc["neutral"]["positive"], "\t", cc["neutral"]["neutral"], "\t", cc["neutral"]["negative"]
+        print "neg\t", cc["negative"]["positive"], "\t", cc["negative"]["neutral"], "\t", cc["negative"]["negative"]
+
+        print "Accuracy:", nltk.classify.accuracy(self.classifier, test_set)
+        print "Accuracy:", (cc["positive"]["positive"] + cc["neutral"]["neutral"] + cc["negative"]["negative"]) / float(len(test_set))
+
+        #for label in cc.keys():
+            #print label
+
+        print "Avg Accuracy:", (cc["positive"]["positive"] + cc["neutral"]["neutral"] + cc["negative"]["negative"]) / float(len(test_set))
+
+
+    def show_informitive_features(self):
+        self.classifier.show_most_informative_features(20)
 
     def inspect_errors(self, test_set):
         errors = []
@@ -26,17 +51,9 @@ class multi_label_classifier(classifier):
     def __init__(self, train_set):
         self.classifier = nltk.MaxentClassifier.train(train_set, min_lldelta=0.01)
 
-    def test(self, test_set):
-        print nltk.classify.accuracy(self.classifier, test_set)
-        self.classifier.show_most_informative_features()
-
 class multi_label_naive_bayes_classifier(classifier):
     def __init__(self, train_set):
         self.classifier = nltk.NaiveBayesClassifier.train(train_set)
-
-    def test(self, test_set):
-        print nltk.classify.accuracy(self.classifier, test_set)
-        self.classifier.show_most_informative_features()
 
 
 class binary_classifier:
@@ -78,8 +95,6 @@ class binary_classifier:
     def select_choice(self, pos_str, neg_str):
         pos_result = True if pos_str == "true" else False
         neg_result = True if neg_str == "true" else False
-        #print pos_result
-        #print neg_result
         if pos_result == True:
             return "positive"
         else:
