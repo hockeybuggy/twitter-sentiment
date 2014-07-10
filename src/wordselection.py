@@ -42,6 +42,11 @@ def remove_uncommon(input_list, count=1):
             else:
                 word_docfreq[k] += 1
 
+    # Print all the features in order
+    with open("features.txt", "w") as w:
+        for feature in sorted(word_docfreq, key=word_docfreq.get, reverse=True):
+            w.write(feature + "\t" + str(word_docfreq[feature]) + "\n")
+
     num_features = 0
     #print "Selected Words"
     for word in word_docfreq:

@@ -15,22 +15,19 @@ import statsify
 import wordselection
 import dictizer
 from Token import Token
-from train import multi_label_classifier, binary_classifier
+from train import multi_label_classifier, multi_label_naive_bayes_classifier, binary_classifier
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Scan a tweet to determine it's tokens")
     parser.add_argument("--file", type=str, help="The file name containing the text to be scanned")
-    parser.add_argument("start", type=int, help="The lower limit of the line number")
-    parser.add_argument("end", type=int, nargs="?", help="The upper limit of the line number")
+    parser.add_argument("items", type=int, help="The number of items to use")
     args = parser.parse_args()
-    if args.end == None:
-        args.end = args.start + 1
     return args
 
 if __name__ == "__main__":
     args = parse_args()
     print "Opening dataset..."
-    tokens = tokenize.open_tweets_file("../data/b.tsv", args.start, args.end)
+    tokens = tokenize.open_tweets_file("../data/b.tsv", 0, args.items)
     #stats  = statsify.__call__(tokens) # Count each category of token
 
     print "Selecting labels..."
@@ -64,6 +61,10 @@ if __name__ == "__main__":
 
     classifier = multi_label_classifier(train_set)
     classifier.test(test_set)
+    #classifier.inspect_errors(test_set)
+
+    #classifier = multi_label_naive_bayes_classifier(train_set)
+    #classifier.test(test_set)
     #classifier.inspect_errors(test_set)
 
     #classifier = binary_classifier(train_set)

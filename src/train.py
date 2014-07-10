@@ -5,7 +5,24 @@ import nltk
 from finisher import binarize_labels
 from nltk.featstruct import FeatStruct
 
-class multi_label_classifier:
+class classifier:
+    def __init__(self, train_set):
+        pass
+
+    def test(self, test_set):
+        pass
+
+    def inspect_errors(self, test_set):
+        errors = []
+        for item, label in test_set:
+            result = self.classifier.classify(item)
+            if result != label:
+                errors.append((label, result, item))
+        for intended, result, error in errors:
+            print "Should have been:", intended, "Was:", result, error
+
+
+class multi_label_classifier(classifier):
     def __init__(self, train_set):
         self.classifier = nltk.MaxentClassifier.train(train_set, min_lldelta=0.01)
 
@@ -13,14 +30,14 @@ class multi_label_classifier:
         print nltk.classify.accuracy(self.classifier, test_set)
         self.classifier.show_most_informative_features()
 
-    def inspect_errors(self, test_set):
-        errors = []
-        for item, label in test_set:
-            result = self.classifier.classify(item) 
-            if result != label:
-                errors.append((label, result, item))
-        for intended, result, error in errors:
-            print intended, result, error
+class multi_label_naive_bayes_classifier(classifier):
+    def __init__(self, train_set):
+        self.classifier = nltk.NaiveBayesClassifier.train(train_set)
+
+    def test(self, test_set):
+        print nltk.classify.accuracy(self.classifier, test_set)
+        self.classifier.show_most_informative_features()
+
 
 class binary_classifier:
     def __init__(self, train_set):
