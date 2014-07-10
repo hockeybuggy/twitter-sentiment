@@ -28,10 +28,30 @@ class classifier:
         print "Accuracy:", nltk.classify.accuracy(self.classifier, test_set)
         print "Accuracy:", (cc["positive"]["positive"] + cc["neutral"]["neutral"] + cc["negative"]["negative"]) / float(len(test_set))
 
-        #for label in cc.keys():
-            #print label
+        aa = 0.0
+        for label in cc.keys():
+            aa += cc[label][label]
+        print "Avg Accuracy:", aa
 
-        print "Avg Accuracy:", (cc["positive"]["positive"] + cc["neutral"]["neutral"] + cc["negative"]["negative"]) / float(len(test_set))
+        for label in cc.keys():
+            tp_sum = 0
+            tn_sum = 0
+            fp_sum = 0
+            fn_sum = 0
+            for other_label in cc.keys():
+                if label == other_label:
+                    tp_sum += cc[label][label]
+                else:
+                    tn_sum += cc[other_label][other_label]
+                    fn_sum += cc[other_label][label]
+                    fp_sum += cc[label][other_label]
+            print label, "tp:", tp_sum
+            print label, "tn:", tp_sum
+            print label, "fp", fp_sum
+            print label, "fn", fn_sum
+
+        print "Precision", u"\u03BC", tp_sum / tpfp_sum
+        print "Recall", u"\u03BC", tp_sum / tpfp_sum
 
 
     def show_informitive_features(self):
