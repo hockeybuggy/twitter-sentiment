@@ -47,11 +47,10 @@ def remove_uncommon(input_list, count=1):
         for feature in sorted(word_docfreq, key=word_docfreq.get, reverse=True):
             w.write(feature + "\t" + str(word_docfreq[feature]) + "\n")
 
+    # Count number of features
     num_features = 0
-    #print "Selected Words"
     for word in word_docfreq:
         if word_docfreq[word] > count:
-            #print word, ":\t", word_docfreq[word]
             num_features += 1
     print "Num features:", num_features
 

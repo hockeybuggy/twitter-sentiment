@@ -21,6 +21,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Scan a tweet to determine it's tokens")
     parser.add_argument("--file", type=str, help="The file name containing the text to be scanned")
     parser.add_argument("items", type=int, help="The number of items to use")
+    parser.add_argument("--classifier_type", default="max_ent", help="Select classifer should be: max_ent, naive_bayes")
     args = parser.parse_args()
     return args
 
@@ -59,12 +60,12 @@ if __name__ == "__main__":
     #for i in train_set:
         #print i
 
-    classifier = multi_label_classifier(train_set)
-    classifier.test(test_set)
-    #classifier.inspect_errors(test_set)
+    if args.classifier_type == "max_ent":
+        classifier = multi_label_classifier(train_set)
+    else:
+        classifier = multi_label_naive_bayes_classifier(train_set)
 
-    #classifier = multi_label_naive_bayes_classifier(train_set)
-    #classifier.test(test_set)
+    classifier.test(test_set)
     #classifier.inspect_errors(test_set)
 
     #classifier = binary_classifier(train_set)
