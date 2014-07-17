@@ -53,7 +53,7 @@ def remove_uncommon(input_list, count=1):
     for word in word_docfreq:
         if word_docfreq[word] > count:
             num_features += 1
-    print "Num features:", num_features
+    print "Total retained features:", num_features
 
     # Keep only the common words
     for pair in input_list:
