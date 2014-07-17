@@ -90,8 +90,16 @@ class classifier:
 
 
 class multi_label_classifier(classifier):
-    def __init__(self, train_set):
-        self.classifier = nltk.MaxentClassifier.train(train_set, min_lldelta=0.01)
+    def __init__(self, train_set, lldelta=None, ll=None):
+        if lldelta:
+            print "Cutoff after log likelyhood changes by less than", lldelta
+            self.classifier = nltk.MaxentClassifier.train(train_set, min_lldelta=lldelta)
+        elif ll:
+            print "Cutoff after log likelyhood reaches", ll
+            self.classifier = nltk.MaxentClassifier.train(train_set, min_ll=ll)
+        else:
+            print "Cutoff after 50 iterations"
+            self.classifier = nltk.MaxentClassifier.train(train_set, max_iter=50)
 
 class multi_label_naive_bayes_classifier(classifier):
     def __init__(self, train_set):

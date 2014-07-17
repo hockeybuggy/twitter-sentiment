@@ -21,6 +21,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Scan a tweet to determine it's tokens")
     parser.add_argument("--file", type=str, help="The file name containing the text to be scanned")
     parser.add_argument("items", type=int, help="The number of items to use")
+    parser.add_argument("--minlldelta", type=float, help="This parameter changes the cutoff of training for max ent ")
+    parser.add_argument("--minll", type=float, help="This parameter changes the cutoff for training for max ent ")
     parser.add_argument("--classifier_type", default="max_ent", help="Select classifer should be: max_ent, naive_bayes")
     args = parser.parse_args()
     return args
@@ -36,10 +38,6 @@ if __name__ == "__main__":
 
     print "Normalizing dataset..."
     tokens = normalize.__call__(tokens) # Normalize the tokens
-
-    #for k in stats:
-        #print k, ": ", stats[k]
-
     #for token in tokens:
         #print token.__unicode__()
 
@@ -48,6 +46,10 @@ if __name__ == "__main__":
 
     print "Selecting features from the dataset..."
     feature_list = wordselection.__call__(feature_list)
+
+    split_point = int(math.ceil(len(feature_list) * 0.8))
+    train_set = feature_list[:split_point]
+    test_set = feature_list[split_point:]
 
     # Write the features out to a file
     with open("filtered_docs.txt", "w") as w:
@@ -60,10 +62,12 @@ if __name__ == "__main__":
     num_neu_docs = len([x for x in feature_list if x[1] == "neutral"])
     num_neg_docs = len([x for x in feature_list if x[1] == "negative"])
 
-    print "Number of documents:", num_docs
+    print "Total number of documents:", num_docs
     print "% positive :", num_pos_docs / float(num_docs)
     print "% neutral  :", num_neu_docs / float(num_docs)
     print "% negative :", num_neg_docs / float(num_docs)
+    print "Number of training documents:", len(train_set)
+    print "Number of test documents:", len(test_set)
 
     num_features = 0
     num_pos_features = 0
@@ -84,17 +88,13 @@ if __name__ == "__main__":
     print "Avg neutral  / doc :", num_neu_features / float(num_neu_docs)
     print "Avg negative / doc :", num_neg_features / float(num_neg_docs)
 
-
-    split_point = int(math.ceil(len(feature_list) * 0.8))
-    train_set = feature_list[:split_point]
-    test_set = feature_list[split_point:]
-
-    #for i in train_set:
-    #for i in test_set:
-        #print i
-
     if args.classifier_type == "max_ent":
-        classifier = multi_label_classifier(train_set)
+        if args.minlldelta:
+            classifier = multi_label_classifier(train_set, lldelta=args.minlldelta)
+        elif args.minll:
+            classifier = multi_label_classifier(train_set, ll=args.minll)
+        else:
+            classifier = multi_label_classifier(train_set)
     else:
         classifier = multi_label_naive_bayes_classifier(train_set)
 
@@ -102,7 +102,4 @@ if __name__ == "__main__":
     print "\nTesting"
     classifier.test(test_set)
     #classifier.inspect_errors(test_set)
-
-    #classifier = binary_classifier(train_set)
-    #classifier.test(test_set)
 
