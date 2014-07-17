@@ -16,7 +16,8 @@ def remove_stopwords(input_list):
     output_list = []
     # Read the stop words into a set
     stopwords = set()
-    stopword_file = open("../data/english.stop", "r")
+    #stopword_file = open("../data/stopwords.txt", "r")
+    stopword_file = open("../data/stopwords.short.txt", "r")
     for line in stopword_file:
         stopwords.add(line.strip())
     stopword_file.close()
