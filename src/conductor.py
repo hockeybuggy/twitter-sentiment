@@ -15,7 +15,7 @@ import statsify
 import wordselection
 import dictizer
 from Token import Token
-from train import multi_label_classifier, multi_label_naive_bayes_classifier, binary_classifier
+from train import multi_label_classifier, multi_label_naive_bayes_classifier
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Scan a tweet to determine it's tokens")
@@ -46,6 +46,14 @@ if __name__ == "__main__":
     print "Transforming dataset..."
     feature_list = dictizer.__call__(tokens)
 
+    print "Selecting features from the dataset..."
+    feature_list = wordselection.__call__(feature_list)
+
+    # Write the features out to a file
+    with open("filtered_docs.txt", "w") as w:
+        for row in feature_list:
+            w.write(str(row[0]) + "\n")
+
     # Count the document by label
     num_docs = len(feature_list)
     num_pos_docs = len([x for x in feature_list if x[1] == "positive"])
@@ -56,13 +64,6 @@ if __name__ == "__main__":
     print "% positive :", num_pos_docs / float(num_docs)
     print "% neutral  :", num_neu_docs / float(num_docs)
     print "% negative :", num_neg_docs / float(num_docs)
-
-    print "Selecting features from the dataset..."
-    feature_list = wordselection.__call__(feature_list)
-
-    with open("filtered_docs.txt", "w") as w:
-        for row in feature_list:
-            w.write(str(row[0]) + "\n")
 
     num_features = 0
     num_pos_features = 0
