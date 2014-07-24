@@ -70,10 +70,6 @@ def calculate_confusion_matrix(cc):
                 for other_other_label in cc.keys():
                     if label != other_other_label:
                         label_stats[label]["fn"] += cc[other_other_label][other_label]
-        #print label, "tp:\t", label_stats[label]["tp"]
-        #print label, "tn:\t", label_stats[label]["tn"]
-        #print label, "fp:\t", label_stats[label]["fp"]
-        #print label, "fn:\t", label_stats[label]["fn"]
     return(label_stats)
 
 def multi_label_classifier_test(classifier, test_set):
@@ -123,7 +119,12 @@ def bi_label_classifier_test(classifier, test_set):
         cm_raw[result][intended_label] += 1
     print_bi_confusion_matrix(cm_raw)
 
+    precison = cm_raw["positive"]["positive"] / float(cm_raw["positive"]["positive"] + cm_raw["positive"]["negative"])
+    recall = cm_raw["positive"]["positive"] / float(cm_raw["positive"]["positive"] + cm_raw["negative"]["positive"])
+    fscore = 2 * ((precison * recall)/(precison + recall))
+
     print "Accuracy  :\t", nltk.classify.accuracy(classifier, test_set)
-    print "Precision :\t", cm_raw["positive"]["positive"] / float(cm_raw["positive"]["positive"] + cm_raw["positive"]["negative"])
-    print "Recall    :\t", cm_raw["positive"]["positive"] / float(cm_raw["positive"]["positive"] + cm_raw["negative"]["positive"])
+    print "Precision :\t", precison
+    print "Recall    :\t", recall
+    print "Fscore    :\t", fscore
 
