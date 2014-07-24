@@ -36,7 +36,7 @@ def create_tweetid(sid, uid):
 def open_tweets_file(filename, start, end):
     count = 0
     tokens = []
-    with open("../data/b.tsv") as f:
+    with open(filename) as f:
         r = csv.DictReader(f, delimiter="\t")
         for tweet in r:
             if count >= start and count < end:

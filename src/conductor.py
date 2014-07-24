@@ -43,7 +43,7 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     print "Opening dataset..."
-    tokens = tokenize.open_tweets_file("../data/b.tsv", 0, args.items)
+    tokens = tokenize.open_tweets_file("../data/b.2.tsv", 0, args.items)
 
     print "Selecting labels..."
     tokens = labelselect.__call__(tokens, args.labels) # Select only the labels
