@@ -33,7 +33,7 @@ class classifier:
 
 
 class multi_label_classifier(classifier):
-    def __init__(self, train_set, lldelta=None, ll=None):
+    def __init__(self, train_set, iterations=None, lldelta=None, ll=None):
         if lldelta:
             print "Cutoff after log likelyhood changes by less than", lldelta
             self.classifier = nltk.MaxentClassifier.train(train_set, min_lldelta=lldelta)
@@ -41,8 +41,10 @@ class multi_label_classifier(classifier):
             print "Cutoff after log likelyhood reaches", ll
             self.classifier = nltk.MaxentClassifier.train(train_set, min_ll=ll)
         else:
-            print "Cutoff after 50 iterations"
-            self.classifier = nltk.MaxentClassifier.train(train_set, max_iter=50)
+            if not iterations:
+                iterations = 25
+            print "Cutoff after {} iterations".format(iterations)
+            self.classifier = nltk.MaxentClassifier.train(train_set, max_iter=iterations)
 
 def train_maxent_classifier_with_iis_with_validation(train_toks, prev_weights=None, trace=3, encoding=None,
                                      labels=None, **cutoffs):
@@ -130,7 +132,7 @@ def train_maxent_classifier_with_iis_with_validation(train_toks, prev_weights=No
 class multi_label_classifier_with_validation(classifier):
     def __init__(self, train_set, validation_set, accuracy_delta_cutoff):
         print "Cutoff after validation set reaches {}% accuracy".format(accuracy_delta_cutoff)
-        self.classifier = nltk.MaxentClassifier.train(train_set, max_iter=5)
+        self.classifier = nltk.MaxentClassifier.train(train_set, trace=1, max_iter=5)
         iter_count = 0
         prev_accuracy = 0.0
         accuracy = nltk.classify.accuracy(self.classifier, validation_set)
@@ -139,7 +141,7 @@ class multi_label_classifier_with_validation(classifier):
         while (accuracy - prev_accuracy) > accuracy_delta_cutoff:
             iter_count += 1
             prev_weights = self.classifier.weights()
-            self.classifier = train_maxent_classifier_with_iis_with_validation(train_set, prev_weights=prev_weights, max_iter=5)
+            self.classifier = train_maxent_classifier_with_iis_with_validation(train_set, trace=1, prev_weights=prev_weights, max_iter=1)
             prev_accuracy = accuracy
             accuracy = nltk.classify.accuracy(self.classifier, validation_set)
             print "Iteration {} Accuracy  :\t{}".format(iter_count, accuracy)

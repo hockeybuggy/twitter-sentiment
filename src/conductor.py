@@ -30,9 +30,11 @@ def parse_args():
     parser.add_argument("--minll", type=float,
             help="This parameter changes the cutoff for training for max ent ")
     parser.add_argument("--validationAccuracy", type=float,
+            help="This parameter changes the cutoff for training for max ent ") # TODO make this validationDelta
+    parser.add_argument("--numIterations", type=int,
             help="This parameter changes the cutoff for training for max ent ")
     parser.add_argument("--classifier_type", default="max_ent",
-            help="Select classifer should be:" + " ".join(classifier_types))
+            help="Select classifier should be:" + " ".join(classifier_types))
     parser.add_argument("--labels", default="pn",
             help="Which labels should be:" + " ".join(labels))
     args = parser.parse_args()
@@ -60,10 +62,10 @@ if __name__ == "__main__":
     feature_list = wordselection.__call__(feature_list)
 
     print "Splitting the dataset..."
-    if not args.validationAccuracy:
+    if args.validationAccuracy == None:
         train_set, _, test_set = split_dataset.__call__(feature_list, 0.2)
     else:
-        train_set, validation_set, test_set = split_dataset.__call__(feature_list, 0.2, validation_size=0.15)
+        train_set, validation_set, test_set = split_dataset.__call__(feature_list, 0.2, validation_size=0.2)
 
     # Write the features out to a file
     with open("filtered_docs.txt", "w") as w:
@@ -78,10 +80,13 @@ if __name__ == "__main__":
             classifier = multi_label_classifier(train_set, lldelta=args.minlldelta)
         elif args.minll:
             classifier = multi_label_classifier(train_set, ll=args.minll)
-        elif args.validationAccuracy:
+        elif args.validationAccuracy != None:
             classifier = multi_label_classifier_with_validation(train_set, validation_set, args.validationAccuracy)
+        elif args.numIterations:
+            classifier = multi_label_classifier(train_set, iterations=args.numIterations)
         else:
-            classifier = multi_label_classifier(train_set)
+            print "Error no cut off set"
+            sys.exit(0)
     else:
         classifier = multi_label_naive_bayes_classifier(train_set)
 

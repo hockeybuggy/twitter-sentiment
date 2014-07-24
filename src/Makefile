@@ -48,13 +48,13 @@ small:
 	python conductor.py 250 --minlldelta 0.02
 
 small-val:
-	python conductor.py 250 --validationAccuracy 0.025
+	python conductor.py 250 --validationAccuracy 0.0
 
 test-1:
-	python conductor.py 6500
+	python conductor.py 6500 --numIterations 20
 
 test-val:
-	python conductor.py 6500 --validationAccuracy 0.025
+	python conductor.py 6500 --validationAccuracy 0.0
 
 test-bayes:
 	python conductor.py 6500 --classifier_type bayes
