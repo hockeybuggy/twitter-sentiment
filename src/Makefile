@@ -41,6 +41,9 @@ clean:
 
 test: test-1
 
+tiny:
+	python conductor.py 10 --minlldelta 0.02
+
 small:
 	python conductor.py 250 --minlldelta 0.02
 
@@ -52,3 +55,6 @@ test-1:
 
 test-val:
 	python conductor.py 6500 --validationAccuracy 0.025
+
+test-bayes:
+	python conductor.py 6500 --classifier_type bayes
