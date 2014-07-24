@@ -16,7 +16,7 @@ import wordselection
 import dictizer
 import split_dataset
 from Token import Token
-from train import multi_label_classifier, multi_label_naive_bayes_classifier
+from train import multi_label_classifier, multi_label_classifier_with_validation, multi_label_naive_bayes_classifier
 
 def parse_args():
     classifier_types = ["max_ent", "bayes"]
@@ -28,6 +28,8 @@ def parse_args():
     parser.add_argument("--minlldelta", type=float,
             help="This parameter changes the cutoff of training for max ent ")
     parser.add_argument("--minll", type=float,
+            help="This parameter changes the cutoff for training for max ent ")
+    parser.add_argument("--validationAccuracy", type=float,
             help="This parameter changes the cutoff for training for max ent ")
     parser.add_argument("--classifier_type", default="max_ent",
             help="Select classifer should be:" + " ".join(classifier_types))
@@ -58,7 +60,10 @@ if __name__ == "__main__":
     feature_list = wordselection.__call__(feature_list)
 
     print "Splitting the dataset..."
-    train_set, test_set = split_dataset.__call__(feature_list, 0.2)
+    if not args.validationAccuracy:
+        train_set, _, test_set = split_dataset.__call__(feature_list, 0.2)
+    else:
+        train_set, validation_set, test_set = split_dataset.__call__(feature_list, 0.2, validation_size=0.15)
 
     # Write the features out to a file
     with open("filtered_docs.txt", "w") as w:
@@ -73,6 +78,8 @@ if __name__ == "__main__":
             classifier = multi_label_classifier(train_set, lldelta=args.minlldelta)
         elif args.minll:
             classifier = multi_label_classifier(train_set, ll=args.minll)
+        elif args.validationAccuracy:
+            classifier = multi_label_classifier_with_validation(train_set, validation_set, args.validationAccuracy)
         else:
             classifier = multi_label_classifier(train_set)
     else:

@@ -34,8 +34,21 @@ main.o: main.c globals.h scan.h util.h
 util.o: globals.h scan.h
 	$(CC) $(CFLAGS) -c util.c
 
-.PHONY: clean all py
+.PHONY: clean all test
 
 clean:
 	rm -f $(EXE) $(OBJS) lex.yy.c *.pyc
 
+test: test-1
+
+small:
+	python conductor.py 250 --minlldelta 0.02
+
+small-val:
+	python conductor.py 250 --validationAccuracy 0.025
+
+test-1:
+	python conductor.py 6500
+
+test-val:
+	python conductor.py 6500 --validationAccuracy 0.025
