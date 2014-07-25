@@ -137,3 +137,27 @@ def bi_label_classifier_test(classifier, test_set):
     print "Recall    :\t", recall
     print "Fscore    :\t", fscore
 
+def calculate_fscore(classifier, test_set):
+    cm_raw = {
+            "positive": {"positive": 0, "negative": 0},
+            "negative": {"positive": 0, "negative": 0},
+            }
+    for item, intended_label in test_set:
+        result = classifier.classify(item)
+        cm_raw[result][intended_label] += 1
+    try:
+        precison = cm_raw["positive"]["positive"] / \
+            float(cm_raw["positive"]["positive"] + cm_raw["positive"]["negative"])
+    except:
+        precison = 0.0
+    try:
+        recall = cm_raw["positive"]["positive"] / \
+            float(cm_raw["positive"]["positive"] + cm_raw["negative"]["positive"])
+    except:
+        recall = 0.0
+    try:
+        fscore = 2 * ((precison * recall)/(precison + recall))
+    except:
+        fscore = 0.0
+    return fscore
+

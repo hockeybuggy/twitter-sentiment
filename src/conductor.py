@@ -16,11 +16,14 @@ import wordselection
 import dictizer
 import split_dataset
 from Token import Token
-from train import multi_label_classifier, multi_label_classifier_with_validation, multi_label_naive_bayes_classifier
+from train import maxent_classifier
+from train import maxent_classifier_with_validation
+from train import naive_bayes_classifier
 
 def parse_args():
     classifier_types = ["max_ent", "bayes"]
     labels = ["pn", "pnn"]
+    val_metrics = ["none", "accuracy", "fscore"]
     parser = argparse.ArgumentParser(description="Scan a tweet to determine it's tokens")
     parser.add_argument("--file", type=str,
             help="The file name containing the text to be scanned")
@@ -29,10 +32,10 @@ def parse_args():
             help="This parameter changes the cutoff of training for max ent ")
     parser.add_argument("--minll", type=float,
             help="This parameter changes the cutoff for training for max ent ")
-    parser.add_argument("--validationAccuracy", type=float,
-            help="This parameter changes the cutoff for training for max ent ") # TODO make this validationDelta
     parser.add_argument("--numIterations", type=int,
             help="This parameter changes the cutoff for training for max ent ")
+    parser.add_argument("--validationMetric", default="none",
+            help="This changes the metric for validation set evaluation")
     parser.add_argument("--classifier_type", default="max_ent",
             help="Select classifier should be:" + " ".join(classifier_types))
     parser.add_argument("--labels", default="pn",
@@ -42,6 +45,8 @@ def parse_args():
         raise Exception("Classifier type must be one of: " + " ".join(classifier_types))
     if args.labels not in labels:
         raise Exception("Labels must be one of: " + " ".join(labels))
+    if args.validationMetric not in val_metrics:
+        raise Exception("Validation metrics must be one of: " + " ".join(val_metrics))
     return args
 
 if __name__ == "__main__":
@@ -62,7 +67,7 @@ if __name__ == "__main__":
     feature_list = wordselection.__call__(feature_list)
 
     print "Splitting the dataset..."
-    if args.validationAccuracy == None:
+    if args.validationMetric == "none":
         train_set, _, test_set = split_dataset.__call__(feature_list, 0.2)
     else:
         train_set, validation_set, test_set = split_dataset.__call__(feature_list, 0.2, validation_size=0.2)
@@ -77,18 +82,19 @@ if __name__ == "__main__":
 
     if args.classifier_type == "max_ent":
         if args.minlldelta:
-            classifier = multi_label_classifier(train_set, lldelta=args.minlldelta)
+            classifier = maxent_classifier(train_set, lldelta=args.minlldelta)
         elif args.minll:
-            classifier = multi_label_classifier(train_set, ll=args.minll)
-        elif args.validationAccuracy != None:
-            classifier = multi_label_classifier_with_validation(train_set, validation_set, args.validationAccuracy)
+            classifier = maxent_classifier(train_set, ll=args.minll)
+        elif args.validationMetric != "none":
+            classifier = maxent_classifier_with_validation(train_set, validation_set,
+                    args.validationMetric)
         elif args.numIterations:
-            classifier = multi_label_classifier(train_set, iterations=args.numIterations)
+            classifier = maxent_classifier(train_set, iterations=args.numIterations)
         else:
             print "Error no cut off set"
             sys.exit(0)
     else:
-        classifier = multi_label_naive_bayes_classifier(train_set)
+        classifier = naive_bayes_classifier(train_set)
 
     print "\nTesting"
     classifier.test(test_set, args.labels)
