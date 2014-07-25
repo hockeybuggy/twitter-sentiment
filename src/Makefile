@@ -44,10 +44,17 @@ test: test-1
 tiny:
 	python conductor.py 10 --minlldelta 0.02
 
-small:
+small-lldelta:
 	python conductor.py 250 --minlldelta 0.02
 
-small-val: small-val-acc
+small-baseline:
+	python conductor.py 250 --validationMetric accuracy --no-stopword-removal --no-uncommon-selection
+
+small-no-uncommon-selection:
+	python conductor.py 250 --validationMetric accuracy --no-uncommon-selection
+
+small-no-stopword-removal:
+	python conductor.py 250 --validationMetric accuracy --no-stopword-removal
 
 small-val-acc:
 	python conductor.py 250 --validationMetric accuracy
@@ -58,7 +65,7 @@ small-val-fsc:
 small-bayes:
 	python conductor.py 250 --classifier_type bayes
 
-test-1:
+test-20iter:
 	python conductor.py 6500 --numIterations 20
 
 test-val-acc:

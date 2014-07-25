@@ -36,6 +36,10 @@ def parse_args():
             help="This parameter changes the cutoff for training for max ent ")
     parser.add_argument("--validationMetric", default="none",
             help="This changes the metric for validation set evaluation")
+    parser.add_argument("--no-uncommon-selection", dest="uncommon_selection",
+            action="store_false", help="This toggles whither word selection is on off")
+    parser.add_argument("--no-stopword-removal", dest="stopword_removal",
+            action="store_false", help="This toggles whither stopword removal is on off")
     parser.add_argument("--classifier_type", default="max_ent",
             help="Select classifier should be:" + " ".join(classifier_types))
     parser.add_argument("--labels", default="pn",
@@ -63,8 +67,13 @@ if __name__ == "__main__":
     print "Transforming dataset..."
     feature_list = dictizer.__call__(tokens)
 
-    print "Selecting features from the dataset..."
-    feature_list = wordselection.__call__(feature_list)
+    if args.stopword_removal:
+        print "Removing stopwords from the dataset..."
+        feature_list = wordselection.remove_uncommon(feature_list)
+
+    if args.uncommon_selection:
+        print "Removing uncommon words from the dataset..."
+        feature_list = wordselection.remove_stopwords(feature_list)
 
     print "Splitting the dataset..."
     if args.validationMetric == "none":

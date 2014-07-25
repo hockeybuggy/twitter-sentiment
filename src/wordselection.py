@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-# File       : wordselection.py
-# Author     : Douglas Anderson
-# Description: This file removes unnecessary tokens
+# File        : wordselection.py
+# Author      : Douglas Anderson
+# Description : This file removes unnecessary tokens
 
 
 def __call__(input_list):

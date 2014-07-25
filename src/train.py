@@ -66,7 +66,8 @@ class maxent_classifier_with_validation(classifier):
                 metric = statsify.calculate_fscore(self.classifier, validation_set)
             print "Iteration {} {}  :\t{}".format(iter_count, metric_type, metric)
             print "{} delta  :\t{}".format(metric_type, metric - prev_metric)
-
+        print "Restoring iteration {} weights".format(iter_count-1)
+        self.classifier.set_weights(prev_weights)
 
 
 class naive_bayes_classifier(classifier):
