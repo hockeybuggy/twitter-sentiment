@@ -107,6 +107,6 @@ if __name__ == "__main__":
 
     print "\nTesting"
     classifier.test(test_set, args.labels)
-    #classifier.show_informitive_features()
+    classifier.show_informitive_features()
     #classifier.inspect_errors(test_set)
 

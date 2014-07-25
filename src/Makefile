@@ -39,8 +39,11 @@ util.o: globals.h scan.h
 clean:
 	rm -f $(EXE) $(OBJS) lex.yy.c *.pyc
 
-test: test-1
+# --- Testing targets ---
+test:
+	echo "Not yet implemented" #TODO implement
 
+# --- small dataset ---
 tiny:
 	python conductor.py 10 --minlldelta 0.02
 
@@ -65,8 +68,18 @@ small-val-fsc:
 small-bayes:
 	python conductor.py 250 --classifier_type bayes
 
+# --- Full dataset ---
 test-20iter:
 	python conductor.py 6500 --numIterations 20
+
+test-baseline:
+	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection --no-stopword-removal
+
+test-no-uncommon_selection:
+	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection
+
+test-no-stopword-removal:
+	python conductor.py 6500 --validationMetric accuracy --no-stopword-removal
 
 test-val-acc:
 	python conductor.py 6500 --validationMetric accuracy
