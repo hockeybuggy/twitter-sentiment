@@ -16,8 +16,8 @@ class classifier:
         else:
             statsify.bi_label_classifier_test(self.classifier, test_set)
 
-    def show_informitive_features(self):
-        self.classifier.show_most_informative_features(20)
+    def show_informitive_features(self, numFeatures):
+        self.classifier.show_most_informative_features(numFeatures)
 
     def inspect_errors(self, test_set):
         errors = []
