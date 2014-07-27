@@ -75,12 +75,6 @@ if __name__ == "__main__":
         print "Removing uncommon words from the dataset..."
         feature_list = wordselection.remove_stopwords(feature_list)
 
-    print "Splitting the dataset..."
-    if args.validationMetric == "none":
-        train_set, _, test_set = split_dataset.__call__(feature_list, 0.2)
-    else:
-        train_set, validation_set, test_set = split_dataset.__call__(feature_list, 0.2, validation_size=0.2)
-
     # Write the features out to a file
     with open("filtered_docs.txt", "w") as w:
         for row in feature_list:
@@ -89,6 +83,12 @@ if __name__ == "__main__":
     print "Generating feature set statistics..."
     statsify.__call__(feature_list, args.labels)
 
+    print "Splitting the dataset..."
+    if args.validationMetric == "none":
+        train_set, _, test_set = split_dataset.__call__(feature_list, 0.2)
+    else:
+        train_set, validation_set, test_set = split_dataset.__call__(feature_list, 0.2, validation_size=0.2)
+
     if args.classifier_type == "max_ent":
         if args.minlldelta:
             classifier = maxent_classifier(train_set, lldelta=args.minlldelta)
@@ -96,7 +96,7 @@ if __name__ == "__main__":
             classifier = maxent_classifier(train_set, ll=args.minll)
         elif args.validationMetric != "none":
             classifier = maxent_classifier_with_validation(train_set, validation_set,
-                    args.validationMetric)
+                    args.validationMetric, 3)
         elif args.numIterations:
             classifier = maxent_classifier(train_set, iterations=args.numIterations)
         else:

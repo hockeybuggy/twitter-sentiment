@@ -45,29 +45,39 @@ class maxent_classifier(classifier):
 
 
 class maxent_classifier_with_validation(classifier):
-    def __init__(self, train_set, validation_set, metric_type):
+    def __init__(self, train_set, validation_set, metric_type, smoothing):
         self.classifier = nltk.MaxentClassifier.train(train_set, trace=1, max_iter=5)
         iter_count = 0
+        rounds_without_improvment = 0
         if metric_type == "accuracy":
             metric = nltk.classify.accuracy(self.classifier, validation_set)
         else:
             metric = statsify.calculate_fscore(self.classifier, validation_set)
-        prev_metric = 0.0
+        best_iteration = 0
+        best_metric = metric
+        best_weights = self.classifier.weights()
         print "Iteration {} {}  :\t{}".format(iter_count, metric_type, metric)
-        while (metric - prev_metric) > 0.0:
+        #while (metric - prev_metric) >= 0.0:
+        while rounds_without_improvment < smoothing:
             iter_count += 1
-            prev_weights = self.classifier.weights()
             self.classifier = train_maxent_classifier_with_validation(train_set,
-                    trace=1, prev_weights=prev_weights, max_iter=1)
-            prev_metric = metric
+                    trace=1, prev_weights=self.classifier.weights(), max_iter=1)
             if metric_type == "accuracy":
                 metric = nltk.classify.accuracy(self.classifier, validation_set)
             else:
                 metric = statsify.calculate_fscore(self.classifier, validation_set)
             print "Iteration {} {}  :\t{}".format(iter_count, metric_type, metric)
-            print "{} delta  :\t{}".format(metric_type, metric - prev_metric)
-        print "Restoring iteration {} weights".format(iter_count-1)
-        self.classifier.set_weights(prev_weights)
+            print "{} delta  :\t{}".format(metric_type, metric - best_metric)
+            if(metric - best_metric) <= 0.0:
+                rounds_without_improvment += 1
+            else:
+                rounds_without_improvment = 0
+                best_iteration = iter_count
+                best_metric = metric
+                best_weights = self.classifier.weights()
+
+        print "Restoring iteration {} weights".format(best_iteration)
+        self.classifier.set_weights(best_weights)
 
 
 class naive_bayes_classifier(classifier):
