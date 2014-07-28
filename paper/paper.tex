@@ -104,9 +104,28 @@ F-positive and the F-negative.
 
 \section{Background}
 
-Quite a bit of research has been done in the field of sentiment analysis recently. Some notable examples include \cite{Pang2002}
+Quite a bit of research has been done in the field of sentiment analysis
+recently. Much of the work has involved data from other contexts such as Movie
+reviews \cite{Pang2002}, and blog posts \cite{Melville2009}. The challenges
+associated with classifying Twitter data has attracted researchers in the past
+few years \cite{Jianfeng2013} \cite{Barbosa2010} \cite{Gokulakrishnan2012}.
 
 \section{Approach}
+
+The Maximum Entropy classification method that was focused on due to the
+limited duration of the project. This supervised machine learning method
+calculates the probability that a given document $d$ belongs to the class $c$.
+
+The maximum entropy approach is well described in \cite{Pang2002} and
+\cite{Nigam1999} and is summarized below.
+
+\begin{equation}
+    P(c | d) = \frac{1}{Z(d)} exp( \sum\limits_{i} \lambda _{i,c} F_{i,c}(d,c) )
+\end{equation}
+
+Where $Z(d)$ is a normalization function. $F_{i,c}$ is a feature function for
+feature $f_{i}$ and class $c$.
+
 
 \section{Discussion}
 
