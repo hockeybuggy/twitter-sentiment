@@ -60,9 +60,46 @@ Professor Xining Li
 
 \section{Introduction}
 
+A great deal of modern communications technologies allow people to discuss and
+disseminate their opinions with a near negligible cost. Since the extremely low
+cost allows everyone to share their opinions, the scale of textual data is
+enormous. In order to gain insight into the `overall' opinion on particular
+topics, the process of determining sentiment must be automated.
+
 \subsection{Topic Area}
+
+Sentiment analysis is simply a classification task that attempts to label
+fragments of text with a label that appropriately summarizes the attitude of
+the text. Natural Language Processing (NLP) provides a number of method for
+preforming sentiment analysis. Many of these methods take a probabilistic
+approach to performing the task.
+
+%TODO how could this be useful
+
 \subsection{Specific Problem}
+
+The focus of this undergraduate research project has been to preform sentiment
+analysis in data from the microbloging website Twitter. This data presents some
+interesting problems to performing good sentiment analysis due to it's short
+and informal nature. All of the messages, known as Tweets, are constrained in
+length to 140 characters. This limit forces many users of Twitter to use
+abbreviations and contractions. Twitter makes it extremely easy to publish a
+Tweet and has no way to edit a Tweet once published. This results more spelling
+and grammar mistakes then other sources of text. Tweets often also contain
+links to other websites in the form of URLs as well as taging system for topics
+and other users.
+
 \subsection{Task Description}
+
+Organizers of the SemEval-2013 workshop created various sentiment analysis
+tasks to be preformed. The task focused on for this project was task-2b:
+Message polarity classification. The organizers used the amazon service
+``Mechanical Turk" to get many humans to annotate Tweets as `positive',
+`negative' or `neutral'. In tweets with mixed sentiments the prevailing
+sentiment was chosen. Participants were tasked with creating a classifier to
+establish labels for Tweets not in the training dataset. The various
+submissions of the participants were then evaluated by the average of the
+F-positive and the F-negative.
 
 \section{Background}
 
