@@ -22,7 +22,8 @@
 
 \huge
 
-Utilizing maximum entropy classifiers for sentiment analysis in twitter messages
+Utilizing Maximum Entropy classification for sentiment analysis in twitter
+messages
 
 \large
 \vspace{2.0cm}
@@ -38,7 +39,8 @@ dander01@uoguelph.ca
 \vspace{1.5cm}
 CIS*4900 - Undergraduate Research Project
 
-August 1, 2014 %TODO fix this
+July 29th, 2014 %TODO fix this
+
 
 \vspace{1.5cm}
 
@@ -51,6 +53,10 @@ Professor Fei Song
 Second Reader:
 
 Professor Xining Li
+
+\vspace{1.5cm}
+
+Draft 1 %TODO ditch this
 
 \end{center}
 
@@ -78,7 +84,10 @@ Maximum Entropy, take a probabilistic approach to performing the task. Another
 commonly used method of performing sentiment analysis is the uses of a support
 vector machine (SVM).
 
-Performing sentimetn
+Performing sentiment analysis is becoming a very important field of study for
+many businesses. If a company can determine what consumers think of their
+products they can take actions such as improve their products or appease an
+unsatisfied customer.
 
 \subsection{Specific Problem}
 
@@ -103,7 +112,9 @@ Message polarity classification. The organizers used the amazon service
 sentiment was chosen. Participants were tasked with creating a classifier to
 establish labels for Tweets not in the training dataset. The various
 submissions of the participants were then evaluated by the average of the
-F-positive and the F-negative.
+F-positive and the F-negative. The submissions were allowed categorized as
+`unconstrained' or `constrained' depending on if they did or did not use
+supplemental data, respectively.
 
 \section{Background}
 
@@ -112,6 +123,8 @@ recently. Much of the work has involved data from other contexts such as Movie
 reviews \cite{Pang2002}, and blog posts \cite{Melville2009}. The challenges
 associated with classifying Twitter data has attracted researchers in the past
 few years \cite{Jianfeng2013} \cite{Barbosa2010} \cite{Gokulakrishnan2012}.
+Many previous attempts researched make use of Native Bayes, Maximum Entropy,
+and SVM classifiers.
 
 %TODO extend
 
@@ -154,7 +167,9 @@ we improve the parameters by setting $\Lambda = \Lambda + \Delta$.
 The classifier produced for this project is implemented in \textit{python} and
 make extensive use of the \textit{nltk} (Natural Language Toolkit) library. As
 well the implementation makes use of the \textit{flex} tool to create a lexer
-for tokenization.
+for tokenization. The classifier does not make uses of any supplemental
+datasets and therefore should be considered constrained within the context of
+the task.
 
 \begin{enumerate}
 
@@ -253,7 +268,7 @@ procedure was followed:
 
 \section{Discussion}
 
-\subsection{Baseline}
+\subsection{Evaluation Method}
 
 After the SemEval-2013 workshop the organizers released a paper discussing the
 proceedings and the results of the task \cite{Nakov2013}. The paper establishes
@@ -266,6 +281,8 @@ positive label is defined as $R_{pos} = \frac{\mathrm{\# of\ true\
 postive}}{\mathrm{\# of\ true\ postive} + \mathrm{\# of\ false\ negative} }$
 
 %TODO note that my solution is unconstrained
+
+\subsection{Baseline}
 
 \subsection{Results}
 
@@ -288,9 +305,11 @@ et al. \cite{Nakov2013}.
         BOUNCE     & 63.53 \\
         KLUE       & 63.06 \\
         \hline
+        Majority Baseline & 29.19 \\
+        \hline
     \end{tabular}
     \end{center}
-    \caption{Comparison of unconstrained classifiers by F-score}
+    \caption{Comparison of constrained classifiers by F-score.}
     \label{table:comparison}
 \end{table}
 
@@ -348,8 +367,8 @@ element since people's outlooks, and therefore sentiment's in Tweets, will
 change over time. As well as public perception of a individual changes, the
 prevailing sentiment my change as well.
 
-% Bibliography
 
+% Bibliography
 \nocite{*}
 \bibliographystyle{ieeetr}
 \bibliography{paper}
