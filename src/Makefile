@@ -47,46 +47,100 @@ test:
 tiny:
 	python conductor.py 10 --minlldelta 0.02
 
-small-lldelta:
+# --- Small dataset - Only positive and negitive labels ---
+
+small-pn: small-baseline-pn small-no-uncommon-selection-pn small-no-stopword-removal-pn small-val-acc-pn small-val-fsc-pn small-bayes-pn
+
+small-lldelta-pn:
 	python conductor.py 250 --minlldelta 0.02
 
-small-baseline:
+small-baseline-pn:
 	python conductor.py 250 --validationMetric accuracy --no-stopword-removal --no-uncommon-selection
 
-small-no-uncommon-selection:
+small-no-uncommon-selection-pn:
 	python conductor.py 250 --validationMetric accuracy --no-uncommon-selection
 
-small-no-stopword-removal:
+small-no-stopword-removal-pn:
 	python conductor.py 250 --validationMetric accuracy --no-stopword-removal
 
-small-val-acc:
+small-val-acc-pn:
 	python conductor.py 250 --validationMetric accuracy
 
-small-val-fsc:
+small-val-fsc-pn:
 	python conductor.py 250 --validationMetric fscore
 
-small-bayes:
+small-bayes-pn:
 	python conductor.py 250 --classifier_type bayes
 
-# --- Full dataset ---
-test-20iter:
+# --- Small dataset - Positive, neutral, and negative labels ---
+
+small-pnn: small-baseline-pnn small-no-uncommon-selection-pnn small-no-stopword-removal-pnn small-val-acc-pnn small-val-fsc-pnn small-bayes-pnn
+
+small-baseline-pnn:
+	python conductor.py 250 --validationMetric accuracy --no-stopword-removal --no-uncommon-selection --labels pnn
+
+small-no-uncommon-selection-pnn:
+	python conductor.py 250 --validationMetric accuracy --no-uncommon-selection --labels pnn
+
+small-no-stopword-removal-pnn:
+	python conductor.py 250 --validationMetric accuracy --no-stopword-removal --labels pnn
+
+small-val-acc-pnn:
+	python conductor.py 250 --validationMetric accuracy --labels pnn
+
+small-val-fsc-pnn:
+	python conductor.py 250 --validationMetric fscore --labels pnn
+
+small-bayes-pnn:
+	python conductor.py 250 --classifier_type bayes --labels pnn
+
+# --- Full dataset - Only positive, negative labels ---
+
+test-pn: test-baseline-pn test-no-uncommon-selection-pn test-no-stopword-removal-pn test-val-acc-pn test-val-fsc-pn test-bayes-pn
+
+test-20iter-pn:
 	python conductor.py 6500 --numIterations 20
 
-test-baseline:
+test-baseline-pn:
 	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection --no-stopword-removal
 
-test-no-uncommon_selection:
+test-no-uncommon_selection-pn:
 	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection
 
-test-no-stopword-removal:
+test-no-stopword-removal-pn:
 	python conductor.py 6500 --validationMetric accuracy --no-stopword-removal
 
-test-val-acc:
+test-val-acc-pn:
 	python conductor.py 6500 --validationMetric accuracy
 
-test-val-fsc:
+test-val-fsc-pn:
 	python conductor.py 6500 --validationMetric fscore
 
-test-bayes:
+test-bayes-pn:
 	python conductor.py 6500 --classifier_type bayes
+
+# --- Full dataset - Positive, neutral, and negative labels ---
+
+test-pnn: test-baseline-pnn test-no-uncommon-selection-pnn test-no-stopword-removal-pnn test-val-acc-pnn test-val-fsc-pnn test-bayes-pnn
+
+test-20iter-pnn:
+	python conductor.py 6500 --numIterations 20 --labels pnn
+
+test-baseline-pnn:
+	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection --no-stopword-removal --labels pnn
+
+test-no-uncommon_selection-pnn:
+	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection --labels pnn
+
+test-no-stopword-removal-pnn:
+	python conductor.py 6500 --validationMetric accuracy --no-stopword-removal --labels pnn
+
+test-val-acc-pnn:
+	python conductor.py 6500 --validationMetric accuracy --labels pnn
+
+test-val-fsc-pnn:
+	python conductor.py 6500 --validationMetric fscore --labels pnn
+
+test-bayes-pnn:
+	python conductor.py 6500 --classifier_type bayes --labels pnn
 

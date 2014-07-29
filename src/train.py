@@ -11,10 +11,7 @@ class classifier:
         pass
 
     def test(self, test_set, labels):
-        if labels == "pnn":
-            statsify.multi_label_classifier_test(self.classifier, test_set)
-        else:
-            statsify.bi_label_classifier_test(self.classifier, test_set)
+        statsify.calculate_fscore(self.classifier, test_set, trace=True)
 
     def show_informitive_features(self, numFeatures):
         self.classifier.show_most_informative_features(numFeatures)
@@ -52,7 +49,7 @@ class maxent_classifier_with_validation(classifier):
         if metric_type == "accuracy":
             metric = nltk.classify.accuracy(self.classifier, validation_set)
         else:
-            metric = statsify.calculate_fscore(self.classifier, validation_set)
+            metric = statsify.calculate_fscore(self.classifier, validation_set, trace=False)
         best_iteration = 0
         best_metric = metric
         best_weights = self.classifier.weights()
@@ -65,7 +62,7 @@ class maxent_classifier_with_validation(classifier):
             if metric_type == "accuracy":
                 metric = nltk.classify.accuracy(self.classifier, validation_set)
             else:
-                metric = statsify.calculate_fscore(self.classifier, validation_set)
+                metric = statsify.calculate_fscore(self.classifier, validation_set, trace=False)
             print "Iteration {} {}  :\t{}".format(iter_count, metric_type, metric)
             print "{} delta  :\t{}".format(metric_type, metric - best_metric)
             if(metric - best_metric) <= 0.0:

@@ -19,6 +19,9 @@ def selectPosNeuNeg(tokens):
             selected_tokens.append(t)
         elif t.label == "neutral":
             selected_tokens.append(t)
+        elif t.label == "objective" or t.label == "objective-OR-neutral":
+            t.label = "neutral" # Coerce the labels to neutral
+            selected_tokens.append(t)
         elif t.label == "negative":
             selected_tokens.append(t)
     return selected_tokens
@@ -31,3 +34,4 @@ def selectPosNeg(tokens):
         elif t.label == "negative":
             selected_tokens.append(t)
     return selected_tokens
+
