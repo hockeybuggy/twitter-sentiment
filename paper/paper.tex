@@ -116,23 +116,30 @@ few years \cite{Jianfeng2013} \cite{Barbosa2010} \cite{Gokulakrishnan2012}.
 
 The Maximum Entropy classification method that was focused on due to the
 limited duration of the project. This supervised machine learning method
-calculates the probability that a given document $d$ belongs to the class $c$.
+calculates the probability that a given document $d$ belongs to the class $c$. The maximum entropy approach is well described in \cite{Nigam1999} and is summarized below.
 
-The maximum entropy approach is well described in \cite{Nigam1999} and is
-summarized below. The training data is used to establish constraints in the
-following fashion.
+The training data is used to establish constraints in the following fashion.
 
 \begin{equation}
-    P(c | d) = \frac{1}{Z(d)} exp( \sum\limits_{i} \lambda _{i,c} F_{i,c}(d,c) )
+    P(c | d) = \frac{1}{Z(d)} \mathrm{exp}(\sum\limits_{i} \lambda _{i,c} F_{i,c}(d,c) )
 \end{equation}
 
 Where $Z(d)$ is a normalization function, $F_{i,c}$ is a feature function for
 feature $f_{i}$ and class $c$, and $\lambda_{i}$ is a feature parameter.
 
 In order to establish reasonable $\lambda_{i}$ for each feature the Improved
-Iterative Scaling is employed.
+Iterative Scaling (IIS) is employed. Given a set of training data
+$\mathcal{D}$, IIS trains a model $\Lambda$ by performing a hillclimbing procedure with the function $l(\Lambda|\mathcal{D})$, where:
 
-%TODO outline the IIS algorithm
+\begin{equation}
+    l(\Lambda | \mathcal{D}) = \sum\limits_{d\in\mathcal{D}} \sum\limits_{i}
+    \lambda_{i} f_{i}(d,c(d)) - \sum\limits_{d\in\mathcal{D}} \mathrm{log}
+    \sum\limits_{c} \mathrm{exp} \sum\limits_{i} \lambda_{i} f_{i}(d,c)
+\end{equation}
+
+Starting with any initial vector of parameters $\Lambda$, at each iteration
+we improve the parameters by setting $\Lambda = \Lambda + \Delta$.
+
 
 \subsection{Implementation}
 
@@ -191,20 +198,71 @@ extensive use of the \textit{nltk} (Natural Language Toolkit) library.
         and the \textit{testing set}. Respectively, Each dataset is 60\%, 20\%,
         and 20\% of the corpus.
 
-    \item \textbf{Training} -
+    \item \textbf{Training} - The classifier is trained using the
+        \textit{training set}.  The classifier uses the \textit{validation set}
+        to evaluate the training process and attempt to curtail overfitting.
 
-    \item \textbf{Testing} - The performance of the dataset is evaulated
+    \item \textbf{Testing} - The performance of the dataset is evaluated
         against the \textit{testing set}.
 
 \end{enumerate}
 
 \section{Discussion}
 
+\subsection{Baseline}
+
+\subsection{Avoiding overfitting}
+
+The implementation created for this project used a validation set during
+training as the primary mechanism to avoid overfitting. While training the
+effectiveness of the classifier was evaluated after every iteration, using the
+accuracy or F-positive measure. During the training process the following
+procedure was followed:
+
+\begin{enumerate}
+
+    \item The classifier was trained for 5 iterations to establish reasonable
+        initial weights.
+
+    \item Evaluate the classifier using the validation set. Like the
+        \textit{testing set} that will evaluate the classifiers final
+        performance, the \textit{validation set} shares no common examples with
+        the \textit{training set} and will therefore give a reasonable
+        indication of how the classifier will perform with unseen examples.
+
+    \item Repeat the following until performance degrades for a specified
+        number of iterations
+
+    \begin{enumerate}
+
+        \item Train the classifier for another iteration.
+
+        \item Evaluate performance with the \textit{validation set}.
+
+    \end{enumerate}
+
+    \item Restore the $\Lambda$ value of the best performing iteration.
+
+\end{enumerate}
+
 \section{Conclusion}
 
 \section{Future Work}
 
-\section{Works Cited}
+\subsection{Hashtags}
+
+\subsection{Users}
+
+Nearly all Twitter users have published more than one tweet. A more advanced
+classifier could establish a particular users propensity to publishing a
+prevailing sentiment in all of their tweets.
+
+As well, some Twitter users may be frequently be referred to with a particular
+sentiment. For a hypothetical example, Tweets addresses to Emma Watson
+(`@EmWatson') are more likely to have a positive sentiment, while tweets to
+Barack Obama (`@BarackObama') may contain extremely mixed sentiment.
+
+% Bibliography
 
 \nocite{*}
 \bibliographystyle{ieeetr}
