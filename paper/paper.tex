@@ -61,21 +61,24 @@ Professor Xining Li
 
 \section{Introduction}
 
-A great deal of modern communications technologies allow people to discuss and
-disseminate their opinions with a near negligible cost. Since the extremely low
-cost allows everyone to share their opinions, the scale of textual data is
-enormous. In order to gain insight into the `overall' opinion on particular
-topics, the process of determining sentiment must be automated.
+Social Media allows people to discuss topics and disseminate their opinions
+with a near negligible cost. Since the cost of using social media is so low it
+allows everyone to share their opinions as much as they please. Because of this
+the scale of textual data is enormous. In order to gain insight into the
+`overall' opinion on particular topics, the process of determining sentiment
+must be automated.
 
 \subsection{Topic Area}
 
 Sentiment analysis is simply a classification task that attempts to label
 fragments of text with a label that appropriately summarizes the attitude of
 the text. Natural Language Processing (NLP) provides a number of method for
-preforming sentiment analysis. Many of these methods take a probabilistic
-approach to performing the task.
+preforming sentiment analysis. Many of these methods, such as Naive Bayes and
+Maximum Entropy, take a probabilistic approach to performing the task. Another
+commonly used method of performing sentiment analysis is the uses of a support
+vector machine (SVM).
 
-%TODO how could this be useful
+Performing sentimetn
 
 \subsection{Specific Problem}
 
@@ -118,7 +121,9 @@ few years \cite{Jianfeng2013} \cite{Barbosa2010} \cite{Gokulakrishnan2012}.
 
 The Maximum Entropy classification method that was focused on due to the
 limited duration of the project. This supervised machine learning method
-calculates the probability that a given document $d$ belongs to the class $c$. The maximum entropy approach is well described in \cite{Nigam1999} and is summarized below.
+calculates the probability that a given document $d$ belongs to the class $c$.
+The maximum entropy approach is well described in \cite{Nigam1999} and is
+summarized below.
 
 The training data is used to establish constraints in the following fashion.
 
@@ -131,7 +136,8 @@ feature $f_{i}$ and class $c$, and $\lambda_{i}$ is a feature parameter.
 
 In order to establish reasonable $\lambda_{i}$ for each feature the Improved
 Iterative Scaling (IIS) is employed. Given a set of training data
-$\mathcal{D}$, IIS trains a model $\Lambda$ by performing a hillclimbing procedure with the function $l(\Lambda|\mathcal{D})$, where:
+$\mathcal{D}$, IIS trains a model $\Lambda$ by performing a hillclimbing
+procedure with the function $l(\Lambda|\mathcal{D})$, where:
 
 \begin{equation}
     l(\Lambda | \mathcal{D}) = \sum\limits_{d\in\mathcal{D}} \sum\limits_{i}
@@ -145,8 +151,10 @@ we improve the parameters by setting $\Lambda = \Lambda + \Delta$.
 
 \subsection{Implementation}
 
-The classifier produced for this project is implemented in \textit{python} and make
-extensive use of the \textit{nltk} (Natural Language Toolkit) library.
+The classifier produced for this project is implemented in \textit{python} and
+make extensive use of the \textit{nltk} (Natural Language Toolkit) library. As
+well the implementation makes use of the \textit{flex} tool to create a lexer
+for tokenization.
 
 \begin{enumerate}
 
@@ -209,15 +217,6 @@ extensive use of the \textit{nltk} (Natural Language Toolkit) library.
 
 \end{enumerate}
 
-\section{Discussion}
-
-\subsection{Baseline}
-
-After the SemEval-2013 workshop the organizers released a paper discussing the
-proceedings and the results of the task.
-
-%TODO
-
 \subsection{Avoiding overfitting}
 
 The implementation created for this project used a validation set during
@@ -252,7 +251,56 @@ procedure was followed:
 
 \end{enumerate}
 
+\section{Discussion}
+
+\subsection{Baseline}
+
+After the SemEval-2013 workshop the organizers released a paper discussing the
+proceedings and the results of the task \cite{Nakov2013}. The paper establishes
+baseline in terms of $F$. $F$ can be calculated $F = (F_{pos} + F_{neg}) / 2$
+where $F_{pos} = 2 \frac{P_{pos}R_{pos}}{P_{pos} + R_{pos}}$ and $F_{neg}$ is
+calculated in a similar fashion. The Precision measure for the positive label
+is $P_{pos} = \frac{\mathrm{\# of\ true\ postive}}{\mathrm{\# of\ true\
+postive} + \mathrm{\# of\ false\ postive} }$. The Recall measure for the
+positive label is defined as $R_{pos} = \frac{\mathrm{\# of\ true\
+postive}}{\mathrm{\# of\ true\ postive} + \mathrm{\# of\ false\ negative} }$
+
+%TODO note that my solution is unconstrained
+
+\subsection{Results}
+
+\subsection{Comparison to Workshop Participants}
+
+Table \ref{table:comparison} shows the performance of the classifier produced
+for this project ranks compared to results of the workshop participants. The
+full table (with out this project's results) can be found in table 9 of Nakov
+et al. \cite{Nakov2013}.
+
+\begin{table}[H]
+    \begin{center}
+    \begin{tabular}{|r|l|}
+        \hline
+        Run & F \\
+        \hline
+        NRC-Canada & 69.02 \\
+        GU-MLT-LT  & 65.27 \\
+        teragram   & 64.86 \\
+        BOUNCE     & 63.53 \\
+        KLUE       & 63.06 \\
+        \hline
+    \end{tabular}
+    \end{center}
+    \caption{Comparison of unconstrained classifiers by F-score}
+    \label{table:comparison}
+\end{table}
+
+%TODO finsh table
+
 \section{Conclusion}
+
+I am great and without reproach.
+
+%TODO get a stronger conclusion
 
 \section{Future Work}
 
@@ -279,6 +327,10 @@ are different. Hashtags often have message level meaning while simple words
 have local context withing the sentence. Since the dataset created for the
 SemEval-2013 workshop mostly contained examples of Hashtags used as proper
 nouns, more annotated Tweets would be needed for training and testing.
+
+As well Hashtags sometimes use CamelCase to create multi-word tags (e.g.
+`\#SorryNotSorry'). It could prove worthwhile to attempt the decompose
+CamelCase Hashtags into its component words during feature selection.
 
 \subsection{Users}
 
