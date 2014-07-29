@@ -182,12 +182,20 @@ extensive use of the \textit{nltk} (Natural Language Toolkit) library.
             \item Then \textbf{Uncommon words} are removed. Words that do not
                 meet a certain document frequency threshold are eliminated.
                 Many of these words are proper nouns that, if retained are
-                likely to cause the classifier to overfit to the training set
+                likely to cause the classifier to overfit to the training set.
 
         \end{itemize}
 
-    \item \textbf{Training}
-    \item \textbf{Testing}
+    \item \textbf{Splitting} - The corpus of documents are random separated
+        into three sets: the \textit{training set}, the \textit{validation set},
+        and the \textit{testing set}. Respectively, Each dataset is 60\%, 20\%,
+        and 20\% of the corpus.
+
+    \item \textbf{Training} -
+
+    \item \textbf{Testing} - The performance of the dataset is evaulated
+        against the \textit{testing set}.
+
 \end{enumerate}
 
 \section{Discussion}
