@@ -73,3 +73,4 @@ def normalize_words(tokens):
     for t in tokens:
         if t.tokentype == "word":
             t.text = t.text.lower()
+

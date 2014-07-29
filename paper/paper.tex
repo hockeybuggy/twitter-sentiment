@@ -112,20 +112,83 @@ few years \cite{Jianfeng2013} \cite{Barbosa2010} \cite{Gokulakrishnan2012}.
 
 \section{Approach}
 
+\subsection{Summary of Maximum Entropy}
+
 The Maximum Entropy classification method that was focused on due to the
 limited duration of the project. This supervised machine learning method
 calculates the probability that a given document $d$ belongs to the class $c$.
 
-The maximum entropy approach is well described in \cite{Pang2002} and
-\cite{Nigam1999} and is summarized below.
+The maximum entropy approach is well described in \cite{Nigam1999} and is
+summarized below. The training data is used to establish constraints in the
+following fashion.
 
 \begin{equation}
     P(c | d) = \frac{1}{Z(d)} exp( \sum\limits_{i} \lambda _{i,c} F_{i,c}(d,c) )
 \end{equation}
 
-Where $Z(d)$ is a normalization function. $F_{i,c}$ is a feature function for
-feature $f_{i}$ and class $c$.
+Where $Z(d)$ is a normalization function, $F_{i,c}$ is a feature function for
+feature $f_{i}$ and class $c$, and $\lambda_{i}$ is a feature parameter.
 
+In order to establish reasonable $\lambda_{i}$ for each feature the Improved
+Iterative Scaling is employed.
+
+%TODO outline the IIS algorithm
+
+\subsection{Implementation}
+
+The classifier produced for this project is implemented in \textit{python} and make
+extensive use of the \textit{nltk} (Natural Language Toolkit) library.
+
+\begin{enumerate}
+
+    \item \textbf{Tokenization} - The text is read into memory and separated into
+        tokens. Each token represents an atom of text. Token types include
+        word, number, user, hashtag, url, emoticon and punctuation.
+
+    \item \textbf{Normalizing} - Each token is simplified to assist in
+        classification by reducing the number of tokens.
+
+        \begin{itemize}
+
+            \item \textbf{Words} are coerced into lowercase
+
+            \item \textbf{Numbers} are replaced with "\#NUM"
+
+            \item \textbf{User} are replaced with "@USER"
+
+            \item \textbf{Hashtags} are replaced with "\#OCTOTHORPE"
+
+            \item \textbf{URLs} are replaced with "@URL"
+
+            \item \textbf{Emoticon} are grouped into four different groups
+                based on their intended meaning. Each group is then replaced
+                with a representation. (e.g. `:)' $\rightarrow$ `EM\_HAPPY' and
+                `;-p' $\rightarrow$ `EM\_WINK')
+
+            \item most \textbf{Punctuation} is replaced with "PUNCT" however
+                question marks, punctuation marks, and ellipsis are each
+                replaced with their own representation.
+
+        \end{itemize}
+
+    \item \textbf{Feature Selection} - The number of tokens retained as
+        features is further reduced.
+        \begin{itemize}
+
+            \item By \textbf{Removing Stopwords}, words that do not
+                discriminate between classes are eliminated. Because of the
+                limited size of the dataset only 28 stopwords are used.
+
+            \item Then \textbf{Uncommon words} are removed. Words that do not
+                meet a certain document frequency threshold are eliminated.
+                Many of these words are proper nouns that, if retained are
+                likely to cause the classifier to overfit to the training set
+
+        \end{itemize}
+
+    \item \textbf{Training}
+    \item \textbf{Testing}
+\end{enumerate}
 
 \section{Discussion}
 
