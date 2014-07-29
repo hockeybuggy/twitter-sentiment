@@ -110,6 +110,8 @@ reviews \cite{Pang2002}, and blog posts \cite{Melville2009}. The challenges
 associated with classifying Twitter data has attracted researchers in the past
 few years \cite{Jianfeng2013} \cite{Barbosa2010} \cite{Gokulakrishnan2012}.
 
+%TODO extend
+
 \section{Approach}
 
 \subsection{Summary of Maximum Entropy}
@@ -211,6 +213,11 @@ extensive use of the \textit{nltk} (Natural Language Toolkit) library.
 
 \subsection{Baseline}
 
+After the SemEval-2013 workshop the organizers released a paper discussing the
+proceedings and the results of the task.
+
+%TODO
+
 \subsection{Avoiding overfitting}
 
 The implementation created for this project used a validation set during
@@ -251,6 +258,28 @@ procedure was followed:
 
 \subsection{Hashtags}
 
+Hashtags are a way that Twitter users tag a Tweet as part of a particular
+conversation. Hashtags refer to proper nouns such as events, places, or people.
+Hashtags can also denote modifiers (such as `\#sarcasm') to the sentiment of the
+Tweet, or even raw sentiment (e.g. `\#yay').
+
+While it is likely infeasible to retain Hashtags about proper nouns,
+classification performance could be improved by including modifiers and
+Hashtags with raw sentiment. The following Tweet (not from the dataset) is a
+great example of a Tweet that Hashtags could help improve classification
+accuracy.
+
+\begin{verbatim}
+    Well I have an ear infection #good #sarcasm
+\end{verbatim}
+
+While a simple approach could be to strip the octothorpe from the front of the
+Hashtag (e.g. `\#good' $\rightarrow$ `good'), the semantic meaning of the two
+are different. Hashtags often have message level meaning while simple words
+have local context withing the sentence. Since the dataset created for the
+SemEval-2013 workshop mostly contained examples of Hashtags used as proper
+nouns, more annotated Tweets would be needed for training and testing.
+
 \subsection{Users}
 
 Nearly all Twitter users have published more than one tweet. A more advanced
@@ -261,6 +290,11 @@ As well, some Twitter users may be frequently be referred to with a particular
 sentiment. For a hypothetical example, Tweets addresses to Emma Watson
 (`@EmWatson') are more likely to have a positive sentiment, while tweets to
 Barack Obama (`@BarackObama') may contain extremely mixed sentiment.
+
+A challenge that this method could introduce is the introduction of a temporal
+element since people's outlooks, and therefore sentiment's in Tweets, will
+change over time. As well as public perception of a individual changes, the
+prevailing sentiment my change as well.
 
 % Bibliography
 
