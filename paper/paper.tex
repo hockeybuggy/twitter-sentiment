@@ -280,40 +280,88 @@ postive} + \mathrm{\# of\ false\ postive} }$. The Recall measure for the
 positive label is defined as $R_{pos} = \frac{\mathrm{\# of\ true\
 postive}}{\mathrm{\# of\ true\ postive} + \mathrm{\# of\ false\ negative} }$
 
-%TODO note that my solution is unconstrained
-
 \subsection{Baseline}
 
+TODO establish baseline here
+
 \subsection{Results}
+
+Since the \textit{test set} is random subset of the corpus, the results of the
+classifier can vary slightly between runs. In order to effectively evaluate the
+performance of the classifier under certain conditions each experiment is
+conducted 3 times and averaged.
+
+\begin{table}[H]
+    \begin{center}
+    \begin{tabular}{|c|c|r|r|r|r|}
+        \hline
+        Description & Stopwords & Run 1 & Run 2 & Run 3 & $\mu$ F\\
+        \hline
+        MaxEnt      & Yes       & 0.0   & 0.0   & 0     & 0 \\
+        \dots       & No        & 0.0   & 0.0   & 0     & 0 \\
+        Naive Bayes & Yes       & 0.0   & 0.0   & 0     & 0 \\
+        \dots       & No        & 0.0   & 0.0   & 0     & 0 \\
+        \hline
+    \end{tabular}
+    \end{center}
+    \caption{Results of variations on feature selection and training. Sorted by
+        average F-score.}
+    \label{table:results}
+\end{table}
 
 \subsection{Comparison to Workshop Participants}
 
 Table \ref{table:comparison} shows the performance of the classifier produced
-for this project ranks compared to results of the workshop participants. The
-full table (with out this project's results) can be found in table 9 of Nakov
-et al. \cite{Nakov2013}.
+for this project compared to results of the workshop participants. The full
+table (with out this project's results) can be found in table 9 of Nakov et al.
+\cite{Nakov2013}.
 
 \begin{table}[H]
     \begin{center}
     \begin{tabular}{|r|l|}
         \hline
-        Run & F \\
+        Team & F \\
         \hline
         NRC-Canada & 69.02 \\
         GU-MLT-LT  & 65.27 \\
         teragram   & 64.86 \\
         BOUNCE     & 63.53 \\
         KLUE       & 63.06 \\
+        AMI\&ERIC  & 62.55 \\
+        FBM        & 61.17 \\
+        AVAYA      & 60.84 \\
+        SAIL       & 60.14 \\
+        UT-DB      & 59.87 \\
+        FBK-irst   & 59.76 \\
+        nlp.cs.aueb.gr & 58.91 \\
+        UNITOR     & 58.27 \\
+        LVIC-LIMSI & 57.14 \\
+        Unigon     & 56.96 \\
+        NILC\_USP   & 56.31 \\
+        DataMining & 55.52 \\
+        ECNUCS     & 55.05 \\
+        nlp.cs.aueb.gr & 54.73 \\
+        ASVUniOfLeipzig & 54.56 \\
+        SZTE-NLP   & 54.33 \\
+        CodeX      & 53.89 \\
+        Oasis      & 53.84 \\
+        \textbf{Best MaxEnt}& \textbf{53.32} \\
+        NTNU       & 53.23 \\
+        UoM        & 51.81 \\
+        SSA-UO     & 50.17 \\
+        SenselyticTeam & 50.10 \\
+        $\ldots$ & $\ldots$ \\
+        9 more teams &  \textless\ 50 \\
+        $\ldots$ & $\ldots$ \\
         \hline
         Majority Baseline & 29.19 \\
         \hline
     \end{tabular}
     \end{center}
-    \caption{Comparison of constrained classifiers by F-score.}
+    \caption{Comparison of constrained classifiers sumitted to the SemEval-2013
+        workshop. Sorted by F-score.}
     \label{table:comparison}
 \end{table}
-
-%TODO finsh table
 
 \section{Conclusion}
 
