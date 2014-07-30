@@ -8,7 +8,7 @@ import re
 
 def __call__(tokens):
     normalize_words(tokens)
-    normalize_ellipsis(tokens)
+    normalize_punct(tokens)
     normalize_emoticons(tokens)
     normalize_users(tokens)
     normalize_hashtags(tokens)
@@ -36,7 +36,7 @@ def normalize_hashtags(tokens):
         if t.tokentype == "hash":
             t.text = "#OCTOTHORPE"
 
-def normalize_ellipsis(tokens):
+def normalize_punct(tokens):
     for t in tokens:
         if t.tokentype == "punc":
             if t.text == ".." or t.text == "...":

@@ -55,7 +55,7 @@ small-lldelta-pn:
 	python conductor.py 250 --minlldelta 0.02
 
 small-baseline-pn:
-	python conductor.py 250 --validationMetric accuracy --no-stopword-removal --no-uncommon-selection
+	python conductor.py 250 --validationMetric accuracy --no-uncommon-selection --no-stopword-removal --no-normalize-words --no-normalize-punct --no-normalize-emoticons --no-normalize-users --no-normalize-hashtags --no-normalize-nums --no-normalize-urls
 
 small-no-uncommon-selection-pn:
 	python conductor.py 250 --validationMetric accuracy --no-uncommon-selection
@@ -72,27 +72,33 @@ small-val-fsc-pn:
 small-bayes-pn:
 	python conductor.py 250 --classifier_type bayes
 
+small-bayes-baseline-pn:
+	python conductor.py 250 --classifier_type bayes --no-uncommon-selection --no-stopword-removal --no-normalize-words --no-normalize-punct --no-normalize-emoticons --no-normalize-users --no-normalize-hashtags --no-normalize-nums --no-normalize-urls
+
 # --- Small dataset - Positive, neutral, and negative labels ---
 
 small-pnn: small-baseline-pnn small-no-uncommon-selection-pnn small-no-stopword-removal-pnn small-val-acc-pnn small-val-fsc-pnn small-bayes-pnn
 
 small-baseline-pnn:
-	python conductor.py 250 --validationMetric accuracy --no-stopword-removal --no-uncommon-selection --labels pnn
+	python conductor.py 250 --validationMetric fscore --no-uncommon-selection --no-stopword-removal --no-normalize-words --no-normalize-punct --no-normalize-emoticons --no-normalize-users --no-normalize-hashtags --no-normalize-nums --no-normalize-urls --labels pnn
 
 small-no-uncommon-selection-pnn:
-	python conductor.py 250 --validationMetric accuracy --no-uncommon-selection --labels pnn
+	python conductor.py 250 --validationMetric fscore --no-uncommon-selection --labels pnn
 
 small-no-stopword-removal-pnn:
-	python conductor.py 250 --validationMetric accuracy --no-stopword-removal --labels pnn
+	python conductor.py 250 --validationMetric fscore --no-stopword-removal --labels pnn
 
 small-val-acc-pnn:
-	python conductor.py 250 --validationMetric accuracy --labels pnn
+	python conductor.py 250 --validationMetric fscore --labels pnn
 
 small-val-fsc-pnn:
 	python conductor.py 250 --validationMetric fscore --labels pnn
 
 small-bayes-pnn:
 	python conductor.py 250 --classifier_type bayes --labels pnn
+
+small-bayes-baseline-pnn:
+	python conductor.py 250 --classifier_type bayes --no-uncommon-selection --no-stopword-removal --no-normalize-words --no-normalize-punct --no-normalize-emoticons --no-normalize-users --no-normalize-hashtags --no-normalize-nums --no-normalize-urls --labels pnn
 
 # --- Full dataset - Only positive, negative labels ---
 
@@ -102,7 +108,7 @@ test-20iter-pn:
 	python conductor.py 6500 --numIterations 20
 
 test-baseline-pn:
-	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection --no-stopword-removal
+	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection --no-stopword-removal --no-normalize-words --no-normalize-punct --no-normalize-emoticons --no-normalize-users --no-normalize-hashtags --no-normalize-nums --no-normalize-urls
 
 test-no-uncommon_selection-pn:
 	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection
@@ -119,6 +125,9 @@ test-val-fsc-pn:
 test-bayes-pn:
 	python conductor.py 6500 --classifier_type bayes
 
+test-bayes-baseline-pn:
+	python conductor.py 6500 --classifier_type bayes --no-uncommon-selection --no-stopword-removal --no-normalize-words --no-normalize-punct --no-normalize-emoticons --no-normalize-users --no-normalize-hashtags --no-normalize-nums --no-normalize-urls
+
 # --- Full dataset - Positive, neutral, and negative labels ---
 
 test-pnn: test-baseline-pnn test-no-uncommon-selection-pnn test-no-stopword-removal-pnn test-val-acc-pnn test-val-fsc-pnn test-bayes-pnn
@@ -127,7 +136,7 @@ test-20iter-pnn:
 	python conductor.py 6500 --numIterations 20 --labels pnn
 
 test-baseline-pnn:
-	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection --no-stopword-removal --labels pnn
+	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection --no-stopword-removal --no-normalize-words --no-normalize-punct --no-normalize-emoticons --no-normalize-users --no-normalize-hashtags --no-normalize-nums --no-normalize-urls --labels pnn
 
 test-no-uncommon_selection-pnn:
 	python conductor.py 6500 --validationMetric accuracy --no-uncommon-selection --labels pnn
@@ -143,4 +152,7 @@ test-val-fsc-pnn:
 
 test-bayes-pnn:
 	python conductor.py 6500 --classifier_type bayes --labels pnn
+
+test-bayes-baseline-pnn:
+	python conductor.py 6500 --classifier_type bayes --no-uncommon-selection --no-stopword-removal --no-normalize-words --no-normalize-punct --no-normalize-emoticons --no-normalize-users --no-normalize-hashtags --no-normalize-nums --no-normalize-urls --labels pnn
 
