@@ -22,8 +22,8 @@
 
 \huge
 
-Utilizing Maximum Entropy classification for sentiment analysis in twitter
-messages
+Utilizing Maximum Entropy Classification for Sentiment Analysis in Twitter
+Messages
 
 \large
 \vspace{2.0cm}
@@ -41,7 +41,6 @@ CIS*4900 - Undergraduate Research Project
 
 July 29th, 2014 %TODO fix this
 
-
 \vspace{1.5cm}
 
 Supervisor:
@@ -56,59 +55,59 @@ Professor Xining Li
 
 \vspace{1.5cm}
 
-Draft 1 %TODO ditch this
+Draft 2 %TODO ditch this
 
 \end{center}
 
-
 \newpage
-\pagestyle{headings}
+%\pagestyle{headings}
 \setcounter{page}{1}
 
 \section{Introduction}
 
-Social Media allows people to discuss topics and disseminate their opinions
-with a near negligible cost. Since the cost of using social media is so low it
-allows everyone to share their opinions as much as they please. Because of this
-the scale of textual data is enormous. In order to gain insight into the
-`overall' opinion on particular topics, the process of determining sentiment
-must be automated.
-
-\subsection{Topic Area}
-
-Sentiment analysis is simply a classification task that attempts to label
-fragments of text with a label that appropriately summarizes the attitude of
-the text. Natural Language Processing (NLP) provides a number of method for
-preforming sentiment analysis. Many of these methods, such as Naive Bayes and
-Maximum Entropy, take a probabilistic approach to performing the task. Another
-commonly used method of performing sentiment analysis is the uses of a support
-vector machine (SVM).
+Social media allows people to discuss topics and disseminate their opinions
+with a near negligible cost. The low barrier of entry to social media allows
+everyone to share their opinions as much as they please. The scale of textual
+data from social media is enormous. In order to gain insight into the `overall'
+opinion on particular topics, the process of determining sentiment must be
+automated.
 
 Performing sentiment analysis is becoming a very important field of study for
 many businesses. If a company can determine what consumers think of their
 products they can take actions such as improve their products or appease an
 unsatisfied customer.
 
+\subsection{Topic Area}
+
+Sentiment analysis is simply a classification task that attempts to label
+fragments of text that appropriately summarizes the attitude of the text.
+Natural Language Processing (NLP) provides a number of method for preforming
+sentiment analysis. Many of these methods, such as Naive Bayes and Maximum
+Entropy, take a probabilistic approach to performing the task. Another commonly
+used method of performing sentiment analysis is the uses of a support vector
+machine (SVM).
+
+
 \subsection{Specific Problem}
 
 The focus of this undergraduate research project has been to preform sentiment
-analysis in data from the microbloging website Twitter. This data presents some
-interesting problems to performing good sentiment analysis due to it's short
-and informal nature. All of the messages, known as Tweets, are constrained in
-length to 140 characters. This limit forces many users of Twitter to use
-abbreviations and contractions. Twitter makes it extremely easy to publish a
-Tweet and has no way to edit a Tweet once published. This results more spelling
-and grammar mistakes then other sources of text. Tweets often also contain
-links to other websites in the form of URLs as well as taging system for topics
-and other users.
+analysis in data from the microbloging website Twitter. All of the messages,
+known as Tweets, are constrained in length to 140 characters. This limit forces
+many users of Twitter to use abbreviations and contractions. This data presents
+some interesting problems to performing good sentiment analysis due to it's
+short and informal nature. Twitter makes it extremely easy to publish a Tweet
+and has no way to edit a Tweet once published. This results in more spelling
+mistakes and inconsistent grammar then other sources of text. Tweets often also
+contain links to other websites in the form of URLs as well as taging system
+for topics and other users.
 
 \subsection{Task Description}
 
 Organizers of the SemEval-2013 workshop created various sentiment analysis
 tasks to be preformed. The task focused on for this project was task-2b:
-Message polarity classification. The organizers used the amazon service
+Message polarity classification. The organizers used the Amazon service
 ``Mechanical Turk" to get many humans to annotate Tweets as `positive',
-`negative' or `neutral'. In tweets with mixed sentiments the prevailing
+`negative' or `neutral'. In tweets with mixed sentiments, the prevailing
 sentiment was chosen. Participants were tasked with creating a classifier to
 establish labels for Tweets not in the training dataset. The various
 submissions of the participants were then evaluated by the average of the
@@ -126,25 +125,27 @@ few years \cite{Jianfeng2013} \cite{Barbosa2010} \cite{Gokulakrishnan2012}.
 Many previous attempts researched make use of Native Bayes, Maximum Entropy,
 and SVM classifiers.
 
+\textit{Note: This section needs to be expanded. I am just not sure what else to write about...}
+
 %TODO extend
 
 \section{Approach}
 
 \subsection{Summary of Maximum Entropy}
 
-The Maximum Entropy classification method that was focused on due to the
-limited duration of the project. This supervised machine learning method
-calculates the probability that a given document $d$ belongs to the class $c$.
-The maximum entropy approach is well described in \cite{Nigam1999} and is
-summarized below.
+The Maximum Entropy classification method was focused on due to the limited
+duration of the project. This supervised machine learning method calculates the
+probability that a given document $d$ belongs to the class $c$.  The Maximum
+Entropy approach is summarized below. For a more detailed description, see:
+Nigam et al. \cite{Nigam1999}.
 
-The training data is used to establish constraints in the following fashion.
+The training data is used to establish constraints in the following fashion:
 
 \begin{equation}
     P(c | d) = \frac{1}{Z(d)} \mathrm{exp}(\sum\limits_{i} \lambda _{i,c} F_{i,c}(d,c) )
 \end{equation}
 
-Where $Z(d)$ is a normalization function, $F_{i,c}$ is a feature function for
+where $Z(d)$ is a normalization function, $F_{i,c}$ is a feature function for
 feature $f_{i}$ and class $c$, and $\lambda_{i}$ is a feature parameter.
 
 In order to establish reasonable $\lambda_{i}$ for each feature the Improved
@@ -169,7 +170,7 @@ make extensive use of the \textit{nltk} (Natural Language Toolkit) library. As
 well the implementation makes use of the \textit{flex} tool to create a lexer
 for tokenization. The classifier does not make uses of any supplemental
 datasets and therefore should be considered constrained within the context of
-the task.
+the task. The classifier adheres to the following procedure:
 
 \begin{enumerate}
 
@@ -220,7 +221,7 @@ the task.
 
     \item \textbf{Splitting} - The corpus of documents are random separated
         into three sets: the \textit{training set}, the \textit{validation set},
-        and the \textit{testing set}. Respectively, Each dataset is 60\%, 20\%,
+        and the \textit{testing set}. Respectively, each dataset is 60\%, 20\%,
         and 20\% of the corpus.
 
     \item \textbf{Training} - The classifier is trained using the
@@ -234,7 +235,7 @@ the task.
 
 \subsection{Avoiding overfitting}
 
-The implementation created for this project used a validation set during
+The implementation created for this project used a \textit{validation set} during
 training as the primary mechanism to avoid overfitting. While training the
 effectiveness of the classifier was evaluated after every iteration, using the
 accuracy or F-positive measure. During the training process the following
@@ -274,11 +275,12 @@ After the SemEval-2013 workshop the organizers released a paper discussing the
 proceedings and the results of the task \cite{Nakov2013}. The paper establishes
 baseline in terms of $F$. $F$ can be calculated $F = (F_{pos} + F_{neg}) / 2$
 where $F_{pos} = 2 \frac{P_{pos}R_{pos}}{P_{pos} + R_{pos}}$ and $F_{neg}$ is
-calculated in a similar fashion. The Precision measure for the positive label
-is $P_{pos} = \frac{\mathrm{\# of\ true\ postive}}{\mathrm{\# of\ true\
-postive} + \mathrm{\# of\ false\ postive} }$. The Recall measure for the
-positive label is defined as $R_{pos} = \frac{\mathrm{\# of\ true\
-postive}}{\mathrm{\# of\ true\ postive} + \mathrm{\# of\ false\ negative} }$
+calculated in a similar fashion. The \textit{Precision} measure for the
+positive label is $P_{pos} = \frac{\mathrm{\# of\ true\ postive}}{\mathrm{\#
+of\ true\ postive} + \mathrm{\# of\ false\ postive} }$. The \textit{Recall}
+measure for the positive label is defined as $R_{pos} = \frac{\mathrm{\# of\
+true\ postive}}{\mathrm{\# of\ true\ postive} + \mathrm{\# of\ false\ negative}
+}$
 
 \subsection{Baseline}
 
@@ -320,7 +322,7 @@ table (with out this project's results) can be found in table 9 of Nakov et al.
     \begin{center}
     \begin{tabular}{|r|l|}
         \hline
-        Team & F \\
+        Team       & F \\
         \hline
         NRC-Canada & 69.02 \\
         GU-MLT-LT  & 65.27 \\
@@ -337,7 +339,7 @@ table (with out this project's results) can be found in table 9 of Nakov et al.
         UNITOR     & 58.27 \\
         LVIC-LIMSI & 57.14 \\
         Unigon     & 56.96 \\
-        NILC\_USP   & 56.31 \\
+        NILC\_USP  & 56.31 \\
         DataMining & 55.52 \\
         ECNUCS     & 55.05 \\
         nlp.cs.aueb.gr & 54.73 \\
@@ -350,9 +352,9 @@ table (with out this project's results) can be found in table 9 of Nakov et al.
         UoM        & 51.81 \\
         SSA-UO     & 50.17 \\
         SenselyticTeam & 50.10 \\
-        $\ldots$ & $\ldots$ \\
+        $\ldots$   & $\ldots$ \\
         9 more teams &  \textless\ 50 \\
-        $\ldots$ & $\ldots$ \\
+        $\ldots$   & $\ldots$ \\
         \hline
         Majority Baseline & 29.19 \\
         \hline
@@ -406,7 +408,7 @@ classifier could establish a particular users propensity to publishing a
 prevailing sentiment in all of their tweets.
 
 As well, some Twitter users may be frequently be referred to with a particular
-sentiment. For a hypothetical example, Tweets addresses to Emma Watson
+sentiment. For a hypothetical example, Tweets addressed to Emma Watson
 (`@EmWatson') are more likely to have a positive sentiment, while tweets to
 Barack Obama (`@BarackObama') may contain extremely mixed sentiment.
 
