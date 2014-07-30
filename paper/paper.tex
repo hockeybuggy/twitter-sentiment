@@ -115,6 +115,8 @@ F-positive and the F-negative. The submissions were allowed categorized as
 `unconstrained' or `constrained' depending on if they did or did not use
 supplemental data, respectively.
 
+The dataset for the task consists of 6225 labelled Tweets
+
 \section{Background}
 
 Quite a bit of research has been done in the field of sentiment analysis
@@ -295,14 +297,26 @@ conducted 3 times and averaged.
 
 \begin{table}[H]
     \begin{center}
-    \begin{tabular}{|c|c|r|r|r|r|}
+    \begin{tabular}{|c|c|c|c|r|r|r|r|}
         \hline
-        Description & Stopwords & Run 1 & Run 2 & Run 3 & $\mu$ F\\
+        Description & Stopwords & Uncommon  & Normalize & Run 1 & Run 2 & Run 3 & $\mu F$\\
         \hline
-        MaxEnt      & Yes       & 0.0   & 0.0   & 0     & 0 \\
-        \dots       & No        & 0.0   & 0.0   & 0     & 0 \\
-        Naive Bayes & Yes       & 0.0   & 0.0   & 0     & 0 \\
-        \dots       & No        & 0.0   & 0.0   & 0     & 0 \\
+        MaxEnt      & Yes       & Yes       & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & Yes       & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & No        & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & No        & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & Yes       & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & Yes       & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & No        & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & No        & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
+        Naive Bayes & Yes       & Yes       & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & Yes       & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & No        & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & No        & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & Yes       & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & Yes       & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & No        & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & No        & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
         \hline
     \end{tabular}
     \end{center}

@@ -34,13 +34,16 @@ def parse_args():
             help="This parameter changes the cutoff for training for max ent ")
     parser.add_argument("--numIterations", type=int,
             help="This parameter changes the cutoff for training for max ent ")
-    parser.add_argument("--validationMetric", default="none",
+    parser.add_argument("--validation_metric", default="none",
             help="This changes the metric for validation set evaluation")
 
     parser.add_argument("--no-uncommon-selection", dest="uncommon_selection",
             action="store_false", help="This toggles whither word selection is on off")
     parser.add_argument("--no-stopword-removal", dest="stopword_removal",
             action="store_false", help="This toggles whither stopword removal is on off")
+
+    parser.add_argument("--no-normalize", dest="no_normalize",
+            action="store_true", help="This toggles whither anything is normalized")
     parser.add_argument("--no-normalize-words", dest="normalize_words",
             action="store_false", help="This toggles whither words are normalized")
     parser.add_argument("--no-normalize-punct", dest="normalize_punct",
@@ -65,7 +68,7 @@ def parse_args():
         raise Exception("Classifier type must be one of: " + " ".join(classifier_types))
     if args.labels not in labels:
         raise Exception("Labels must be one of: " + " ".join(labels))
-    if args.validationMetric not in val_metrics:
+    if args.validation_metric not in val_metrics:
         raise Exception("Validation metrics must be one of: " + " ".join(val_metrics))
     return args
 
@@ -79,20 +82,21 @@ if __name__ == "__main__":
 
     print "Normalizing dataset..."
     #tokens = normalize.__call__(tokens) # Normalize the tokens
-    if args.normalize_words:
-        normalize.normalize_words(tokens)
-    if args.normalize_punct:
-        normalize.normalize_punct(tokens)
-    if args.normalize_emoticons:
-        normalize.normalize_emoticons(tokens)
-    if args.normalize_users:
-        normalize.normalize_users(tokens)
-    if args.normalize_hashtags:
-        normalize.normalize_hashtags(tokens)
-    if args.normalize_nums:
-        normalize.normalize_nums(tokens)
-    if args.normalize_urls:
-        normalize.normalize_urls(tokens)
+    if args.no_normalize:
+        if args.normalize_words:
+            normalize.normalize_words(tokens)
+        if args.normalize_punct:
+            normalize.normalize_punct(tokens)
+        if args.normalize_emoticons:
+            normalize.normalize_emoticons(tokens)
+        if args.normalize_users:
+            normalize.normalize_users(tokens)
+        if args.normalize_hashtags:
+            normalize.normalize_hashtags(tokens)
+        if args.normalize_nums:
+            normalize.normalize_nums(tokens)
+        if args.normalize_urls:
+            normalize.normalize_urls(tokens)
 
     print "Transforming dataset..."
     feature_list = dictizer.__call__(tokens)
@@ -114,7 +118,7 @@ if __name__ == "__main__":
     statsify.__call__(feature_list, args.labels)
 
     print "Splitting the dataset..."
-    if args.validationMetric == "none":
+    if args.validation_metric == "none":
         train_set, _, test_set = split_dataset.__call__(feature_list, 0.2)
     else:
         train_set, validation_set, test_set = split_dataset.__call__(feature_list, 0.2, validation_size=0.2)
@@ -124,9 +128,9 @@ if __name__ == "__main__":
             classifier = maxent_classifier(train_set, lldelta=args.minlldelta)
         elif args.minll:
             classifier = maxent_classifier(train_set, ll=args.minll)
-        elif args.validationMetric != "none":
+        elif args.validation_metric != "none":
             classifier = maxent_classifier_with_validation(train_set, validation_set,
-                    args.validationMetric, 3)
+                    args.validation_metric, 3)
         elif args.numIterations:
             classifier = maxent_classifier(train_set, iterations=args.numIterations)
         else:
