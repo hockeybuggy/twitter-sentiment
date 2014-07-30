@@ -156,39 +156,43 @@ test-bayes-pnn:
 test-bayes-baseline-pnn:
 	python conductor.py 6500 --classifier_type bayes --no-uncommon-selection --no-stopword-removal --no-normalize --labels pnn
 
+# TABLE
+
+table: table-maxent-111 table-maxent-110 table-maxent-101 table-maxent-100 table-maxent-011 table-maxent-010 table-maxent-001 table-maxent-000 table-bayes-111 table-bayes-110 table-bayes-101 table-bayes-100 table-bayes-011 table-bayes-010 table-bayes-001 table-bayes-000
+	mv [mb][01]*.txt results
+	echo "Done"
 #Run the test for the table 1 in the paper
 # Not that of ABC A=Stopwords B=Uncommon words C=Normilize
-
 table-maxent-111:
-	python conductor.py 6500 --validation_metric fscore --labels pnn
+	python conductor.py 6500 --validation_metric fscore --labels pnn > m111-x.txt
 table-maxent-110:
-	python conductor.py 6500 --validation_metric fscore --labels pnn --no-normalize
+	python conductor.py 6500 --validation_metric fscore --labels pnn --no-normalize > m110-x.txt
 table-maxent-101:
-	python conductor.py 6500 --validation_metric fscore --labels pnn --no-uncommon-selection
+	python conductor.py 6500 --validation_metric fscore --labels pnn --no-uncommon-selection > m101-x.txt
 table-maxent-100:
-	python conductor.py 6500 --validation_metric fscore --labels pnn --no-uncommon-selection --no-normalize
+	python conductor.py 6500 --validation_metric fscore --labels pnn --no-uncommon-selection --no-normalize > m100-x.txt
 table-maxent-011:
-	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal
+	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal > m011-x.txt
 table-maxent-010:
-	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-normalize
+	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-normalize > m010-x.txt
 table-maxent-001:
-	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-uncommon-selection
+	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-uncommon-selection > m001-x.txt
 table-maxent-000:
-	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize
+	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize > m000-x.txt
 table-bayes-111:
-	python conductor.py 6500 --classifier_type bayes --labels pnn
+	python conductor.py 6500 --classifier_type bayes --labels pnn > b111-x.txt
 table-bayes-110:
-	python conductor.py 6500 --classifier_type bayes --labels pnn --no-normalize
+	python conductor.py 6500 --classifier_type bayes --labels pnn --no-normalize > b110-x.txt
 table-bayes-101:
-	python conductor.py 6500 --classifier_type bayes --labels pnn --no-uncommon-selection
+	python conductor.py 6500 --classifier_type bayes --labels pnn --no-uncommon-selection > b101-x.txt
 table-bayes-100:
-	python conductor.py 6500 --classifier_type bayes --labels pnn --no-uncommon-selection --no-normalize
+	python conductor.py 6500 --classifier_type bayes --labels pnn --no-uncommon-selection --no-normalize > b100-x.txt
 table-bayes-011:
-	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal
+	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal > b011-x.txt
 table-bayes-010:
-	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-normalize
+	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-normalize > b010-x.txt
 table-bayes-001:
-	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection
+	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection > b001-x.txt
 table-bayes-000:
-	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize
+	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize > b000-x.txt
 

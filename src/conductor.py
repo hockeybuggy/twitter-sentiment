@@ -42,8 +42,8 @@ def parse_args():
     parser.add_argument("--no-stopword-removal", dest="stopword_removal",
             action="store_false", help="This toggles whither stopword removal is on off")
 
-    parser.add_argument("--no-normalize", dest="no_normalize",
-            action="store_true", help="This toggles whither anything is normalized")
+    parser.add_argument("--no-normalize", dest="normalize",
+            action="store_false", help="This toggles whither anything is normalized")
     parser.add_argument("--no-normalize-words", dest="normalize_words",
             action="store_false", help="This toggles whither words are normalized")
     parser.add_argument("--no-normalize-punct", dest="normalize_punct",
@@ -82,32 +82,31 @@ if __name__ == "__main__":
 
     print "Normalizing dataset..."
     #tokens = normalize.__call__(tokens) # Normalize the tokens
-    if args.no_normalize:
-        if args.normalize_words:
-            normalize.normalize_words(tokens)
-        if args.normalize_punct:
-            normalize.normalize_punct(tokens)
-        if args.normalize_emoticons:
-            normalize.normalize_emoticons(tokens)
-        if args.normalize_users:
-            normalize.normalize_users(tokens)
-        if args.normalize_hashtags:
-            normalize.normalize_hashtags(tokens)
-        if args.normalize_nums:
-            normalize.normalize_nums(tokens)
-        if args.normalize_urls:
-            normalize.normalize_urls(tokens)
+    if args.normalize and args.normalize_words:
+        normalize.normalize_words(tokens)
+    if args.normalize and args.normalize_punct:
+        normalize.normalize_punct(tokens)
+    if args.normalize and args.normalize_emoticons:
+        normalize.normalize_emoticons(tokens)
+    if args.normalize and args.normalize_users:
+        normalize.normalize_users(tokens)
+    if args.normalize and args.normalize_hashtags:
+        normalize.normalize_hashtags(tokens)
+    if args.normalize and args.normalize_nums:
+        normalize.normalize_nums(tokens)
+    if args.normalize and args.normalize_urls:
+        normalize.normalize_urls(tokens)
 
     print "Transforming dataset..."
     feature_list = dictizer.__call__(tokens)
 
     if args.stopword_removal:
         print "Removing stopwords from the dataset..."
-        feature_list = wordselection.remove_uncommon(feature_list)
+        feature_list = wordselection.remove_stopwords(feature_list)
 
     if args.uncommon_selection:
         print "Removing uncommon words from the dataset..."
-        feature_list = wordselection.remove_stopwords(feature_list)
+        feature_list = wordselection.remove_uncommon(feature_list)
 
     # Write the features out to a file
     with open("filtered_docs.txt", "w") as w:

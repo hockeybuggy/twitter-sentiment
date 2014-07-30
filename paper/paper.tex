@@ -115,7 +115,10 @@ F-positive and the F-negative. The submissions were allowed categorized as
 `unconstrained' or `constrained' depending on if they did or did not use
 supplemental data, respectively.
 
-The dataset for the task consists of 6225 labelled Tweets
+The dataset for the task consists of 6225 labelled Tweets. 36.66\% of the
+corpus has `positive' label, 14.04\% has a `negative' label, 49.30\% has a
+label that conveys neutral sentiment. This neutral label is one of `neutral',
+`objective', or `objective-OR-neutral'.
 
 \section{Background}
 
@@ -301,22 +304,22 @@ conducted 3 times and averaged.
         \hline
         Description & Stopwords & Uncommon  & Normalize & Run 1 & Run 2 & Run 3 & $\mu F$\\
         \hline
-        MaxEnt      & Yes       & Yes       & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & Yes       & Yes       & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & Yes       & No        & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & Yes       & No        & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & No        & Yes       & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & No        & Yes       & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & No        & No        & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & No        & No        & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
-        Naive Bayes & Yes       & Yes       & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & Yes       & Yes       & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & Yes       & No        & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & Yes       & No        & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & No        & Yes       & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & No        & Yes       & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & No        & No        & Yes       & 0.0   & 0.0   & 0.0   & 0.0 \\
-        \dots       & No        & No        & No        & 0.0   & 0.0   & 0.0   & 0.0 \\
+        MaxEnt      & Yes       & Yes       & Yes       & 50.97 & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & Yes       & No        & 56.21 & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & No        & Yes       & 51.25 & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & No        & No        & 54.44 & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & Yes       & Yes       & 50.71 & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & Yes       & No        & 51.03 & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & No        & Yes       & 50.41 & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & No        & No        & 51.56 & 0.0   & 0.0   & 0.0 \\
+        Naive Bayes & Yes       & Yes       & Yes       & 50.27 & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & Yes       & No        & 50.27 & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & No        & Yes       & 50.85 & 0.0   & 0.0   & 0.0 \\
+        \dots       & Yes       & No        & No        & 52.12 & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & Yes       & Yes       & 47.19 & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & Yes       & No        & 50.56 & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & No        & Yes       & 49.82 & 0.0   & 0.0   & 0.0 \\
+        \dots       & No        & No        & No        & 52.15 & 0.0   & 0.0   & 0.0 \\
         \hline
     \end{tabular}
     \end{center}
@@ -324,6 +327,8 @@ conducted 3 times and averaged.
         average F-score.}
     \label{table:results}
 \end{table}
+
+%TODO write about the number of features
 
 \subsection{Comparison to Workshop Participants}
 
