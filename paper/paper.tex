@@ -345,8 +345,39 @@ experiment \textit{g}, however $\sigma_{g} = 2.69$. In contrast, the second
 best F-score is experiment \textit{a} exhibits more consistent classification
 with $\sigma_{a} = 1.04$.
 
+Number of features retained varies from Tweet to Tweet. To summarize the number
+of features retained after different process Table \ref{table:numfeatures}
+presents the mean number of features per Tweet for positive, neutral, negative
+examples as well as an overall average.
 
-%TODO write about the number of features
+\begin{table}[H]
+    \begin{center}
+    \begin{tabular}{|c||r|r|r|r|}
+        \hline
+                               & Positive & Neutral & Negative & Overall \\
+        \hline
+        \textit{a}, \textit{i} & 14.85    & 14.06   & 15.10    & 14.49 \\
+        \textit{b}, \textit{j} & 14.91    & 14.30   & 15.30    & 14.67 \\
+        \textit{c}, \textit{k} & 15.95    & 15.40   & 16.33    & 15.73 \\
+        \textit{d}, \textit{l} & 17.13    & 16.86   & 17.41    & 17.04 \\
+        \textit{e}, \textit{m} & 18.54    & 17.81   & 18.82    & 18.22 \\
+        \textit{f}, \textit{n} & 18.43    & 17.87   & 18.85    & 18.21 \\
+        \textit{g}, \textit{o} & 19.64    & 19.15   & 20.05    & 19.46 \\
+        \textit{h}, \textit{p} & 20.65    & 20.45   & 20.96    & 20.58 \\
+        \hline
+    \end{tabular}
+    \end{center}
+    \caption{The average number of features in each experiment}
+    \label{table:numfeatures}
+\end{table}
+
+As presented in Table \ref{table:numfeatures}, the number of features decreases
+each time a feature set simplification method is turned on. Normalization does
+not appear to significantly reduce the number of features per Tweet. This make
+sense because the number of features in would only be reduced if it contained
+tokens that were different before simplification and were the same after (e.g.
+A Tweet that contained `2' and `3' before normalization would only contain the
+feature `\#NUM' after normalization).
 
 \subsection{Comparison to Workshop Participants}
 
@@ -354,6 +385,7 @@ Table \ref{table:comparison} shows the performance of the classifier produced
 for this project compared to results of the workshop participants. The full
 table (with out this project's results) can be found in table 9 of Nakov et al.
 \cite{Nakov2013}.
+
 
 \begin{table}[H]
     \begin{center}
