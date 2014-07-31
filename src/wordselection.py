@@ -31,10 +31,8 @@ def remove_stopwords(input_list):
         output_list.append([stopword_free_dict, pair[1]])
     return output_list
 
-def remove_uncommon(input_list, count=1):
-    output_list = []
+def calculate_docfreq(input_list):
     word_docfreq = {}
-
     # Count document frequency for each word
     for pair in input_list:
         for k in pair[0].keys():
@@ -47,21 +45,24 @@ def remove_uncommon(input_list, count=1):
     with open("features.txt", "w") as w:
         for feature in sorted(word_docfreq, key=word_docfreq.get, reverse=True):
             w.write(feature + "\t" + str(word_docfreq[feature]) + "\n")
+    return word_docfreq
 
+def print_reatined_features(word_docfreq, df_cutoff):
     # Count number of features
     num_features = 0
     for word in word_docfreq:
-        if word_docfreq[word] > count:
+        if word_docfreq[word] > df_cutoff:
             num_features += 1
     print "Total retained features:", num_features
 
+def remove_uncommon(input_list, word_docfreq, df_cutoff):
+    output_list = []
     # Keep only the common words
     for pair in input_list:
         uncommon_free_dict = {}
         for k in pair[0].keys():
-            if word_docfreq[k] > count:
+            if word_docfreq[k] > df_cutoff:
                 uncommon_free_dict[k] = pair[0][k]
         output_list.append([uncommon_free_dict, pair[1]])
-
     return output_list
 

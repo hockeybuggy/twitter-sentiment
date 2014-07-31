@@ -36,6 +36,8 @@ def parse_args():
             help="This parameter changes the cutoff for training for max ent ")
     parser.add_argument("--validation_metric", default="none",
             help="This changes the metric for validation set evaluation")
+    parser.add_argument("--df_cutoff", type=int, default=1,
+            help="This parameter changes the document frequency cutoff")
 
     parser.add_argument("--no-uncommon-selection", dest="uncommon_selection",
             action="store_false", help="This toggles whither word selection is on off")
@@ -100,13 +102,17 @@ if __name__ == "__main__":
     print "Transforming dataset..."
     feature_list = dictizer.__call__(tokens)
 
+    docfreq = wordselection.calculate_docfreq(feature_list)
+
     if args.stopword_removal:
         print "Removing stopwords from the dataset..."
         feature_list = wordselection.remove_stopwords(feature_list)
 
     if args.uncommon_selection:
         print "Removing uncommon words from the dataset..."
-        feature_list = wordselection.remove_uncommon(feature_list)
+        feature_list = wordselection.remove_uncommon(feature_list, docfreq, args.df_cutoff)
+
+    wordselection.print_reatined_features(docfreq, args.df_cutoff)
 
     # Write the features out to a file
     with open("filtered_docs.txt", "w") as w:
