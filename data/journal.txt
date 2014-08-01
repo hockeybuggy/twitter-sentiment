@@ -1,5 +1,0 @@
-
-14-05-2014: Added a header to b.tsv in an attempt to get it working in weka
-
-26-06-2014: Found stop word list at
-    http://jmlr.org/papers/volume5/lewis04a/a11-smart-stop-list/english.stop

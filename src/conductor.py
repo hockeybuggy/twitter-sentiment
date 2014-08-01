@@ -2,11 +2,9 @@
 
 # File       : conductor.py
 # Author     : Douglas Anderson
-# Description: Driver for my parser implementation
+# Description: Driver for sentiment anaysis implementation
 
 import os, sys
-import argparse
-import math
 
 import tokenize
 import normalize
@@ -16,63 +14,11 @@ import wordselection
 import dictizer
 import split_dataset
 from Token import Token
+from parse_args import parse_args
 from train import maxent_classifier
 from train import maxent_classifier_with_validation
 from train import naive_bayes_classifier
 
-def parse_args():
-    classifier_types = ["max_ent", "bayes"]
-    labels = ["pn", "pnn"]
-    val_metrics = ["none", "accuracy", "fscore"]
-    parser = argparse.ArgumentParser(description="Scan a tweet to determine it's tokens")
-    parser.add_argument("--file", type=str,
-            help="The file name containing the text to be scanned")
-    parser.add_argument("items", type=int, help="The number of items to use")
-    parser.add_argument("--minlldelta", type=float,
-            help="This parameter changes the cutoff of training for max ent ")
-    parser.add_argument("--minll", type=float,
-            help="This parameter changes the cutoff for training for max ent ")
-    parser.add_argument("--numIterations", type=int,
-            help="This parameter changes the cutoff for training for max ent ")
-    parser.add_argument("--validation_metric", default="none",
-            help="This changes the metric for validation set evaluation")
-    parser.add_argument("--df_cutoff", type=int, default=1,
-            help="This parameter changes the document frequency cutoff")
-
-    parser.add_argument("--no-uncommon-selection", dest="uncommon_selection",
-            action="store_false", help="This toggles whither word selection is on off")
-    parser.add_argument("--no-stopword-removal", dest="stopword_removal",
-            action="store_false", help="This toggles whither stopword removal is on off")
-
-    parser.add_argument("--no-normalize", dest="normalize",
-            action="store_false", help="This toggles whither anything is normalized")
-    parser.add_argument("--no-normalize-words", dest="normalize_words",
-            action="store_false", help="This toggles whither words are normalized")
-    parser.add_argument("--no-normalize-punct", dest="normalize_punct",
-            action="store_false", help="This toggles whither words are normalized")
-    parser.add_argument("--no-normalize-emoticons", dest="normalize_emoticons",
-            action="store_false", help="This toggles whither words are normalized")
-    parser.add_argument("--no-normalize-users", dest="normalize_users",
-            action="store_false", help="This toggles whither users are normalized")
-    parser.add_argument("--no-normalize-hashtags", dest="normalize_hashtags",
-            action="store_false", help="This toggles whither hashtags are normalized")
-    parser.add_argument("--no-normalize-nums", dest="normalize_nums",
-            action="store_false", help="This toggles whither nums are normalized")
-    parser.add_argument("--no-normalize-urls", dest="normalize_urls",
-            action="store_false", help="This toggles whither urls are normalized")
-
-    parser.add_argument("--classifier_type", default="max_ent",
-            help="Select classifier should be:" + " ".join(classifier_types))
-    parser.add_argument("--labels", default="pn",
-            help="Which labels should be:" + " ".join(labels))
-    args = parser.parse_args()
-    if args.classifier_type not in classifier_types:
-        raise Exception("Classifier type must be one of: " + " ".join(classifier_types))
-    if args.labels not in labels:
-        raise Exception("Labels must be one of: " + " ".join(labels))
-    if args.validation_metric not in val_metrics:
-        raise Exception("Validation metrics must be one of: " + " ".join(val_metrics))
-    return args
 
 if __name__ == "__main__":
     args = parse_args()
@@ -147,6 +93,6 @@ if __name__ == "__main__":
     print "\nTesting"
     classifier.test(test_set, args.labels)
 
-    #classifier.show_informitive_features(30)
+    classifier.show_informitive_features(30)
     #classifier.inspect_errors(test_set)
 

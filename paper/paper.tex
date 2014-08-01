@@ -22,8 +22,7 @@
 
 \huge
 
-Utilizing Maximum Entropy Classification for Sentiment Analysis in Twitter
-Messages
+Utilizing Maximum Entropy Classification for Sentiment Analysis in Twitter Messages
 
 \large
 \vspace{2.0cm}
@@ -383,6 +382,40 @@ tokens that were different before simplification and were the same after (e.g.
 A Tweet that contained `2' and `3' before normalization would only contain the
 feature `\#NUM' after normalization).
 
+\subsection{Most Informative Features}
+
+\begin{verbatim}
+  -3.176 excited==True and label is 'neutral'
+   2.328 lied==True and label is 'negative'
+   2.279 availability==True and label is 'negative'
+  -2.258 excited==True and label is 'negative'
+  -2.180 EM_HAPPY==True and label is 'negative'
+  -2.171 happy==True and label is 'neutral'
+  -2.098 birthday==True and label is 'negative'
+   2.016 shitty==True and label is 'negative'
+  -1.836 8th==True and label is 'positive'
+  -1.801 international==True and label is 'positive'
+   1.789 embarrassing==True and label is 'negative'
+  -1.762 went==True and label is 'negative'
+   1.702 releases==True and label is 'negative'
+  -1.672 love==True and label is 'negative'
+   1.650 lack==True and label is 'negative'
+   1.650 oneil==True and label is 'neutral'
+  -1.638 fun==True and label is 'neutral'
+   1.599 replay==True and label is 'negative'
+  -1.585 great==True and label is 'neutral'
+   1.577 asses==True and label is 'positive'
+   1.570 garlic==True and label is 'negative'
+  -1.564 pass==True and label is 'negative'
+   1.560 den==True and label is 'negative'
+   1.560 accepting==True and label is 'negative'
+  -1.557 sure==True and label is 'negative'
+   1.551 insensitive==True and label is 'negative'
+   1.547 calvin==True and label is 'negative'
+   1.532 jailed==True and label is 'negative'
+   1.520 lookin==True and label is 'neutral'
+   1.515 2c==True and label is 'negative'
+\end{verbatim}
 
 \subsection{Comparison to Workshop Participants}
 
