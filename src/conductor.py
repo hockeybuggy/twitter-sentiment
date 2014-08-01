@@ -2,7 +2,7 @@
 
 # File       : conductor.py
 # Author     : Douglas Anderson
-# Description: Driver for sentiment anaysis implementation
+# Description: Simple driver for sentiment analysis implementation
 
 import os, sys
 

@@ -23,3 +23,10 @@ def __call__(feature_list, test_size, validation_size=0.0):
     train_set = feature_list
     return train_set, validation_set, test_set
 
+def partition(flist, n):
+    outlist = []
+    splitsize = int(math.ceil(len(flist)/float(n)))
+    for i in range(0, len(flist), splitsize):
+        outlist.append(flist[i:i+splitsize])
+    return outlist
+

@@ -56,7 +56,7 @@ def print_bi_confusion_matrix(cm):
     print "neg\t",cm["negative"]["positive"],"\t",cm["negative"]["negative"]
 
 
-def calculate_fscore(classifier, test_set, trace=True):
+def calculate_metrics(classifier, test_set, trace=True):
     cm = {
             "positive": {"positive": 0, "neutral": 0, "negative": 0},
             "neutral":  {"positive": 0, "neutral": 0, "negative": 0},
@@ -126,5 +126,12 @@ def calculate_fscore(classifier, test_set, trace=True):
         print "F pos   :\t", stats["Fpos"]
         print "F neg   :\t", stats["Fneg"]
         print "Fscore  :\t", stats["F"]
-    return stats["F"]
+    #return stats["F"]
+    return stats
+
+def calculate_fscore(classifier, test_set):
+    x = calculate_metrics(classifier, test_set, trace=False)["F"]
+    print "x:", x
+    return x
+
 
