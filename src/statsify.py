@@ -130,8 +130,8 @@ def calculate_metrics(classifier, test_set, trace=True):
     return stats
 
 def calculate_fscore(classifier, test_set):
-    x = calculate_metrics(classifier, test_set, trace=False)["F"]
-    print "x:", x
-    return x
+    return calculate_metrics(classifier, test_set, trace=False)["F"]
 
+def accumulate_fscore(classifier, test_set):
+    pass
 

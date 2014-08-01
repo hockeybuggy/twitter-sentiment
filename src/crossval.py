@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
-# File       : conductor.py
+# File       : crossval.py
 # Author     : Douglas Anderson
-# Description: Simple driver for sentiment analysis implementation
+# Description: Cross validation driver for sentiment analysis implementation
 
 import os, sys
+import numpy
+from itertools import permutations
 
 import tokenize
 import normalize
@@ -20,8 +22,7 @@ from train import maxent_classifier_with_validation
 from train import naive_bayes_classifier
 
 
-if __name__ == "__main__":
-    args = parse_args()
+def main(args):
     print "Opening dataset..."
     tokens = tokenize.open_tweets_file("../data/b.tsv", 0, args.items)
 
@@ -69,30 +70,64 @@ if __name__ == "__main__":
     statsify.__call__(feature_list, args.labels)
 
     print "Splitting the dataset..."
-    if args.validation_metric == "none":
-        train_set, _, test_set = split_dataset.__call__(feature_list, 0.2)
-    else:
-        train_set, validation_set, test_set = split_dataset.__call__(feature_list, 0.2, validation_size=0.2)
+    partitions = split_dataset.partition(feature_list, args.num_folds)
 
-    if args.classifier_type == "max_ent":
-        if args.minlldelta:
-            classifier = maxent_classifier(train_set, lldelta=args.minlldelta)
-        elif args.minll:
-            classifier = maxent_classifier(train_set, ll=args.minll)
-        elif args.validation_metric != "none":
-            classifier = maxent_classifier_with_validation(train_set, validation_set,
+    print len(partitions), "Partitions"
+
+    accumulation_dict = {}
+
+    for i, fold in enumerate(generate_folds(partitions)):
+        print "Fold number:", i, "Looks like:", "".join(fold)
+        #print fold
+        print "\nTraining"
+        train_set = select_set("t", fold, partitions)
+        validation_set = select_set("v", fold, partitions)
+        test_set = select_set("T", fold, partitions)
+        classifier = maxent_classifier_with_validation(train_set, validation_set,
                     args.validation_metric, 3)
-        elif args.numIterations:
-            classifier = maxent_classifier(train_set, iterations=args.numIterations)
-        else:
-            print "Error no cut off set"
-            sys.exit(0)
-    else:
-        classifier = naive_bayes_classifier(train_set)
+        print "\nTesting...",
+        results_dict = classifier.test(test_set, args.labels, trace=False)
+        #Add results to the accumulation dict
+        for key in results_dict.keys():
+         try:
+             accumulation_dict[key].append(results_dict[key])
+         except KeyError:
+             accumulation_dict[key] = [results_dict[key]]
+        print "done."
+        #classifier.show_informative_features(30)
+        #classifier.inspect_errors(test_set)
 
-    print "\nTesting"
-    classifier.test(test_set, args.labels)
+    print "\n\nAccumulating Results"
+    for key in sorted(accumulation_dict.keys(), reverse=True):
+        print key, ":\t", accumulation_dict[key]
+        print "{}-avg:\t".format(key), numpy.mean(accumulation_dict[key])
+        print "{}-std:\t".format(key), numpy.std(accumulation_dict[key])
 
-    classifier.show_informative_features(30)
-    #classifier.inspect_errors(test_set)
 
+
+def select_set(set_type, fold, partitions):
+    output_set = []
+    for i,x in enumerate(fold):
+        if x == set_type:
+            output_set += partitions[i]
+    return output_set
+
+
+def generate_folds(partitions):
+    num_folds = len(partitions)
+    if num_folds == 5:
+        sets = "tttvT"
+    elif num_folds == 10:
+        sets = "ttttttttvT"
+    available = {}
+    #range(len(partitions))
+    for order in permutations(sets, num_folds):
+        try:
+            available["".join(order)]
+        except KeyError:
+            available["".join(order)] = True
+            yield order
+
+if __name__ == "__main__":
+    args = parse_args()
+    main(args)

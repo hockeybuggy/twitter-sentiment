@@ -10,10 +10,10 @@ class classifier:
     def __init__(self, train_set):
         pass
 
-    def test(self, test_set, labels):
-        return statsify.calculate_metrics(self.classifier, test_set)
+    def test(self, test_set, labels, trace=True):
+        return statsify.calculate_metrics(self.classifier, test_set, trace=trace)
 
-    def show_informitive_features(self, numFeatures):
+    def show_informative_features(self, numFeatures):
         self.classifier.show_most_informative_features(numFeatures)
 
     def inspect_errors(self, test_set):
