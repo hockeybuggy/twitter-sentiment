@@ -126,7 +126,6 @@ def calculate_metrics(classifier, test_set, trace=True):
         print "F pos   :\t", stats["Fpos"]
         print "F neg   :\t", stats["Fneg"]
         print "Fscore  :\t", stats["F"]
-    #return stats["F"]
     return stats
 
 def calculate_fscore(classifier, test_set):

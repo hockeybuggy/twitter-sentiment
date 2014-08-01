@@ -53,7 +53,7 @@ class maxent_classifier_with_validation(classifier):
         best_iteration = 0
         best_metric = metric
         best_weights = self.classifier.weights()
-        print "Iteration {} {}  :\t{}".format(iter_count, metric_type, metric)
+        print "  Iteration {} {}  :\t{}".format(iter_count, metric_type, metric)
         #while (metric - prev_metric) >= 0.0:
         while rounds_without_improvment < smoothing:
             iter_count += 1
@@ -63,8 +63,8 @@ class maxent_classifier_with_validation(classifier):
                 metric = nltk.classify.accuracy(self.classifier, validation_set)
             else:
                 metric = statsify.calculate_fscore(self.classifier, validation_set)
-            print "Iteration {} {}  :\t{}".format(iter_count, metric_type, metric)
-            print "{} delta  :\t{}".format(metric_type, metric - best_metric)
+            print "  Iteration {} {}  :\t{}".format(iter_count, metric_type, metric)
+            print "  {} delta  :\t{}".format(metric_type, metric - best_metric)
             if(metric - best_metric) <= 0.0:
                 rounds_without_improvment += 1
             else:
@@ -73,7 +73,7 @@ class maxent_classifier_with_validation(classifier):
                 best_metric = metric
                 best_weights = self.classifier.weights()
 
-        print "Restoring iteration {} weights".format(best_iteration)
+        print "  Restoring iteration {} weights".format(best_iteration)
         self.classifier.set_weights(best_weights)
 
 

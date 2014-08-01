@@ -72,20 +72,25 @@ def main(args):
     print "Splitting the dataset..."
     partitions = split_dataset.partition(feature_list, args.num_folds)
 
-    print len(partitions), "Partitions"
+    #print len(partitions), "Partitions"
+    #for p in partitions:
+        #print
+        #for t in p:
+            #print t
+    #return
 
     accumulation_dict = {}
 
     for i, fold in enumerate(generate_folds(partitions)):
-        print "Fold number:", i, "Looks like:", "".join(fold)
+        print "Fold number: {} looks like: {}".format(i, "".join(fold))
         #print fold
-        print "\nTraining"
+        print "Training fold", i
         train_set = select_set("t", fold, partitions)
         validation_set = select_set("v", fold, partitions)
         test_set = select_set("T", fold, partitions)
         classifier = maxent_classifier_with_validation(train_set, validation_set,
                     args.validation_metric, 3)
-        print "\nTesting...",
+        print "Testing fold {}...".format(i),
         results_dict = classifier.test(test_set, args.labels, trace=False)
         #Add results to the accumulation dict
         for key in results_dict.keys():
@@ -93,7 +98,7 @@ def main(args):
              accumulation_dict[key].append(results_dict[key])
          except KeyError:
              accumulation_dict[key] = [results_dict[key]]
-        print "done."
+        print "done.\n"
         #classifier.show_informative_features(30)
         #classifier.inspect_errors(test_set)
 
