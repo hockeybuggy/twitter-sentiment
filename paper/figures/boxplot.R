@@ -14,7 +14,11 @@ groups <- c("All", "Just Stopwords", "Just Uncommon", "Just Normalization", "Bas
 
 p <- ggplot(data, aes(x=factor(Label), y=F)) + geom_boxplot()
 p = p + scale_x_discrete(xlab, labels=groups)
-p = p + scale_y_continuous(ylab, limits=c(0.30, 0.60))
+p = p + scale_y_continuous(ylab, limits=c(0.35, 0.55))
 p = p + ggtitle(chart_title)
 p = p + theme_minimal()
+
+#png("boxplot.png")
 p # Draw that sucker
+#dev.off()
+ggsave("boxplot.png")
