@@ -80,16 +80,24 @@ def main(args):
     #return
 
     accumulation_dict = {}
+    if args.classifier_type == "max_ent":
+        validation = True
+    else:
+        validation = False
 
-    for i, fold in enumerate(generate_folds(partitions)):
+    for i, fold in enumerate(generate_folds(partitions, validation)):
         print "Fold number: {} looks like: {}".format(i, "".join(fold))
         #print fold
         print "Training fold", i
         train_set = select_set("t", fold, partitions)
         validation_set = select_set("v", fold, partitions)
         test_set = select_set("T", fold, partitions)
-        classifier = maxent_classifier_with_validation(train_set, validation_set,
+        if args.classifier_type == "max_ent":
+            classifier = maxent_classifier_with_validation(train_set, validation_set,
                     args.validation_metric, 3)
+        else:
+            train_set += validation_set
+            classifier = naive_bayes_classifier(train_set)
         print "Testing fold {}...".format(i),
         results_dict = classifier.test(test_set, args.labels, trace=False)
         #Add results to the accumulation dict
@@ -117,12 +125,18 @@ def select_set(set_type, fold, partitions):
     return output_set
 
 
-def generate_folds(partitions):
+def generate_folds(partitions, validation):
     num_folds = len(partitions)
-    if num_folds == 5:
-        sets = "tttvT"
-    elif num_folds == 10:
-        sets = "ttttttttvT"
+    if validation:
+        if num_folds == 5:
+            sets = "tttvT"
+        elif num_folds == 10:
+            sets = "ttttttttvT"
+    else:
+        if num_folds == 5:
+            sets = "ttttT"
+        elif num_folds == 10:
+            sets = "tttttttttT"
     available = {}
     #range(len(partitions))
     for order in permutations(sets, num_folds):

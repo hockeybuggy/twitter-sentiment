@@ -25,6 +25,7 @@ def __call__(feature_list, test_size, validation_size=0.0):
 
 def partition(flist, n):
     outlist = []
+    random.shuffle(flist)
     splitsize = int(math.ceil(len(flist)/float(n)))
     for i in range(0, len(flist), splitsize):
         outlist.append(flist[i:i+splitsize])

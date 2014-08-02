@@ -5,8 +5,11 @@
 *.bbl
 *.blg
 *.pdf
+*.out
+*.spl
 *.o
 lex.yy.*
 *.pyc
 *.so
 src/scanner
+*.png

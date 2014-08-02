@@ -156,61 +156,76 @@ test-bayes-pnn:
 test-bayes-baseline-pnn:
 	python conductor.py 6500 --classifier_type bayes --no-uncommon-selection --no-stopword-removal --no-normalize --labels pnn
 
-# TABLE
-
-table: table-maxent-111 table-maxent-110 table-maxent-101 table-maxent-100 table-maxent-011 table-maxent-010 table-maxent-001 table-maxent-000 table-bayes-111 table-bayes-110 table-bayes-101 table-bayes-100 table-bayes-011 table-bayes-010 table-bayes-001 table-bayes-000
-	mv [mb][01]*.txt results
+# Single run
+single: single-maxent-111 single-maxent-110 single-maxent-101 single-maxent-100 single-maxent-011 single-maxent-010 single-maxent-001 single-maxent-000 single-bayes-111 single-bayes-110 single-bayes-101 single-bayes-100 single-bayes-011 single-bayes-010 single-bayes-001 single-bayes-000
 	echo "Done"
-#Run the test for the table 1 in the paper
+#Run the test for the single 1 in the paper
 # Not that of ABC A=Stopwords B=Uncommon words C=Normilize
-table-maxent-111:
+single-maxent-111:
 	python conductor.py 6500 --validation_metric fscore --labels pnn > m111-x.txt
-table-maxent-110:
+single-maxent-110:
 	python conductor.py 6500 --validation_metric fscore --labels pnn --no-normalize > m110-x.txt
-table-maxent-101:
+single-maxent-101:
 	python conductor.py 6500 --validation_metric fscore --labels pnn --no-uncommon-selection > m101-x.txt
-table-maxent-100:
+single-maxent-100:
 	python conductor.py 6500 --validation_metric fscore --labels pnn --no-uncommon-selection --no-normalize > m100-x.txt
-table-maxent-011:
+single-maxent-011:
 	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal > m011-x.txt
-table-maxent-010:
+single-maxent-010:
 	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-normalize > m010-x.txt
-table-maxent-001:
+single-maxent-001:
 	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-uncommon-selection > m001-x.txt
-table-maxent-000:
+single-maxent-000:
 	python conductor.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize > m000-x.txt
-table-bayes-111:
+single-bayes-111:
 	python conductor.py 6500 --classifier_type bayes --labels pnn > b111-x.txt
-table-bayes-110:
+single-bayes-110:
 	python conductor.py 6500 --classifier_type bayes --labels pnn --no-normalize > b110-x.txt
-table-bayes-101:
+single-bayes-101:
 	python conductor.py 6500 --classifier_type bayes --labels pnn --no-uncommon-selection > b101-x.txt
-table-bayes-100:
+single-bayes-100:
 	python conductor.py 6500 --classifier_type bayes --labels pnn --no-uncommon-selection --no-normalize > b100-x.txt
-table-bayes-011:
+single-bayes-011:
 	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal > b011-x.txt
-table-bayes-010:
+single-bayes-010:
 	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-normalize > b010-x.txt
-table-bayes-001:
+single-bayes-001:
 	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection > b001-x.txt
-table-bayes-000:
+single-bayes-000:
 	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize > b000-x.txt
 
 ## This is the most recent section. It runs cross-validations
-crossfolds: crossfolds-111 crossfolds-100 crossfolds-010 crossfolds-011
+crossfolds: crossfolds-m crossfolds-b
+crossfolds-m: crossfolds-m111 crossfolds-m100 crossfolds-m010 crossfolds-m001 crossfolds-m000
+crossfolds-b: crossfolds-b111 crossfolds-b100 crossfolds-b010 crossfolds-b001 crossfolds-b000
 
-crossfolds-111:
+crossfolds-m111:
 	python crossval.py 6500 --validation_metric fscore --labels pnn > m111-cf.txt
 
-crossfolds-100:
+crossfolds-m100:
 	python crossval.py 6500 --validation_metric fscore --labels pnn  --no-uncommon-selection --no-normalize > m100-cf.txt
 
-crossfolds-010:
+crossfolds-m010:
 	python crossval.py 6500 --validation_metric fscore --labels pnn --no-normalize --no-stopword-removal > m010-cf.txt
 
-crossfolds-001:
+crossfolds-m001:
 	python crossval.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-uncommon-selection > m001-cf.txt
 
-crossfolds-000:
+crossfolds-m000:
 	python crossval.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize > m000-cf.txt
+
+crossfolds-b111:
+	python crossval.py 6500 --classifier_type bayes --labels pnn > b111-cf.txt
+
+crossfolds-b100:
+	python crossval.py 6500 --classifier_type bayes --labels pnn  --no-uncommon-selection --no-normalize > b100-cf.txt
+
+crossfolds-b010:
+	python crossval.py 6500 --classifier_type bayes --labels pnn --no-normalize --no-stopword-removal > b010-cf.txt
+
+crossfolds-b001:
+	python crossval.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection > b001-cf.txt
+
+crossfolds-b000:
+	python crossval.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize > b000-cf.txt
 

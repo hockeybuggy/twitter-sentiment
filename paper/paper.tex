@@ -3,9 +3,10 @@
 \usepackage{enumerate}
 \usepackage{courier}
 \usepackage{graphicx}
-%\usepackage[margin=1.0in]{geometry}
+\usepackage{hyperref}
 \usepackage{float}
 \usepackage{setspace}
+\usepackage{fancyvrb}
 \usepackage[numbers]{natbib}
 
 \onehalfspacing
@@ -398,7 +399,7 @@ feature `\#NUM' after normalization).
 
 %TODO talk about the features
 
-\begin{verbatim}
+\begin{Verbatim}[fontsize=\footnotesize]
   -3.176 excited==True and label is 'neutral'
    2.328 lied==True and label is 'negative'
    2.279 availability==True and label is 'negative'
@@ -429,7 +430,7 @@ feature `\#NUM' after normalization).
    1.532 jailed==True and label is 'negative'
    1.520 lookin==True and label is 'neutral'
    1.515 2c==True and label is 'negative'
-\end{verbatim}
+\end{Verbatim}
 
 \subsection{Comparison to Other Systems}
 
@@ -540,6 +541,9 @@ element since people's outlooks, and therefore sentiment's in Tweets, will
 change over time. As well as public perception of a individual changes, the
 prevailing sentiment my change as well.
 
+\subsubsection{Support Vector Machine}
+
+%TODO
 
 \section{References}
 
@@ -549,8 +553,60 @@ prevailing sentiment my change as well.
 
 \section{Appendices}
 
-\subsection{Implementation Source Code}
+\subsection{Running the Implementation}
 
+To acquire your own copy of the implementation discussed above. The following
+instructions are written for Ubuntu 14.04 GNU/Linux, however it should be able
+to run on any Unix-like system.
+
+\begin{enumerate}
+    \item \textbf{Download Source} - The source code is hosted on github.com
+        and can be viewed
+        \href{https://github.com/hockeybuggy/semantic\_eval}{here}. To download a zip
+        file and open it:
+
+\begin{Verbatim}[fontsize=\footnotesize]
+wget https://github.com/hockeybuggy/semantic_eval/archive/master.zip
+unzip master.zip
+cd master
+\end{Verbatim}
+% TODO test this and make a dist branch
+
+    \item \textbf{Install Prerequisites} - If \textit{python 2.7}, \textit{pip}, and \textit{flex} are not
+        installed, they can be installed easily via a package manger:
+\begin{Verbatim}[fontsize=\footnotesize]
+sudo apt-get install python2.7 pip flex
+\end{Verbatim}
+
+Then various required python packages can be installed with:
+\begin{Verbatim}[fontsize=\footnotesize]
+sudo pip install -r
+\end{Verbatim}
+% TODO make requirement file
+
+    \item \textbf{Compile Tokenizer} - The tokenizer is written in C for
+        performance reasons and can be compiled with:
+\begin{Verbatim}[fontsize=\footnotesize]
+make
+\end{Verbatim}
+
+    \item \textbf{Run the Program} - The classifier can be executed in a number of ways. There are two python programs that are executable: `conductor.py' and `crossval.py'. These two programs run the classifier in a simple fashion or with cross validation. There are a large number of command line arguments that can be viewed with:
+\begin{Verbatim}[fontsize=\footnotesize]
+python conductor -h
+\end{Verbatim}
+
+Since the command line arguments can be cumbersome many of the experiments can be run via the make file:
+
+\begin{Verbatim}[fontsize=\footnotesize]
+make tiny            # Quick running with only 100 examples
+make crossfolds-m000 # The MaxEnt baseline with cross-validation
+make crossfolds-m111 # MaxEnt with cross-validation & feature selection
+make crossfolds-b000 # The Naive Bayes baseline with cross-validation
+make crossfolds-b111 # Naive Bayes with cross-val & feature selection
+make crossfolds      # Run all of the cross-validation experiments
+\end{Verbatim}
+
+\end{enumerate}
 
 \end{document}
 
