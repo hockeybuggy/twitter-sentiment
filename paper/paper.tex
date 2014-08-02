@@ -12,10 +12,6 @@
 %\doublespacing
 \restylefloat{table}
 
-\makeatletter
-%\renewcommand\@seccntformat[1]{}
-\makeatother
-
 \begin{document}
 
 \thispagestyle{empty}
@@ -76,8 +72,6 @@ many businesses. If a company can determine what consumers think of their
 products they can take actions such as improve their products or appease an
 unsatisfied customer.
 
-\subsection{Topic Area}
-
 Sentiment analysis is simply a classification task that attempts to label
 fragments of text that appropriately summarizes the attitude of the text.
 Natural Language Processing (NLP) provides a number of method for preforming
@@ -85,7 +79,6 @@ sentiment analysis. Many of these methods, such as Naive Bayes and Maximum
 Entropy, take a probabilistic approach to performing the task. Another commonly
 used method of performing sentiment analysis is the uses of a support vector
 machine (SVM).
-
 
 \subsection{Specific Problem}
 
@@ -114,10 +107,6 @@ F-positive and the F-negative. The submissions were allowed categorized as
 `unconstrained' or `constrained' depending on if they did or did not use
 supplemental data, respectively.
 
-The dataset for the task consists of 6225 labelled Tweets. 36.66\% of the
-corpus has `positive' label, 14.04\% has a `negative' label, 49.30\% has a
-label that conveys neutral sentiment. This neutral label is one of `neutral',
-`objective', or `objective-OR-neutral'.
 
 \section{Background}
 
@@ -129,11 +118,14 @@ few years \cite{Jianfeng2013} \cite{Barbosa2010} \cite{Gokulakrishnan2012}.
 Many previous attempts researched make use of Native Bayes, Maximum Entropy,
 and SVM classifiers.
 
+
+%TODO Sentiment Analysis
+%TODO Text Classification
+%TODO Feature Selection
+
 \textit{Note: This section needs to be expanded. I am just not sure what else to write about...}
 
-%TODO extend
-
-\section{Approach}
+\section{Our Implementation}
 
 \subsection{Summary of Maximum Entropy}
 
@@ -166,8 +158,9 @@ procedure with the function $l(\Lambda|\mathcal{D})$, where:
 Starting with any initial vector of parameters $\Lambda$, at each iteration
 we improve the parameters by setting $\Lambda = \Lambda + \Delta$.
 
+% TODO expand on IIS
 
-\subsection{Implementation}
+\subsection{Preprocessing and Feature Selection}
 
 The classifier produced for this project is implemented in \textit{python} and
 make extensive use of the \textit{nltk} (Natural Language Toolkit) library. As
@@ -235,9 +228,11 @@ the task. The classifier adheres to the following procedure:
     \item \textbf{Testing} - The performance of the dataset is evaluated
         against the \textit{testing set}.
 
+    %TODO talk about cross validation
+
 \end{enumerate}
 
-\subsection{Avoiding overfitting}
+\subsection{Training Optimization}
 
 The implementation created for this project used a \textit{validation set} during
 training as the primary mechanism to avoid overfitting. While training the
@@ -271,33 +266,46 @@ procedure was followed:
 
 \end{enumerate}
 
-\section{Discussion}
+\section{Experiments and Discussion}
 
-\subsection{Evaluation Method}
+\subsection{Dataset}
+
+The dataset for the task consists of 6225 labelled Tweets. 36.66\% of the
+corpus has `positive' label, 14.04\% has a `negative' label, 49.30\% has a
+label that conveys neutral sentiment. This neutral label is one of `neutral',
+`objective', or `objective-OR-neutral'.
+
+\subsection{Evaluation Measures}
 
 After the SemEval-2013 workshop the organizers released a paper discussing the
 proceedings and the results of the task \cite{Nakov2013}. The paper establishes
-baseline in terms of $F$. $F$ can be calculated $F = (F_{pos} + F_{neg}) / 2$
-where $F_{pos} = 2 \frac{P_{pos}R_{pos}}{P_{pos} + R_{pos}}$ and $F_{neg}$ is
-calculated in a similar fashion. The \textit{Precision} measure for the
-positive label is $P_{pos} = \frac{\mathrm{\# of\ true\ postive}}{\mathrm{\#
-of\ true\ postive} + \mathrm{\# of\ false\ postive} }$. The \textit{Recall}
-measure for the positive label is defined as $R_{pos} = \frac{\mathrm{\# of\
-true\ postive}}{\mathrm{\# of\ true\ postive} + \mathrm{\# of\ false\ negative}
-}$
+baseline in terms of $F$. $F$ can be calculated as:
+\begin{equation}
+    F = \frac{2 \frac{P_{pos}R_{pos}}{P_{pos} + R_{pos}} +
+    2 \frac{P_{neg}R_{neg}}{P_{neg} + R_{neg}}}{2}
+\end{equation}
+
+Which can be simplified to:
+
+\begin{equation}
+    F = \frac{P_{pos}R_{pos}}{P_{pos} + R_{pos}} + \frac{P_{neg}R_{neg}}{P_{neg} + R_{neg}}
+\end{equation}
+
+The \textit{Precision} measure for the positive label is $P_{pos} =
+\frac{\mathrm{\# of\ true\ postive}}{\mathrm{\# of\ true\ postive} + \mathrm{\#
+of\ false\ postive} }$. The \textit{Recall} measure for the positive label is
+defined as $R_{pos} = \frac{\mathrm{\# of\ true\ postive}}{\mathrm{\# of\ true\
+postive} + \mathrm{\# of\ false\ negative} }$. $P_{neg}$ and $R_{neg}$ can be
+calculated in a similar fashion.
 
 \subsection{Baseline}
-
-The proceedings of SemEval-2013 establishes the `Majority Baseline' for the
-task to be an F-score of 29.19. How this number is calculated is not discusses
-in paper.
 
 The baseline for this project is established by running the Maximum Entropy
 classifier without any Stop word removal, Uncommon word removal, Or feature
 Normalization. The F-score that is achieved is 50.72. See Experiment \textit{g}
 in Table \ref{table:results} to see the results in context.
 
-\subsection{Results}
+\subsection{Experimental Results}
 
 Since the \textit{test set} is random subset of the corpus, the results of the
 classifier can vary slightly between runs. In order to effectively evaluate the
@@ -350,6 +358,7 @@ of features retained after different process Table \ref{table:numfeatures}
 presents the mean number of features per Tweet for positive, neutral, negative
 examples as well as an overall average.
 
+
 \begin{table}[H]
     \begin{center}
     \begin{tabular}{|c||r|r|r|r|r|}
@@ -374,6 +383,8 @@ examples as well as an overall average.
 \end{table}
 
 % TODO finish table
+
+% TODO Student T-test
 
 As presented in Table \ref{table:numfeatures}, the number of features decreases
 each time a feature set simplification method is turned on. Normalization does
@@ -420,7 +431,7 @@ feature `\#NUM' after normalization).
    1.515 2c==True and label is 'negative'
 \end{verbatim}
 
-\subsection{Comparison to Workshop Participants}
+\subsection{Comparison to Other Systems}
 
 Table \ref{table:comparison} shows the performance of the classifier produced
 for this project compared to results of the workshop participants. The full
@@ -475,15 +486,17 @@ table (with out this project's results) can be found in table 9 of Nakov et al.
     \label{table:comparison}
 \end{table}
 
-\section{Conclusion}
+\section{Conclusions and Future Work}
+
+\subsection{Conclusions}
 
 \textit{Note: I would like to finish the results section before I start this section }
 
 %TODO get a stronger conclusion
 
-\section{Future Work}
+\subsection{Future Work}
 
-\subsection{Hashtags}
+\subsubsection{Hashtags}
 
 Hashtags are a way that Twitter users tag a Tweet as part of a particular
 conversation. Hashtags refer to proper nouns such as events, places, or people.
@@ -511,7 +524,7 @@ As well Hashtags sometimes use CamelCase to create multi-word tags (e.g.
 `\#SorryNotSorry'). It could prove worthwhile to attempt the decompose
 CamelCase Hashtags into its component words during feature selection.
 
-\subsection{Users}
+\subsubsection{Users}
 
 Nearly all Twitter users have published more than one tweet. A more advanced
 classifier could establish a particular users propensity to publishing a
@@ -528,10 +541,16 @@ change over time. As well as public perception of a individual changes, the
 prevailing sentiment my change as well.
 
 
-% Bibliography
+\section{References}
+
 \nocite{*}
 \bibliographystyle{ieeetr}
 \bibliography{paper}
+
+\section{Appendices}
+
+\subsection{Implementation Source Code}
+
 
 \end{document}
 
