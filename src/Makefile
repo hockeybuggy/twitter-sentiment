@@ -207,6 +207,10 @@ crossfolds-100:
 
 crossfolds-010:
 	python crossval.py 6500 --validation_metric fscore --labels pnn --no-uncommon-selection > m010-cf.txt
+
 crossfolds-001:
 	python crossval.py 6500 --validation_metric fscore --labels pnn --no-normalize > m001-cf.txt
+
+crossfolds-000:
+	python crossval.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize > m000-cf.txt
 

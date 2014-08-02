@@ -7,15 +7,14 @@ data <- read.csv("boxplot.csv", header=TRUE)
 
 print(data)
 
-chart_title <- "Classifier Performance"
+chart_title <- "Maximum Entropy Classifier Performance"
 xlab <- "Experiment"
 ylab <- "F-score"
+groups <- c("All", "Just Stopwords", "Just Uncommon", "Just Normalization", "Baseline")
 
 p <- ggplot(data, aes(x=factor(Label), y=F)) + geom_boxplot()
-p = p + scale_x_discrete("Labels", labels=c("A", "B"))
-p = p + ylim(c(0.25,0.75))
+p = p + scale_x_discrete(xlab, labels=groups)
+p = p + scale_y_continuous(ylab, limits=c(0.30, 0.60))
 p = p + ggtitle(chart_title)
-p = p + xlab(xlab)
-p = p + ylab(ylab)
 p = p + theme_minimal()
 p # Draw that sucker
