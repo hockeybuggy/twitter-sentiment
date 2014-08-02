@@ -109,7 +109,6 @@ def main(args):
         print "{}-std:\t".format(key), numpy.std(accumulation_dict[key])
 
 
-
 def select_set(set_type, fold, partitions):
     output_set = []
     for i,x in enumerate(fold):
@@ -136,3 +135,4 @@ def generate_folds(partitions):
 if __name__ == "__main__":
     args = parse_args()
     main(args)
+

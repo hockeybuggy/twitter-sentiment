@@ -196,3 +196,17 @@ table-bayes-001:
 table-bayes-000:
 	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize > b000-x.txt
 
+## This is the most recent section. It runs cross-validations
+crossfolds: crossfolds-111 crossfolds-100 crossfolds-010 crossfolds-011
+
+crossfolds-111:
+	python crossval.py 6500 --validation_metric fscore --labels pnn > m111-cf.txt
+
+crossfolds-100:
+	python crossval.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal > m100-cf.txt
+
+crossfolds-010:
+	python crossval.py 6500 --validation_metric fscore --labels pnn --no-uncommon-selection > m010-cf.txt
+crossfolds-001:
+	python crossval.py 6500 --validation_metric fscore --labels pnn --no-normalize > m001-cf.txt
+
