@@ -131,12 +131,12 @@ def generate_folds(partitions, validation):
         if num_folds == 5:
             sets = "tttvT"
         elif num_folds == 10:
-            sets = "ttttttttvT"
+            sets = "ttttttvvTT"
     else:
         if num_folds == 5:
-            sets = "ttttT"
+            sets = "tttTT"
         elif num_folds == 10:
-            sets = "tttttttttT"
+            sets = "ttttttTTTT"
     available = {}
     #range(len(partitions))
     for order in permutations(sets, num_folds):
