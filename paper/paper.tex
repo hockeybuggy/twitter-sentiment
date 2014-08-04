@@ -36,7 +36,7 @@ dander01@uoguelph.ca
 \vspace{1.5cm}
 CIS*4900 - Undergraduate Research Project
 
-July 29th, 2014 %TODO fix this
+August 4th, 2014 %TODO fix this
 
 \vspace{1.5cm}
 
@@ -60,6 +60,7 @@ Draft 3 %TODO ditch this
 \setcounter{page}{1}
 
 \section{Introduction}
+\label{section:intro}
 
 Social media allows people to discuss topics and disseminate their opinions
 with a near negligible cost. The low barrier of entry to social media allows
@@ -82,6 +83,7 @@ used method of performing sentiment analysis is the uses of a support vector
 machine (SVM).
 
 \subsection{Specific Problem}
+\label{ssection:specificproblem}
 
 The focus of this undergraduate research project has been to preform sentiment
 analysis in data from the microbloging website Twitter. All of the messages,
@@ -91,49 +93,74 @@ some interesting problems to performing good sentiment analysis due to it's
 short and informal nature. Twitter makes it extremely easy to publish a Tweet
 and has no way to edit a Tweet once published. This results in more spelling
 mistakes and inconsistent grammar then other sources of text. Tweets often also
-contain links to other websites in the form of URLs as well as taging system
-for topics and other users.
+contain URLs to other websites. Tweets also contain a certain amount of OOV
+(Out-Of-Vocabulary) words, such as Hashtags, a tagging system for topics
+allowing Tweets in a similar vein of conversation to be found. Other OOV words
+include mentions (e.g. `@BarackObama') which are a method to direct a tweet to
+one or more users, as well as `RT' which is an acronym for `retweet'
+communicating that this particular Tweet is a reissuing of another users Tweet.
+Another issue that is out of the scope of this project is that Twitter
+currently supports 35+ languages, meaning that in-order to determine the
+sentiment most systems must first determine which language the tweet is in.
 
 \subsection{Task Description}
+\label{ssection:taskdescription}
 
 Organizers of the SemEval-2013 workshop created various sentiment analysis
 tasks to be preformed. The task focused on for this project was task-2b:
 Message polarity classification. The organizers used the Amazon service
-``Mechanical Turk" to get many humans to annotate Tweets as `positive',
-`negative' or `neutral'. In tweets with mixed sentiments, the prevailing
-sentiment was chosen. Participants were tasked with creating a classifier to
-establish labels for Tweets not in the training dataset. The various
-submissions of the participants were then evaluated by the average of the
-F-positive and the F-negative. The submissions were allowed categorized as
+``Mechanical Turk" to get many humans to annotate English language Tweets as
+`positive', `negative' or `neutral'. In Tweets with mixed sentiments, the
+prevailing sentiment was chosen. Participants were tasked with creating a
+classifier to establish labels for Tweets not in the training dataset. The
+various submissions of the participants were then evaluated by the average of
+the F-positive and the F-negative. The submissions were allowed categorized as
 `unconstrained' or `constrained' depending on if they did or did not use
 supplemental data, respectively.
 
-
 \section{Background}
+\label{section:background}
 
 Quite a bit of research has been done in the field of sentiment analysis
 recently. Much of the work has involved data from other contexts such as Movie
 reviews \cite{Pang2002}, and blog posts \cite{Melville2009}. The challenges
 associated with classifying Twitter data has attracted researchers in the past
 few years \cite{Jianfeng2013} \cite{Barbosa2010} \cite{Gokulakrishnan2012}.
-Many previous attempts researched make use of Native Bayes, Maximum Entropy,
-and SVM classifiers.
+Sentiment analysis has been very closely linked with opinion mining, which is
+the practice of extracting sentiment on a particular topic in order to gain
+insights into public opinion on the topic.
+
+According to `Opinion mining and sentiment analysis' \cite{Pang2008}: ``The
+year 2001 or so seems to mark the beginning of widespread awareness of the
+research problems that sentiment analysis and opinion mining raise''. This
+explosion in research has happened very recently, and as such the field is
+moving very quickly.
+
+Many previous attempts researched make use of Naive Bayes, Maximum Entropy, and
+SVM classifiers. The Naive Bayes classifier uses the occurrences of features in
+the \textit{training set} to calculate the probability that an example in the
+\textit{test set} belongs in a given class. This method has the benefit of
+linear time training since there is no iterative process, but I makes the
+assumption that all features are independent, which is not the case in natural
+language. The Maximum Entropy approach is explained in detail in section
+\ref{ssection:summaryofmaxent}.
 
 %TODO Sentiment Analysis
 %TODO Text Classification
 %TODO Feature Selection
 
-\textit{Note: This section needs to be expanded. I am just not sure what else to write about...}
-
 \section{Our Implementation}
+\label{section:implementation}
 
 \subsection{Summary of Maximum Entropy}
+\label{ssection:summaryofmaxent}
 
 The Maximum Entropy classification method was focused on due to the limited
-duration of the project. This supervised machine learning method calculates the
-probability that a given document $d$ belongs to the class $c$.  The Maximum
-Entropy approach is summarized below. For a more detailed description, see:
-Nigam et al. \cite{Nigam1999}.
+duration of the project, however a Naive Bayes classifier was also implemented
+to provide a point of comparison. This supervised machine learning method
+calculates the probability that a given document $d$ belongs to the class $c$.
+The Maximum Entropy approach is summarized below. For a more detailed
+description, see: Nigam et al. \cite{Nigam1999}.
 
 The training data is used to establish constraints in the following fashion:
 
@@ -161,6 +188,9 @@ we improve the parameters by setting $\Lambda = \Lambda + \Delta$.
 % TODO expand on IIS
 
 \subsection{Preprocessing and Feature Selection}
+\label{ssection:featureselection}
+
+% TODO expand on document frequency
 
 The classifier produced for this project is implemented in \textit{python} and
 make extensive use of the \textit{nltk} (Natural Language Toolkit) library. As
@@ -232,6 +262,7 @@ the task. The classifier adheres to the following procedure:
 
 
 \subsection{Training Optimization}
+\label{ssection:optimization}
 
 The implementation created for this project used a \textit{validation set} during
 training as the primary mechanism to avoid overfitting. While training the
@@ -266,15 +297,20 @@ procedure was followed:
 \end{enumerate}
 
 \section{Experiments and Discussion}
+\label{section:experiments}
 
 \subsection{Dataset}
+\label{ssection:dataset}
 
 The dataset for the task consists of 6225 labelled Tweets. 36.66\% of the
 corpus has `positive' label, 14.04\% has a `negative' label, 49.30\% has a
 label that conveys neutral sentiment. This neutral label is one of `neutral',
 `objective', or `objective-OR-neutral'.
 
+%TODO add example
+
 \subsection{Evaluation Measures}
+\label{ssection:evaluation}
 
 After the SemEval-2013 workshop the organizers released a paper discussing the
 proceedings and the results of the task \cite{Nakov2013}. The paper establishes
@@ -298,7 +334,8 @@ defined as $R_{pos} = \frac{\mathrm{\# of\ true\ postive}}{\mathrm{\# of\ true\
 postive} + \mathrm{\# of\ false\ negative} }$. $P_{neg}$ and $R_{neg}$ can be
 calculated in a similar fashion.
 
-\subsection{Smooth Performance Measurement}
+\subsection{Improving Performance Measurement}
+\label{ssection:performancemeasurement}
 
     Testing the performance of the system with a single run can produce skewed
     results since whether `easy' Tweets end up in \textit{training set} or the
@@ -340,6 +377,7 @@ calculated in a similar fashion.
 
 
 \subsection{Number of features}
+\label{ssection:numfeatures}
 
 Number of features retained after feature selection varies from Tweet to Tweet.
 To summarize the number of features retained after different process Table
@@ -374,12 +412,16 @@ A Tweet that contained `2' and `3' before normalization would only contain the
 feature `\#NUM' after normalization).
 
 \subsection{Baseline}
+\label{ssection:baseline}
 
 The baseline for this project is established by running the Maximum Entropy
 classifier without any stopword removal, uncommon word removal, Or feature
 normalization. The F-score that is achieved is 50.72.
 
 \subsection{Experimental Results}
+\label{ssection:results}
+
+%TODO write something here about the method
 
 \subsubsection{Maximum Entropy Classifier}
 
@@ -401,6 +443,9 @@ normalization. The F-score that is achieved is 50.72.
     cross-validation with 5 partitions}
     \label{table:maxent-results}
 \end{table}
+
+% TODO Write something here about uncommon not getting performance gains
+% without normalization
 
 \begin{figure}[H]
     \begin{center}
@@ -442,6 +487,7 @@ normalization. The F-score that is achieved is 50.72.
 % TODO Student T-test
 
 \subsection{Most Informative Features}
+\label{ssection:informativefeatures}
 
 The implementation create for this project has the ability to show which
 features are the most discriminatory. The following is a list of the top 30
@@ -487,6 +533,7 @@ dataset just enough to get past the uncommon word cutoff, such as `calvin' and
 `oneil'.
 
 \subsection{Comparison to Other Systems}
+\label{ssection:comparison}
 
 Table \ref{table:comparison} shows the performance of the classifier produced
 for this project compared to results of the workshop participants. The full
@@ -540,18 +587,23 @@ table (with out this project's results) can be found in table 9 of Nakov et al.
         workshop. Sorted by F-score.}
     \label{table:comparison}
 \end{table}
+%TODO fix this table
 
 \section{Conclusions and Future Work}
+\label{section:conclusionsandfuturework}
 
 \subsection{Conclusions}
+\label{ssection:conclusions}
 
 \textit{Note: I would like to finish the results section before I start this section }
 
 %TODO get a stronger conclusion
 
 \subsection{Future Work}
+\label{ssection:futurework}
 
 \subsubsection{Hashtags}
+\label{sssection:hashtags}
 
 Hashtags are a way that Twitter users tag a Tweet as part of a particular
 conversation. Hashtags refer to proper nouns such as events, places, or people.
@@ -580,6 +632,7 @@ As well Hashtags sometimes use CamelCase to create multi-word tags (e.g.
 CamelCase Hashtags into its component words during feature selection.
 
 \subsubsection{Users}
+\label{sssection:users}
 
 Nearly all Twitter users have published more than one tweet. A more advanced
 classifier could establish a particular users propensity to publishing a
@@ -596,18 +649,22 @@ change over time. As well as public perception of a individual changes, the
 prevailing sentiment my change as well.
 
 \subsubsection{Support Vector Machine}
+\label{sssection:svm}
 
 %TODO
 
 \section{References}
+\label{section:referances}
 
 \nocite{*}
 \bibliographystyle{ieeetr}
 \bibliography{paper}
 
 \section{Appendices}
+\label{section:appendices}
 
 \subsection{Running the Implementation}
+\label{ssection:runningtheimplementation}
 
 To acquire your own copy of the implementation discussed above. The following
 instructions are written for Ubuntu 14.04 GNU/Linux, however it should be able
@@ -626,17 +683,19 @@ cd master
 \end{Verbatim}
 % TODO test this and make a dist branch
 
-    \item \textbf{Install Prerequisites} - If \textit{python 2.7}, \textit{pip}, and \textit{flex} are not
-        installed, they can be installed easily via a package manger:
+    \item \textbf{Install Prerequisites} - If \textit{python 2.7},
+        \textit{pip}, and \textit{flex} are not installed, they can be
+        installed easily via a package manger:
+
 \begin{Verbatim}[fontsize=\footnotesize]
 sudo apt-get install python2.7 pip flex
 \end{Verbatim}
 
 Then various required python packages can be installed with:
+
 \begin{Verbatim}[fontsize=\footnotesize]
-sudo pip install -r
+sudo pip install numpy nltk
 \end{Verbatim}
-% TODO make requirement file
 
     \item \textbf{Compile Tokenizer} - The tokenizer is written in C for
         performance reasons and can be compiled with:
@@ -644,12 +703,18 @@ sudo pip install -r
 make
 \end{Verbatim}
 
-    \item \textbf{Run the Program} - The classifier can be executed in a number of ways. There are two python programs that are executable: `conductor.py' and `crossval.py'. These two programs run the classifier in a simple fashion or with cross validation. There are a large number of command line arguments that can be viewed with:
+    \item \textbf{Run the Program} - The classifier can be executed in a number
+        of ways. There are two python programs that are executable:
+        `conductor.py' and `crossval.py'. These two programs run the classifier
+        in a simple fashion or with cross validation. There are a large number
+        of command line arguments that can be viewed with:
+
 \begin{Verbatim}[fontsize=\footnotesize]
 python conductor -h
 \end{Verbatim}
 
-Since the command line arguments can be cumbersome many of the experiments can be run via the make file:
+Since the command line arguments can be cumbersome many of the experiments can
+be run via the make file:
 
 \begin{Verbatim}[fontsize=\footnotesize]
 make tiny            # Quick running with only 100 examples
