@@ -166,6 +166,7 @@ partition the data space with the use of linear or non-linear delineations
 between the different classifiers.''\cite{Aggarwal2012}.
 
 %TODO Feature Selection
+%TODO mention bag of words
 
 \section{Our Implementation}
 \label{section:implementation}
@@ -397,7 +398,30 @@ calculated in a similar fashion.
         \end{enumerate}
 
 
-\subsection{Number of features}
+\subsection{Baseline}
+\label{ssection:baseline}
+
+The baseline for this project is established by running the Maximum Entropy
+classifier without any stopword removal, uncommon word removal, Or feature
+normalization. The F-score that is achieved is \textbf{50.72}.
+
+%TODO consider cleaning the text up here
+
+\subsection{Experimental Results}
+\label{ssection:results}
+
+The following experiments examine the results of the Maximum Entropy classifier
+and the Naive Bayes classifier with various feature selection methods turned on
+or off. The `Baseline' experiment refers to no feature selection. The `Just
+Stopwords' experiment refers the only removing stopwords. The `Just Uncommon'
+experiment refers to only removing words with a document frequency of one. The
+`Just Normalization' experiment refers to only applying feature normalization
+mechanisms. The `All' experiment refers to testing the classifier with all of
+the previous feature selection methods turned on.
+
+%TODO add references to the feature selection section
+
+\subsubsection{Number of features}
 \label{ssection:numfeatures}
 
 Number of features retained after feature selection varies from Tweet to Tweet.
@@ -424,6 +448,8 @@ positive, neutral, negative examples as well as an overall average.
     \label{table:numfeatures}
 \end{table}
 
+%TODO check these results
+
 As presented in Table \ref{table:numfeatures}, the number of features decreases
 each time a feature set simplification method is turned on. Normalization does
 not appear to significantly reduce the number of features per Tweet. This make
@@ -432,17 +458,7 @@ tokens that were different before simplification and were the same after (e.g.
 A Tweet that contained `2' and `3' before normalization would only contain the
 feature `\#NUM' after normalization).
 
-\subsection{Baseline}
-\label{ssection:baseline}
-
-The baseline for this project is established by running the Maximum Entropy
-classifier without any stopword removal, uncommon word removal, Or feature
-normalization. The F-score that is achieved is 50.72.
-
-\subsection{Experimental Results}
-\label{ssection:results}
-
-%TODO write something here about the method
+%TODO clarify
 
 \subsubsection{Maximum Entropy Classifier}
 
@@ -464,6 +480,15 @@ normalization. The F-score that is achieved is 50.72.
     cross-validation with 5 partitions}
     \label{table:maxent-results}
 \end{table}
+
+As Table \ref{table:maxent-results} shows `All' experiment provides the best
+results over the baseline. The `Just Stopwords' experiment actually provides
+slightly worse results then the baseline indicating that in context of Tweets
+with so few features in each example every feature counts. The `Just Uncommon'
+experiment does not provide very significant gains when used alone. This is
+potentially due to the fact that with out normalization turned, features such
+as `just' are `Just' are determined to be different and may be removed if each
+only occur once.
 
 % TODO Write something here about uncommon not getting performance gains
 % without normalization
@@ -592,9 +617,8 @@ table (with out this project's results) can be found in table 9 of Nakov et al.
         CodeX      & 53.89 \\
         Oasis      & 53.84 \\
         NTNU       & 53.23 \\
-        \textbf{Best MaxEnt}& \textbf{52.81} \\
         UoM        & 51.81 \\
-        \textbf{Best Navie Bayes}& \textbf{50.96} \\
+        \textbf{MaxEnt}& \textbf{50.96} \\
         SSA-UO     & 50.17 \\
         SenselyticTeam & 50.10 \\
         $\ldots$   & $\ldots$ \\
@@ -608,7 +632,7 @@ table (with out this project's results) can be found in table 9 of Nakov et al.
         workshop. Sorted by F-score.}
     \label{table:comparison}
 \end{table}
-%TODO fix this table
+%TODO add naive bayes
 
 \section{Conclusions and Future Work}
 \label{section:conclusionsandfuturework}
@@ -748,6 +772,15 @@ make crossfolds      # Run all of the cross-validation experiments
 \end{Verbatim}
 
 \end{enumerate}
+
+\subsection{Stopword list}
+\label{ssection:stopwords}
+
+The list of stopwords was acquired at \href{holla}{www.ranks.nl/stopwords} and
+is as follows:
+
+a, about, an, are, as, at, be, by, com, for, from, how, in, is, it, of, on, or,
+that, the, this, to, was, what, when, where, who, will, with
 
 \end{document}
 
