@@ -96,12 +96,12 @@ mistakes and inconsistent grammar then other sources of text. Tweets often also
 contain URLs to other websites. Tweets also contain a certain amount of OOV
 (Out-Of-Vocabulary) words, such as Hashtags, a tagging system for topics
 allowing Tweets in a similar vein of conversation to be found. Other OOV words
-include mentions (e.g. `@BarackObama') which are a method to direct a tweet to
+include mentions (e.g. `@BarackObama') which are a method to direct a Tweet to
 one or more users, as well as `RT' which is an acronym for `retweet'
 communicating that this particular Tweet is a reissuing of another users Tweet.
 Another issue that is out of the scope of this project is that Twitter
 currently supports 35+ languages, meaning that in-order to determine the
-sentiment most systems must first determine which language the tweet is in.
+sentiment most systems must first determine which language the Tweet is in.
 
 \subsection{Task Description}
 \label{ssection:taskdescription}
@@ -121,32 +121,50 @@ supplemental data, respectively.
 \section{Background}
 \label{section:background}
 
-Quite a bit of research has been done in the field of sentiment analysis
-recently. Much of the work has involved data from other contexts such as Movie
-reviews \cite{Pang2002}, and blog posts \cite{Melville2009}. The challenges
-associated with classifying Twitter data has attracted researchers in the past
-few years \cite{Jianfeng2013} \cite{Barbosa2010} \cite{Gokulakrishnan2012}.
-Sentiment analysis has been very closely linked with opinion mining, which is
-the practice of extracting sentiment on a particular topic in order to gain
-insights into public opinion on the topic.
-
-According to `Opinion mining and sentiment analysis' \cite{Pang2008}: ``The
+According to `Opinion Mining and Sentiment Analysis' \cite{Pang2008}: ``The
 year 2001 or so seems to mark the beginning of widespread awareness of the
 research problems that sentiment analysis and opinion mining raise''. This
 explosion in research has happened very recently, and as such the field is
-moving very quickly.
+moving very quickly. Much of the earlier work in the field involved data from
+other contexts such as Movie reviews \cite{Pang2002}, and blog posts
+\cite{Melville2009}. The challenges associated with classifying Twitter data
+has only attracted researchers in the past few years \cite{Jianfeng2013}
+\cite{Barbosa2010} \cite{Gokulakrishnan2012}.
 
-Many previous attempts researched make use of Naive Bayes, Maximum Entropy, and
+Sentiment analysis is a very specific type of \textbf{text classification}, a problem
+that is well summarized in chapter 6 of \textit{Mining Text Data} by Aggarwal
+and Zhai \cite{Aggarwal2012} as:
+
+\begin{quote}
+    We have a set of training records $\mathcal{D} = \{X_{1} , . . .\ , X_{N}
+    \}$, such that each record is labeled with a class value drawn from a set
+    of k different discrete values indexed by $\{1 . . . k\}$. The training
+    data is used in order to construct a classification model, which relates
+    the features in the underlying record to one of the class labels.
+\end{quote}
+
+In the case of sentiment analysis the class labels being applied to the records
+denote the attitude or opinion in the text. The focus of this project is
+determining sentiment at the document level which assumes that the document
+expresses a predominate sentiment. This is a somewhat reasonable assumption
+given the fact that Tweets are limited in size, making it difficult to express
+mixed sentiment. Sentiment analysis is very closely linked with opinion mining,
+which is the practice of extracting sentiment on a particular topic in order to
+gain insights into public opinion on the topic.
+
+Much of the previous research make use of Naive Bayes, Maximum Entropy, and
 SVM classifiers. The Naive Bayes classifier uses the occurrences of features in
 the \textit{training set} to calculate the probability that an example in the
 \textit{test set} belongs in a given class. This method has the benefit of
 linear time training since there is no iterative process, but I makes the
 assumption that all features are independent, which is not the case in natural
 language. The Maximum Entropy approach is explained in detail in section
-\ref{ssection:summaryofmaxent}.
+\ref{ssection:summaryofmaxent}. While Maximum Entropy and Naive Bayes are both
+probabilistic approaches the to problem, Support Vector Machine (SVM)
+classifiers take a different approach to the problem. ``SVM Classifiers attempt
+partition the data space with the use of linear or non-linear delineations
+between the different classifiers.''\cite{Aggarwal2012}.
 
-%TODO Sentiment Analysis
-%TODO Text Classification
 %TODO Feature Selection
 
 \section{Our Implementation}
@@ -305,9 +323,12 @@ procedure was followed:
 The dataset for the task consists of 6225 labelled Tweets. 36.66\% of the
 corpus has `positive' label, 14.04\% has a `negative' label, 49.30\% has a
 label that conveys neutral sentiment. This neutral label is one of `neutral',
-`objective', or `objective-OR-neutral'.
+`objective', or `objective-OR-neutral'. The following is an example of a
+positive Tweet:
 
-%TODO add example
+\begin{Verbatim}[fontsize=\footnotesize]
+"positive", "Gas by my house hit $3.39!!!! I'm going to Chapel Hill on Sat. :)"
+\end{Verbatim}
 
 \subsection{Evaluation Measures}
 \label{ssection:evaluation}
@@ -634,13 +655,13 @@ CamelCase Hashtags into its component words during feature selection.
 \subsubsection{Users}
 \label{sssection:users}
 
-Nearly all Twitter users have published more than one tweet. A more advanced
+Nearly all Twitter users have published more than one Tweet. A more advanced
 classifier could establish a particular users propensity to publishing a
-prevailing sentiment in all of their tweets.
+prevailing sentiment in all of their Tweets.
 
 As well, some Twitter users may be frequently be referred to with a particular
 sentiment. For a hypothetical example, Tweets addressed to Emma Watson
-(`@EmWatson') are more likely to have a positive sentiment, while tweets to
+(`@EmWatson') are more likely to have a positive sentiment, while Tweets to
 Barack Obama (`@BarackObama') may contain extremely mixed sentiment.
 
 A challenge that this method could introduce is the introduction of a temporal

@@ -263,3 +263,29 @@ crossfolds10-b001:
 crossfolds10-b000:
 	python crossval.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize --num-folds 10 > b000-cf-10.txt
 
+## Num Iterations experiment
+
+iterations: iterations-5 iterations-10 iterations-15 iterations-20 iterations-25 iterations-30 iterations-35 iterations-40 iterations-45 iterations-50 iterations-55
+
+iterations-5:
+	python crossval.py 6500 --numIterations 5  --labels pnn --num-folds 5 > ni-5.txt
+iterations-10:
+	python crossval.py 6500 --numIterations 10 --labels pnn --num-folds 5 > ni-10.txt
+iterations-15:
+	python crossval.py 6500 --numIterations 15 --labels pnn --num-folds 5 > ni-15.txt
+iterations-20:
+	python crossval.py 6500 --numIterations 20 --labels pnn --num-folds 5 > ni-20.txt
+iterations-25:
+	python crossval.py 6500 --numIterations 25 --labels pnn --num-folds 5 > ni-25.txt
+iterations-30:
+	python crossval.py 6500 --numIterations 30 --labels pnn --num-folds 5 > ni-30.txt
+iterations-35:
+	python crossval.py 6500 --numIterations 35 --labels pnn --num-folds 5 > ni-35.txt
+iterations-40:
+	python crossval.py 6500 --numIterations 40 --labels pnn --num-folds 5 > ni-40.txt
+iterations-45:
+	python crossval.py 6500 --numIterations 45 --labels pnn --num-folds 5 > ni-45.txt
+iterations-50:
+	python crossval.py 6500 --numIterations 50 --labels pnn --num-folds 5 > ni-50.txt
+iterations-55:
+	python crossval.py 6500 --numIterations 55 --labels pnn --num-folds 5 > ni-55.txt
