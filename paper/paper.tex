@@ -338,40 +338,46 @@ calculated in a similar fashion.
 
         \end{enumerate}
 
-\subsection{Baseline}
-
-The baseline for this project is established by running the Maximum Entropy
-classifier without any stopword removal, uncommon word removal, Or feature
-normalization. The F-score that is achieved is 50.72. See Experiment \textit{g}
-in Table \ref{table:maxent-results} to see the results in context.
 
 \subsection{Number of features}
 
-Number of features retained varies from Tweet to Tweet. To summarize the number
-of features retained after different process Table \ref{table:numfeatures}
-presents the mean number of features per Tweet for positive, neutral, negative
-examples as well as an overall average.
-
+Number of features retained after feature selection varies from Tweet to Tweet.
+To summarize the number of features retained after different process Table
+\ref{table:numfeatures} presents the mean number of features per Tweet for
+positive, neutral, negative examples as well as an overall average.
 
 \begin{table}[H]
     \begin{center}
-    \begin{tabular}{|c||r|r|r|r|r|}
+    \begin{tabular}{|c||r|r|r|r|}
         \hline
-        Description        & Positive & Neutral & Negative & Overall & Total \\
+        Description        & Positive & Neutral & Negative & Overall \\
         \hline
-        All                & 14.85    & 14.06   & 15.10    & 14.49   & 5964 \\
-        Just Stopwords     & 15.95    & 15.40   & 16.33    & 15.73   & 0 \\
-        Just Uncommon      & 18.54    & 17.81   & 18.82    & 18.22   & 5993 \\
-        Just Normalization & 19.64    & 19.15   & 20.05    & 19.46   & 0 \\
-        Baseline           & 20.65    & 20.45   & 20.96    & 20.58   & 0 \\
+        All                & 14.85    & 14.06   & 15.10    & 14.49 \\
+        Just Stopwords     & 17.13    & 16.86   & 17.41    & 17.04 \\
+        Just Uncommon      & 18.43    & 17.87   & 18.85    & 18.21 \\
+        Just Normalization & 19.65    & 19.16   & 20.06    & 19.46 \\
+        Baseline           & 20.65    & 20.45   & 20.96    & 20.58 \\
         \hline
     \end{tabular}
     \end{center}
     \caption{`Positive', `Neutral', `Negative', and `Overall' refer to the
-    average number of features per Tweet in each experiment. `Total' refers to
-    the total number of different features in the dataset}
+    average number of features per Tweet in each experiment.}
     \label{table:numfeatures}
 \end{table}
+
+As presented in Table \ref{table:numfeatures}, the number of features decreases
+each time a feature set simplification method is turned on. Normalization does
+not appear to significantly reduce the number of features per Tweet. This make
+sense because the number of features in would only be reduced if it contained
+tokens that were different before simplification and were the same after (e.g.
+A Tweet that contained `2' and `3' before normalization would only contain the
+feature `\#NUM' after normalization).
+
+\subsection{Baseline}
+
+The baseline for this project is established by running the Maximum Entropy
+classifier without any stopword removal, uncommon word removal, Or feature
+normalization. The F-score that is achieved is 50.72.
 
 \subsection{Experimental Results}
 
@@ -379,15 +385,15 @@ examples as well as an overall average.
 
 \begin{table}[H]
     \begin{center}
-    \begin{tabular}{|r||c|c|}
+    \begin{tabular}{|r||c|c|c|}
         \hline
-           Description    & mean F & std F \\
+        Description    & $\mu F$ & $\sigma F$ & $\delta\ \mu F$ \\
         \hline
-           All            & 0.0    & 0.0   \\
-           Just Stopwords & 0.0    & 0.0   \\
-           Just Uncommon  & 0.0    & 0.0   \\
-           Just Normalize & 0.0    & 0.0   \\
-           Baseline       & 0.0    & 0.0   \\
+        All            & \textbf{50.96} & 1.93 &  2.59 \\
+        Just Stopwords & 48.27   & 1.83 & -0.10 \\
+        Just Uncommon  & 49.02   & 1.96 &  0.65 \\
+        Just Normalize & 49.55   & 2.10 &  1.18 \\
+        Baseline       & 48.37   & 2.15 & - \\
         \hline
     \end{tabular}
     \end{center}
@@ -408,15 +414,15 @@ examples as well as an overall average.
 
 \begin{table}[H]
     \begin{center}
-    \begin{tabular}{|r||c|c|}
+    \begin{tabular}{|r||c|c|c|}
         \hline
-           Description    & mean F & std F \\
+        Description    & $\mu F$ & $\sigma F$ & $\delta\ \mu F$ \\
         \hline
-           All            & 0.0    & 0.0   \\
-           Just Stopwords & 0.0    & 0.0   \\
-           Just Uncommon  & 0.0    & 0.0   \\
-           Just Normalize & 0.0    & 0.0   \\
-           Baseline       & 0.0    & 0.0   \\
+        All            & 49.28  & 0.81 &  1.17 \\
+        Just Stopwords & 47.29  & 0.76 & -0.82 \\
+        Just Uncommon  & 48.34  & 1.11 &  0.23 \\
+        Just Normalize & \textbf{49.44} & 1.00 & 1.33\\
+        Baseline       & 48.11  & 0.74 & - \\
         \hline
     \end{tabular}
     \end{center}
@@ -433,22 +439,13 @@ examples as well as an overall average.
     \end{center}
 \end{figure}
 
-
-% TODO finish table
-
 % TODO Student T-test
-
-As presented in Table \ref{table:numfeatures}, the number of features decreases
-each time a feature set simplification method is turned on. Normalization does
-not appear to significantly reduce the number of features per Tweet. This make
-sense because the number of features in would only be reduced if it contained
-tokens that were different before simplification and were the same after (e.g.
-A Tweet that contained `2' and `3' before normalization would only contain the
-feature `\#NUM' after normalization).
 
 \subsection{Most Informative Features}
 
-%TODO talk about the features
+The implementation create for this project has the ability to show which
+features are the most discriminatory. The following is a list of the top 30
+most informative features from one run of the Maximum Entropy classifier:
 
 \begin{Verbatim}[fontsize=\footnotesize]
   -3.176 excited==True and label is 'neutral'
@@ -482,6 +479,12 @@ feature `\#NUM' after normalization).
    1.520 lookin==True and label is 'neutral'
    1.515 2c==True and label is 'negative'
 \end{Verbatim}
+
+Some of the features listed above make perfect sense, such as `excited' not
+being associated with the neutral class and `shitty' being associated with the
+negative class. However some of the most discriminating features appear in the
+dataset just enough to get past the uncommon word cutoff, such as `calvin' and
+`oneil'.
 
 \subsection{Comparison to Other Systems}
 
