@@ -194,7 +194,7 @@ single-bayes-001:
 single-bayes-000:
 	python conductor.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize > b000-x.txt
 
-## This is the most recent section. It runs cross-validations
+## This section runs cross-validations
 crossfolds: crossfolds-m crossfolds-b
 crossfolds-m: crossfolds-m111 crossfolds-m100 crossfolds-m010 crossfolds-m001 crossfolds-m000
 crossfolds-b: crossfolds-b111 crossfolds-b100 crossfolds-b010 crossfolds-b001 crossfolds-b000
@@ -228,4 +228,38 @@ crossfolds-b001:
 
 crossfolds-b000:
 	python crossval.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize > b000-cf.txt
+
+crossfolds10: crossfolds10-m crossfolds10-b
+crossfolds10-m: crossfolds10-m111 crossfolds10-m100 crossfolds10-m010 crossfolds10-m001 crossfolds10-m000
+crossfolds10-b: crossfolds10-b111 crossfolds10-b100 crossfolds10-b010 crossfolds10-b001 crossfolds10-b000
+
+crossfolds10-m111:
+	python crossval.py 6500 --validation_metric fscore --labels pnn --num-folds 10 > m111-cf-10.txt
+
+crossfolds10-m100:
+	python crossval.py 6500 --validation_metric fscore --labels pnn  --no-uncommon-selection --no-normalize --num-folds 10 > m100-cf-10.txt
+
+crossfolds10-m010:
+	python crossval.py 6500 --validation_metric fscore --labels pnn --no-normalize --no-stopword-removal --num-folds 10 > m010-cf-10.txt
+
+crossfolds10-m001:
+	python crossval.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-uncommon-selection --num-folds 10 > m001-cf-10.txt
+
+crossfolds10-m000:
+	python crossval.py 6500 --validation_metric fscore --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize --num-folds 10 > m000-cf-10.txt
+
+crossfolds10-b111:
+	python crossval.py 6500 --classifier_type bayes --labels pnn --num-folds 10 > b111-cf-10.txt
+
+crossfolds10-b100:
+	python crossval.py 6500 --classifier_type bayes --labels pnn  --no-uncommon-selection --no-normalize --num-folds 10 > b100-cf-10.txt
+
+crossfolds10-b010:
+	python crossval.py 6500 --classifier_type bayes --labels pnn --no-normalize --no-stopword-removal --num-folds 10 > b010-cf-10.txt
+
+crossfolds10-b001:
+	python crossval.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection --num-folds 10 > b001-cf-10.txt
+
+crossfolds10-b000:
+	python crossval.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize --num-folds 10 > b000-cf-10.txt
 
