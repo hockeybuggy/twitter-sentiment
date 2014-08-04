@@ -11,32 +11,36 @@ following instructions are written for Ubuntu 14.04 GNU/Linux, however it
 should be able to run on any Unix-like system.
 
 
-1.  **Download** - The source code is hosted on github.com [here][github-repo] Download the
+### 1. Download
+
+The source code is hosted on github.com [here][github-repo]. Download the
 source code either via git or a [zip file][zip-file]
 
     wget https://github.com/hockeybuggy/semantic_eval/archive/master.zip
     unzip master.zip
     cd master
 
-2. **Install Prerequisites** - If *python 2.7*, *pip*, and *flex* are not
-installed, they can be installed easily via a package manger:
+### 2. Install Prerequisites
+
+ If *python 2.7*, *pip*, and *flex* are not installed, they can be installed
+easily via a package manger. Then the various required python packages can be
+installed with pip:
 
     sudo apt-get install python2.7 pip flex
-
-Then various required python packages can be installed with:
-
     sudo pip install numpy nltk
 
-3. **Compile Tokenizer** - The tokenizer is written in C for performance reasons
-and can be compiled with:
+### 3. Compile Tokenizer
+
+ The tokenizer is written in C for performance reasons and can be compiled with:
 
     make
 
-4. **Run the Program** - The classifier can be executed in a number of ways.
-There are two python programs that are executable: 'conductor.py' and
-'crossval.py'. These two programs run the classifier in a simple fashion or
-with cross validation. There are a large number of command line arguments that
-can be viewed with:
+### Run the Program
+
+ The classifier can be executed in a number of ways.  There are two python
+programs that are executable: 'conductor.py' and 'crossval.py'. These two
+programs run the classifier in a simple fashion or with cross validation. There
+are a large number of command line arguments that can be viewed with:
 
     python conductor -h
 
