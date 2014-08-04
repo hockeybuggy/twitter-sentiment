@@ -131,9 +131,9 @@ other contexts such as Movie reviews \cite{Pang2002}, and blog posts
 has only attracted researchers in the past few years \cite{Jianfeng2013}
 \cite{Barbosa2010} \cite{Gokulakrishnan2012}.
 
-Sentiment analysis is a very specific type of \textbf{text classification}, a problem
-that is well summarized in chapter 6 of \textit{Mining Text Data} by Aggarwal
-and Zhai \cite{Aggarwal2012} as:
+Sentiment analysis is a very specific type of \textbf{text classification}, a
+problem that is well summarized in chapter 6 of \textit{Mining Text Data} by
+Aggarwal and Zhai \cite{Aggarwal2012} as:
 
 \begin{quote}
     We have a set of training records $\mathcal{D} = \{X_{1} , . . .\ , X_{N}
@@ -165,8 +165,20 @@ classifiers take a different approach to the problem. ``SVM Classifiers attempt
 partition the data space with the use of linear or non-linear delineations
 between the different classifiers.''\cite{Aggarwal2012}.
 
-%TODO Feature Selection
-%TODO mention bag of words
+In order to perform text classification of any kind one of the most important
+aspects is deciding how to represent a document and how to select
+representative features. A document is often represented as either a
+\textit{bag-of-words} or \textit{string}. For the limited time frame of this
+project the \textit{bag-of-words} method was used.
+
+There are many established methods of selecting features such as document
+frequency, which is simply the number of documents that a word occurs at least
+once in. Document frequency has the added benefit of not requiring a class
+labels to select features. While document frequency is the only method employed
+for this project many other method exist, such as Gini Index, Information Gain,
+and $\chi^{2}$-statistic \cite{Aggarwal2012}. Each of these more complex
+methods rely on the class label in the training set in order to determine how
+well the feature discriminates between classes.
 
 \section{Our Implementation}
 \label{section:implementation}
@@ -208,8 +220,6 @@ we improve the parameters by setting $\Lambda = \Lambda + \Delta$.
 
 \subsection{Preprocessing and Feature Selection}
 \label{ssection:featureselection}
-
-% TODO expand on document frequency
 
 The classifier produced for this project is implemented in \textit{python} and
 make extensive use of the \textit{nltk} (Natural Language Toolkit) library. As
@@ -256,12 +266,14 @@ the task. The classifier adheres to the following procedure:
 
             \item By \textbf{Removing Stopwords}, words that do not
                 discriminate between classes are eliminated. Because of the
-                limited size of the dataset only 28 stopwords are used.
+                limited size of the dataset only 28 stopwords are used. For a
+                full list of stopwords see section \ref{ssection:stopwords}
 
             \item Then \textbf{Uncommon words} are removed. Words that do not
                 meet a certain document frequency threshold are eliminated.
                 Many of these words are proper nouns that, if retained are
                 likely to cause the classifier to overfit to the training set.
+                A threshold of one was used throughout the testing process.
 
         \end{itemize}
 
@@ -490,13 +502,11 @@ potentially due to the fact that with out normalization turned, features such
 as `just' are `Just' are determined to be different and may be removed if each
 only occur once.
 
-% TODO Write something here about uncommon not getting performance gains
-% without normalization
-
 \begin{figure}[H]
     \begin{center}
     \includegraphics[scale=0.75]{figures/maxent_boxplot.png}
-    \caption{Caption...}
+    \caption{This boxplot shows the F-score of each of twenty folds in all five
+    Maximum Entropy experiments}
     \label{figure:maxent}
     \end{center}
 \end{figure}
@@ -525,7 +535,8 @@ only occur once.
 \begin{figure}[H]
     \begin{center}
     \includegraphics[scale=0.75]{figures/bayes_boxplot.png}
-    \caption{Caption...}
+    \caption{This boxplot shows the F-score of each of ten folds in all five
+    Naive Bayes experiments}
     \label{figure:bayes}
     \end{center}
 \end{figure}
@@ -676,6 +687,13 @@ As well Hashtags sometimes use CamelCase to create multi-word tags (e.g.
 `\#SorryNotSorry'). It could prove worthwhile to attempt the decompose
 CamelCase Hashtags into its component words during feature selection.
 
+The top solution from the National Research Council of Canada made use of a
+Hashtag lexicon that they developed between April of 2012 and December of the
+same year \cite{Mohammad2013}. The final \textit{NRC Hashtag Sentiment Lexicon}
+has more than 350,00 entries and is available at
+\href{http://www.saifmohammad.com/WebDocs/NRC-Hashtag-Sentiment-Lexicon-v0.1.zip}{Saif
+Mohammad's website}.
+
 \subsubsection{Users}
 \label{sssection:users}
 
@@ -693,10 +711,29 @@ element since people's outlooks, and therefore sentiment's in Tweets, will
 change over time. As well as public perception of a individual changes, the
 prevailing sentiment my change as well.
 
+\subsubsection{Negation}
+\label{sssection:negation}
+%TODO
+\subsubsection{N-gram Features}
+\label{sssection:ngram}
+%TODO
+\subsubsection{Employing Sentiment Lexicon}
+\label{sssection:sentimentlexicon}
+
+Many of the more complex solutions submitted to the SemEval-2013 workshop made
+uses of sentiment lexicons that capture a term's polarity. These lexicons, such
+as \href{http://sentiwordnet.isti.cnr.it/}{SentiWordNet}, express the positive,
+neutral, and negative sentiment of each homonym.
+
 \subsubsection{Support Vector Machine}
 \label{sssection:svm}
 
-%TODO
+Many of the top solutions submitted to the workshop such as NRC-Canada
+\cite{Mohammad2013} made use of a support vector machine for classification.
+This indicates that when used effectively a SVM solution can out-perform a
+Maximum Entropy solution. The KLUE team on the other hand found that their
+Maximum Entropy solution outperform their linear SVM solution
+\cite{Proisl2013}.
 
 \section{References}
 \label{section:referances}

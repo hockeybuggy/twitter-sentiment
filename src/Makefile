@@ -264,7 +264,6 @@ crossfolds10-b000:
 	python crossval.py 6500 --classifier_type bayes --labels pnn --no-stopword-removal --no-uncommon-selection --no-normalize --num-folds 10 > b000-cf-10.txt
 
 ## Num Iterations experiment
-
 iterations: iterations-5 iterations-10 iterations-15 iterations-20 iterations-25 iterations-30 iterations-35 iterations-40 iterations-45 iterations-50 iterations-55
 
 iterations-5:
