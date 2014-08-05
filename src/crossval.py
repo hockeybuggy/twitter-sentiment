@@ -92,12 +92,15 @@ def main(args):
         train_set = select_set("t", fold, partitions)
         validation_set = select_set("v", fold, partitions)
         test_set = select_set("T", fold, partitions)
-        if args.classifier_type == "max_ent":
+
+        if args.validation_metric != "none":
             classifier = maxent_classifier_with_validation(train_set, validation_set,
                     args.validation_metric, 3)
+        elif args.numIterations:
+            classifier = maxent_classifier(train_set, iterations=args.numIterations)
         else:
-            train_set += validation_set
             classifier = naive_bayes_classifier(train_set)
+
         print "Testing fold {}...".format(i),
         results_dict = classifier.test(test_set, args.labels, trace=False)
         #Add results to the accumulation dict
