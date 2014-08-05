@@ -7,6 +7,7 @@
 \usepackage{float}
 \usepackage{setspace}
 \usepackage{fancyvrb}
+\usepackage[font=footnotesize,labelfont=bf]{caption}
 \usepackage[numbers]{natbib}
 
 \onehalfspacing
@@ -52,7 +53,7 @@ Professor Xining Li
 
 \vspace{1.5cm}
 
-Draft 3 %TODO ditch this
+Draft 4 %TODO ditch this
 
 \end{center}
 
@@ -63,7 +64,7 @@ Draft 3 %TODO ditch this
 \label{section:intro}
 
 Social media allows people to discuss topics and disseminate their opinions
-with a near negligible cost. The low barrier of entry to social media allows
+with a near negligible cost. Social media's low barrier of entry allows
 everyone to share their opinions as much as they please. The scale of textual
 data from social media is enormous. In order to gain insight into the `overall'
 opinion on particular topics, the process of determining sentiment must be
@@ -74,9 +75,9 @@ many businesses. If a company can determine what consumers think of their
 products they can take actions such as improve their products or appease an
 unsatisfied customer.
 
-Sentiment analysis is simply a classification task that attempts to label
-fragments of text that appropriately summarizes the attitude of the text.
-Natural Language Processing (NLP) provides a number of method for preforming
+Sentiment analysis is simply a classification task that attempts to correctly
+label fragments of text to appropriately summarizes the attitude of the text.
+Natural Language Processing (NLP) provides a number of method for performing
 sentiment analysis. Many of these methods, such as Naive Bayes and Maximum
 Entropy, take a probabilistic approach to performing the task. Another commonly
 used method of performing sentiment analysis is the uses of a support vector
@@ -85,22 +86,22 @@ machine (SVM).
 \subsection{Specific Problem}
 \label{ssection:specificproblem}
 
-The focus of this undergraduate research project has been to preform sentiment
+The focus of this undergraduate research project has been to perform sentiment
 analysis in data from the microbloging website Twitter. All of the messages,
 known as Tweets, are constrained in length to 140 characters. This limit forces
 many users of Twitter to use abbreviations and contractions. This data presents
-some interesting problems to performing good sentiment analysis due to it's
-short and informal nature. Twitter makes it extremely easy to publish a Tweet
-and has no way to edit a Tweet once published. This results in more spelling
-mistakes and inconsistent grammar then other sources of text. Tweets often also
-contain URLs to other websites. Tweets also contain a certain amount of OOV
-(Out-Of-Vocabulary) words, such as Hashtags, a tagging system for topics
-allowing Tweets in a similar vein of conversation to be found. Other OOV words
-include mentions (e.g. `@BarackObama') which are a method to direct a Tweet to
-one or more users, as well as `RT' which is an acronym for `retweet'
+some interesting problems to performing good sentiment analysis due to the
+short and informal nature of the text. Twitter makes it extremely easy to
+publish a Tweet and has no way to edit a Tweet once published. This results in
+more spelling mistakes and inconsistent grammar then other sources of text.
+Tweets often also contain URLs to other websites. Tweets also contain a certain
+amount of OOV (Out-Of-Vocabulary) words, such as Hashtags, a tagging system for
+topics allowing Tweets in a similar vein of conversation to be found. Other OOV
+words include mentions (e.g. `@BarackObama') which are a method to direct a
+Tweet to one or more users, as well as `RT' which is an acronym for `retweet'
 communicating that this particular Tweet is a reissuing of another users Tweet.
 Another issue that is out of the scope of this project is that Twitter
-currently supports 35+ languages, meaning that in-order to determine the
+currently supports 35+ languages, meaning that in order to determine the
 sentiment most systems must first determine which language the Tweet is in.
 
 \subsection{Task Description}
@@ -114,9 +115,10 @@ Message polarity classification. The organizers used the Amazon service
 prevailing sentiment was chosen. Participants were tasked with creating a
 classifier to establish labels for Tweets not in the training dataset. The
 various submissions of the participants were then evaluated by the average of
-the F-positive and the F-negative. The submissions were allowed categorized as
-`unconstrained' or `constrained' depending on if they did or did not use
-supplemental data, respectively.
+the F-positive and the F-negative (explained in depth in Section
+\ref{ssection:performancemeasurement}). The submissions were allowed
+categorized as `unconstrained' or `constrained' depending on if they did or did
+not use supplemental data, respectively.
 
 \section{Background}
 \label{section:background}
@@ -143,20 +145,20 @@ Aggarwal and Zhai \cite{Aggarwal2012} as:
     the features in the underlying record to one of the class labels.
 \end{quote}
 
-In the case of sentiment analysis the class labels being applied to the records
-denote the attitude or opinion in the text. The focus of this project is
-determining sentiment at the document level which assumes that the document
+In the case of sentiment analysis, the class labels being applied to the
+records denote the attitude or opinion in the text. The focus of this project
+is determining sentiment at the document level, which assumes that the document
 expresses a predominate sentiment. This is a somewhat reasonable assumption
 given the fact that Tweets are limited in size, making it difficult to express
 mixed sentiment. Sentiment analysis is very closely linked with opinion mining,
 which is the practice of extracting sentiment on a particular topic in order to
 gain insights into public opinion on the topic.
 
-Much of the previous research make use of Naive Bayes, Maximum Entropy, and
-SVM classifiers. The Naive Bayes classifier uses the occurrences of features in
-the \textit{training set} to calculate the probability that an example in the
+Much of the previous research make use of Naive Bayes, Maximum Entropy, and SVM
+classifiers. The Naive Bayes classifier uses the occurrences of features in the
+\textit{training set} to calculate the probability that an example in the
 \textit{test set} belongs in a given class. This method has the benefit of
-linear time training since there is no iterative process, but I makes the
+linear time training since there is no iterative process, but it makes the
 assumption that all features are independent, which is not the case in natural
 language. The Maximum Entropy approach is explained in detail in section
 \ref{ssection:summaryofmaxent}. While Maximum Entropy and Naive Bayes are both
@@ -167,15 +169,16 @@ between the different classifiers.''\cite{Aggarwal2012}.
 
 In order to perform text classification of any kind one of the most important
 aspects is deciding how to represent a document and how to select
-representative features. A document is often represented as either a
-\textit{bag-of-words} or \textit{string}. For the limited time frame of this
-project the \textit{bag-of-words} method was used.
+representative features. A document is often represented as a
+\textit{bag-of-words}, which is defined a set of strings with no apparent
+order. The \textit{bag-of-words} method of representation was selected for this
+project.
 
 There are many established methods of selecting features such as document
 frequency, which is simply the number of documents that a word occurs at least
 once in. Document frequency has the added benefit of not requiring a class
 labels to select features. While document frequency is the only method employed
-for this project many other method exist, such as Gini Index, Information Gain,
+for this project, many other methods exist, such as Gini Index, Information Gain,
 and $\chi^{2}$-statistic \cite{Aggarwal2012}. Each of these more complex
 methods rely on the class label in the training set in order to determine how
 well the feature discriminates between classes.
@@ -190,8 +193,8 @@ The Maximum Entropy classification method was focused on due to the limited
 duration of the project, however a Naive Bayes classifier was also implemented
 to provide a point of comparison. This supervised machine learning method
 calculates the probability that a given document $d$ belongs to the class $c$.
-The Maximum Entropy approach is summarized below. For a more detailed
-description, see: Nigam et al. \cite{Nigam1999}.
+The Maximum Entropy approach is summarized below (for a more detailed
+description, see: Nigam et al. \cite{Nigam1999}).
 
 The training data is used to establish constraints in the following fashion:
 
@@ -241,20 +244,20 @@ the task. The classifier adheres to the following procedure:
 
             \item \textbf{Words} are coerced into lowercase
 
-            \item \textbf{Numbers} are replaced with "\#NUM"
+            \item \textbf{Numbers} are replaced with ``\#NUM''
 
-            \item \textbf{User} are replaced with "@USER"
+            \item \textbf{User} are replaced with ``@USER''
 
-            \item \textbf{Hashtags} are replaced with "\#OCTOTHORPE"
+            \item \textbf{Hashtags} are replaced with ``\#OCTOTHORPE''
 
-            \item \textbf{URLs} are replaced with "@URL"
+            \item \textbf{URLs} are replaced with ``@URL''
 
             \item \textbf{Emoticon} are grouped into four different groups
                 based on their intended meaning. Each group is then replaced
-                with a representation. (e.g. `:)' $\rightarrow$ `EM\_HAPPY' and
-                `;-p' $\rightarrow$ `EM\_WINK')
+                with a representation. [e.g. `:)' $\rightarrow$ `EM\_HAPPY' and
+                `;-p' $\rightarrow$ `EM\_WINK']
 
-            \item most \textbf{Punctuation} is replaced with "PUNCT" however
+            \item most \textbf{Punctuation} is replaced with ``PUNCT'' however
                 question marks, punctuation marks, and ellipsis are each
                 replaced with their own representation.
 
@@ -267,7 +270,7 @@ the task. The classifier adheres to the following procedure:
             \item By \textbf{Removing Stopwords}, words that do not
                 discriminate between classes are eliminated. Because of the
                 limited size of the dataset only 28 stopwords are used. For a
-                full list of stopwords see section \ref{ssection:stopwords}
+                full list of stopwords see section \ref{ssection:stopwords}.
 
             \item Then \textbf{Uncommon words} are removed. Words that do not
                 meet a certain document frequency threshold are eliminated.
@@ -296,8 +299,8 @@ the task. The classifier adheres to the following procedure:
 \label{ssection:optimization}
 
 The implementation created for this project used a \textit{validation set} during
-training as the primary mechanism to avoid overfitting. While training the
-effectiveness of the classifier was evaluated after every iteration, using the
+training as the primary mechanism to avoid overfitting. While training, the
+effectiveness of the classifier was evaluated after every iteration using the
 accuracy or F-positive measure. During the training process the following
 procedure was followed:
 
@@ -387,8 +390,9 @@ calculated in a similar fashion.
             sections in all possible configurations. In each fold 60\% of the
             partitions are designated as part of the \textit{training set},
             20\% as the \textit{validation set}, and 20\% as the \textit{test set}.
-            Since the Naive Bayes classifier does not use a validation set
-            40\% of the partitions are designated as part of the \textit{test set}
+            Since the Naive Bayes classifier does not use a \textit{validation set},
+            40\% of the partitions are designated as part of the
+            \textit{test set}
 
             %TODO is this clear?
 
@@ -415,8 +419,8 @@ calculated in a similar fashion.
 
 The baseline for this project is established by running the Maximum Entropy
 classifier without any stopword removal, uncommon word removal (words with a
-document frequancy > 1), Or feature normalization. The F-score that is achieved
-is \textbf{50.72}.
+document frequency $<$ 1), Or feature normalization. The F-score that is
+achieved is \textbf{50.72}.
 
 \subsection{Experimental Results}
 \label{ssection:results}
@@ -430,11 +434,11 @@ experiment refers to only removing words with a document frequency of one. The
 mechanisms. The `All' experiment refers to testing the classifier with all of
 the previous feature selection methods turned on.
 
-\subsubsection{Number of features}
+\subsubsection{Number of Features}
 \label{ssection:numfeatures}
 
-Number of features retained after feature selection varies from Tweet to Tweet.
-To summarize the number of features retained after different process Table
+The number of features retained after feature selection varies from Tweet to Tweet.
+To summarize the number of features retained after different processes, Table
 \ref{table:numfeatures} presents the mean number of features per Tweet for
 positive, neutral, negative examples as well as an overall average.
 
@@ -459,15 +463,13 @@ positive, neutral, negative examples as well as an overall average.
 
 %TODO check these results
 
-As presented in Table \ref{table:numfeatures}, the number of features decreases
-each time a feature set simplification method is turned on. Normalization does
-not appear to significantly reduce the number of features per Tweet. This make
-sense because the number of features in would only be reduced if it contained
-tokens that were different before simplification and were the same after (e.g.
+Interestingly `negative' Tweets contain more features then `positive' Tweets
+which, in turn, contain more features than `neutral' tweets. Normalization does
+not appear to significantly reduce the number of features per Tweet. This makes
+sense since the number of features in the \textit{bag-of-words} would only be
+reduced if two or more of the features are normalized to the same thing (e.g.
 A Tweet that contained `2' and `3' before normalization would only contain the
 feature `\#NUM' after normalization).
-
-%TODO clarify
 
 \subsubsection{Maximum Entropy Classifier}
 
@@ -490,14 +492,14 @@ feature `\#NUM' after normalization).
     \label{table:maxent-results}
 \end{table}
 
-As Table \ref{table:maxent-results} shows `All' experiment provides the best
-results over the baseline. The `Just Stopwords' experiment actually provides
-slightly worse results then the baseline indicating that in context of Tweets
-with so few features in each example every feature counts. The `Just Uncommon'
-experiment does not provide very significant gains when used alone. This is
-potentially due to the fact that with out normalization turned, features such
-as `just' are `Just' are determined to be different and may be removed if each
-only occur once.
+As Table \ref{table:maxent-results} shows, the `All' experiment provides the
+best results over the baseline. The `Just Stopwords' experiment actually
+provides slightly worse results then the baseline indicating that in context of
+Tweets with so few features in each example every feature counts. The `Just
+Uncommon' experiment does not provide very significant gains when used alone.
+This is potentially due to the fact that without normalization turned,
+features such as `just' are `Just' are determined to be different and may be
+removed if each only occur once.
 
 \begin{figure}[H]
     \begin{center}
@@ -507,6 +509,8 @@ only occur once.
     \label{figure:maxent}
     \end{center}
 \end{figure}
+
+% TODO make serif?
 
 \subsubsection{Naive Bayes Classifier}
 
@@ -543,9 +547,10 @@ only occur once.
 \subsection{Most Informative Features}
 \label{ssection:informativefeatures}
 
-The implementation create for this project has the ability to show which
+The implementation created for this project has the ability to show which
 features are the most discriminatory. The following is a list of the top 30
-most informative features from one run of the Maximum Entropy classifier:
+most informative features from one run of the Maximum Entropy classifier (note
+that some of the weights are negative):
 
 \begin{Verbatim}[fontsize=\footnotesize]
   -3.176 excited==True and label is 'neutral'
@@ -581,19 +586,17 @@ most informative features from one run of the Maximum Entropy classifier:
 \end{Verbatim}
 
 Some of the features listed above make perfect sense, such as `excited' not
-being associated with the neutral class and `shitty' being associated with the
-negative class. However some of the most discriminating features appear in the
-dataset just enough to get past the uncommon word cutoff, such as `calvin' and
-`oneil'.
+being associated with the neutral class and `embarrassing' being associated
+with the negative class. However some of the most discriminating features
+appear in the dataset infrequently, such as `calvin' and `oneil'.
 
 \subsection{Comparison to Other Systems}
 \label{ssection:comparison}
 
 Table \ref{table:comparison} shows the performance of the classifier produced
 for this project compared to results of the workshop participants. The full
-table (with out this project's results) can be found in table 9 of Nakov et al.
+table (with out this project's results) can be found in Nakov et al. as Table 9
 \cite{Nakov2013}.
-
 
 \begin{table}[H]
     \begin{center}
@@ -646,7 +649,7 @@ table (with out this project's results) can be found in table 9 of Nakov et al.
 \subsection{Conclusions}
 \label{ssection:conclusions}
 
-As shown in Table \ref{table:comparison} there is a lot of room for improvement
+As shown in Table \ref{table:comparison}, there is a lot of room for improvement
 before this system is a completive solution. However, only simple methods have
 been employed including: stopword removal of only 28 words, words with a
 document frequency lower than one removed, and normalization of words, emoticons,
@@ -656,6 +659,10 @@ results.
 
 \subsection{Future Work}
 \label{ssection:futurework}
+
+There is room for a number of improvement in the implementation of the system.
+The following sections are a number of improvements as future work. Many of the
+ideas are from the other submissions to the SemEval-2013 workshop.
 
 \subsubsection{Hashtags}
 \label{sssection:hashtags}
@@ -675,23 +682,24 @@ accuracy.
     Well I have an ear infection #good #sarcasm
 \end{verbatim}
 
-While a simple approach could be to strip the octothorpe from the front of the
-Hashtag (e.g. `\#good' $\rightarrow$ `good'), the semantic meaning of the two
-are different. Hashtags often have message level meaning while simple words
-have local context withing the sentence. Since the dataset created for the
-SemEval-2013 workshop mostly contained examples of Hashtags used as proper
-nouns, more annotated Tweets would be needed for training and testing.
+The words in the previous Tweet carry no inherent sentiment, however the
+message is clearly negative. While a simple approach could be to strip the
+octothorpe from the front of the Hashtag (e.g. `\#good' $\rightarrow$ `good'),
+the semantic meaning of the two are different. Hashtags often have message
+level meaning while simple words have local context withing the sentence. Since
+the dataset created for the SemEval-2013 workshop mostly contained examples of
+Hashtags used as proper nouns, more annotated Tweets would be needed for
+training and testing.
 
-As well Hashtags sometimes use CamelCase to create multi-word tags (e.g.
+Hashtags sometimes use CamelCase to create multi-word tags (e.g.
 `\#SorryNotSorry'). It could prove worthwhile to attempt the decompose
 CamelCase Hashtags into its component words during feature selection.
 
 The top solution from the National Research Council of Canada made use of a
-Hashtag lexicon that they developed between April of 2012 and December of the
-same year \cite{Mohammad2013}. The final \textit{NRC Hashtag Sentiment Lexicon}
-has more than 350,00 entries and is available at
-\href{http://www.saifmohammad.com/WebDocs/NRC-Hashtag-Sentiment-Lexicon-v0.1.zip}{Saif
-Mohammad's website}.
+Hashtag lexicon that they developed between April of 2012 and December 2012
+\cite{Mohammad2013}. The final \textit{NRC Hashtag Sentiment Lexicon} has more
+than 350,00 entries and is available at Saif Mohammad's website
+\footnote{http://www.saifmohammad.com/WebDocs/NRC-Hashtag-Sentiment-Lexicon-v0.1.zip}.
 
 \subsubsection{Users}
 \label{sssection:users}
@@ -708,7 +716,7 @@ Barack Obama (`@BarackObama') may contain extremely mixed sentiment.
 A challenge that this method could introduce is the introduction of a temporal
 element since people's outlooks, and therefore sentiment's in Tweets, will
 change over time. As well as public perception of a individual changes, the
-prevailing sentiment my change as well.
+prevailing sentiment may change as well.
 
 \subsubsection{Negation}
 \label{sssection:negation}
@@ -716,7 +724,7 @@ prevailing sentiment my change as well.
 One problem with the current implementation is that it lack support for
 negation. In it's current form the classifier would likely misunderstand the
 sequence ``not perfect'' since `not' is a vaguely negative word and `perfect'
-is a very positive word, it would likely be classified as positive when in fact
+is a very positive word. It would likely be classified as positive when in fact
 the sentiment is quite clearly negative. A common approach to this problem is
 to add a suffix (such as "\_NEG") to word that appear between a negation word
 and a section delimiting punctuation mark (such as `,', `.', `:', `;', `!',
@@ -726,7 +734,7 @@ can do a better job of distinguishing classes.
 \subsubsection{N-gram Features}
 \label{sssection:ngram}
 
-One way that many of the other bag-of-words solutions capture word order is by
+One way that many of the other \textit{bag-of-words} solutions capture word order is by
 creating features consisting of sequences of words called bigrams. Adding
 bigram features adds a large number of features which can add complexity to
 training. This concept can also be extended to sequences of length n, called
@@ -742,18 +750,21 @@ by *' \cite{Mohammad2013}.
 
 Most of the more complex solutions submitted to the SemEval-2013 workshop made
 uses of sentiment lexicons that capture a term's polarity. These lexicons, such
-as \href{http://sentiwordnet.isti.cnr.it/}{SentiWordNet}, express the positive,
-neutral, and negative sentiment of each homonym.
+as SentiWordNet \footnote{http://sentiwordnet.isti.cnr.it/}, express the
+positive, neutral, and negative sentiment of each homonym. An example of this
+from SentiWordNet, is `good' meaning `morally admirable' having an entirely
+positive sentiment versus `good' meaning `having the normally expected amount'
+having an entirely neutral sentiment
+\footnote{http://sentiwordnet.isti.cnr.it/search.php?q=good}.
 
 \subsubsection{Support Vector Machine}
 \label{sssection:svm}
 
-Many of the top solutions submitted to the workshop such as NRC-Canada
-\cite{Mohammad2013} made use of a support vector machine for classification.
-This indicates that when used effectively a SVM solution can out-perform a
-Maximum Entropy solution. The KLUE team on the other hand found that their
-Maximum Entropy solution outperform their linear SVM solution
-\cite{Proisl2013}.
+Many of the top solutions submitted to the workshop, such as NRC-Canada made
+use of a Support Vector Machine for classification \cite{Mohammad2013}.  This
+indicates that when used effectively a SVM solution can out-perform a Maximum
+Entropy solution. The KLUE team, on the other hand, found that their Maximum
+Entropy solution outperform their linear SVM solution \cite{Proisl2013}.
 
 \section{References}
 \label{section:referances}
@@ -833,11 +844,40 @@ make crossfolds      # Run all of the cross-validation experiments
 \subsection{Stopword list}
 \label{ssection:stopwords}
 
-The list of stopwords was acquired \href{www.ranks.nl/stopwords}{here} and is
+The list of stopwords was acquired online\footnote{www.ranks.nl/stopwords} and is
 as follows:
 
-a, about, an, are, as, at, be, by, com, for, from, how, in, is, it, of, on, or,
-that, the, this, to, was, what, when, where, who, will, with
+\begin{Verbatim}[fontsize=\footnotesize]
+        a
+        about
+        an
+        are
+        as
+        at
+        be
+        by
+        com
+        for
+        from
+        how
+        in
+        is
+        it
+        of
+        on
+        or
+        that
+        the
+        this
+        to
+        was
+        what
+        when
+        where
+        who
+        will
+        with
+\end{Verbatim}
 
 \end{document}
 
