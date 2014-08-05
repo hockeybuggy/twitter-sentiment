@@ -632,8 +632,6 @@ table (with out this project's results) can be found in table 9 of Nakov et al.
         $\ldots$   & $\ldots$ \\
         9 more teams &  \textless\ 50 \\
         \hline
-        Majority Baseline & 29.19 \\
-        \hline
     \end{tabular}
     \end{center}
     \caption{Comparison of constrained classifiers sumitted to the SemEval-2013
@@ -648,9 +646,13 @@ table (with out this project's results) can be found in table 9 of Nakov et al.
 \subsection{Conclusions}
 \label{ssection:conclusions}
 
-\textit{Note: I would like to finish the results section before I start this section }
-
-%TODO get a stronger conclusion
+As shown in Table \ref{table:comparison} there is a lot of room for improvement
+before this system is a completive solution. However, only simple methods have
+been employed including: stopword removal of only 28 words, words with a
+document frequency lower than one removed, and normalization of words, emoticons,
+and OOV words. These simple preprocessing and feature selection methods in
+combination with a Maximum Entropy classifier have demonstrated reasonable
+results.
 
 \subsection{Future Work}
 \label{ssection:futurework}
@@ -831,8 +833,8 @@ make crossfolds      # Run all of the cross-validation experiments
 \subsection{Stopword list}
 \label{ssection:stopwords}
 
-The list of stopwords was acquired at \href{holla}{www.ranks.nl/stopwords} and
-is as follows:
+The list of stopwords was acquired \href{www.ranks.nl/stopwords}{here} and is
+as follows:
 
 a, about, an, are, as, at, be, by, com, for, from, how, in, is, it, of, on, or,
 that, the, this, to, was, what, when, where, who, will, with
