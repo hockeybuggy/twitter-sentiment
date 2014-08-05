@@ -16,7 +16,7 @@ should be able to run on any Unix-like system.
 The source code is hosted on github.com [here][github-repo]. Download the
 source code either via git or a [zip file][zip-file]
 
-    wget https://github.com/hockeybuggy/twitter-sentiment/archive/master.zip -O tsent.zip
+    wget https://github.com/hockeybuggy/twitter-sentiment/archive/dist.zip -O tsent.zip
     unzip tsent.zip
     cd tsent
 
@@ -55,5 +55,5 @@ be run via the make file:
     make crossfolds      # Run all of the cross-validation experiments
 
 [github-repo]: https://github.com/hockeybuggy/semantic_evalhere.
-[zipfile]: https://github.com/hockeybuggy/semantic_eval/archive/master.zip
+[zip-file]: https://github.com/hockeybuggy/semantic_eval/archive/master.zip
 
