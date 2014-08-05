@@ -414,10 +414,9 @@ calculated in a similar fashion.
 \label{ssection:baseline}
 
 The baseline for this project is established by running the Maximum Entropy
-classifier without any stopword removal, uncommon word removal, Or feature
-normalization. The F-score that is achieved is \textbf{50.72}.
-
-%TODO consider cleaning the text up here
+classifier without any stopword removal, uncommon word removal (words with a
+document frequancy > 1), Or feature normalization. The F-score that is achieved
+is \textbf{50.72}.
 
 \subsection{Experimental Results}
 \label{ssection:results}
@@ -430,8 +429,6 @@ experiment refers to only removing words with a document frequency of one. The
 `Just Normalization' experiment refers to only applying feature normalization
 mechanisms. The `All' experiment refers to testing the classifier with all of
 the previous feature selection methods turned on.
-
-%TODO add references to the feature selection section
 
 \subsubsection{Number of features}
 \label{ssection:numfeatures}
@@ -713,14 +710,35 @@ prevailing sentiment my change as well.
 
 \subsubsection{Negation}
 \label{sssection:negation}
-%TODO
+
+One problem with the current implementation is that it lack support for
+negation. In it's current form the classifier would likely misunderstand the
+sequence ``not perfect'' since `not' is a vaguely negative word and `perfect'
+is a very positive word, it would likely be classified as positive when in fact
+the sentiment is quite clearly negative. A common approach to this problem is
+to add a suffix (such as "\_NEG") to word that appear between a negation word
+and a section delimiting punctuation mark (such as `,', `.', `:', `;', `!',
+`?'). By separating negated features from their non-negated instances, features
+can do a better job of distinguishing classes.
+
 \subsubsection{N-gram Features}
 \label{sssection:ngram}
-%TODO
+
+One way that many of the other bag-of-words solutions capture word order is by
+creating features consisting of sequences of words called bigrams. Adding
+bigram features adds a large number of features which can add complexity to
+training. This concept can also be extended to sequences of length n, called
+ngrams.
+
+The added complexity associated with ngrams did not deter the National Research
+Council of Canada from using ngrams of length 1, 2, 3, and 4 as well as
+`non-contiguous' ngrams which are described as `ngrams with one token replaced
+by *' \cite{Mohammad2013}.
+
 \subsubsection{Employing Sentiment Lexicon}
 \label{sssection:sentimentlexicon}
 
-Many of the more complex solutions submitted to the SemEval-2013 workshop made
+Most of the more complex solutions submitted to the SemEval-2013 workshop made
 uses of sentiment lexicons that capture a term's polarity. These lexicons, such
 as \href{http://sentiwordnet.isti.cnr.it/}{SentiWordNet}, express the positive,
 neutral, and negative sentiment of each homonym.
