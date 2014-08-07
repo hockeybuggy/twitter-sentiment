@@ -3,7 +3,7 @@ library(ggplot2)
 
 xlab <- "Experiment"
 ylab <- "F-score"
-groups <- c("All", "Just Stopwords", "Just Uncommon", "Just Normalization", "Baseline")
+groups <- c("Baseline", "Just Stopwords", "Just Uncommon", "Just Normalization", "All")
 palette <- c("#999999", "#84B237", "#6E98FF", "#B24932", "#F0E442")
 
 

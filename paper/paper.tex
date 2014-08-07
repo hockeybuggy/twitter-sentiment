@@ -37,7 +37,7 @@ dander01@uoguelph.ca
 \vspace{1.5cm}
 CIS*4900 - Undergraduate Research Project
 
-August 4th, 2014 %TODO fix this
+August 7th, 2014 %TODO fix this
 
 \vspace{1.5cm}
 
@@ -53,7 +53,7 @@ Professor Xining Li
 
 \vspace{1.5cm}
 
-Draft 4 %TODO ditch this
+Draft 5 %TODO ditch this
 
 \end{center}
 
@@ -219,8 +219,6 @@ procedure with the function $l(\Lambda|\mathcal{D})$, where:
 Starting with any initial vector of parameters $\Lambda$, at each iteration
 we improve the parameters by setting $\Lambda = \Lambda + \Delta$.
 
-% TODO expand on IIS
-
 \subsection{Preprocessing and Feature Selection}
 \label{ssection:featureselection}
 
@@ -365,11 +363,22 @@ Which can be simplified to:
 \end{equation}
 
 The \textit{Precision} measure for the positive label is $P_{pos} =
-\frac{\mathrm{\# of\ true\ postive}}{\mathrm{\# of\ true\ postive} + \mathrm{\#
-of\ false\ postive} }$. The \textit{Recall} measure for the positive label is
-defined as $R_{pos} = \frac{\mathrm{\# of\ true\ postive}}{\mathrm{\# of\ true\
-postive} + \mathrm{\# of\ false\ negative} }$. $P_{neg}$ and $R_{neg}$ can be
+\frac{\mathrm{\# of\ true\ positive}}{\mathrm{\# of\ true\ positive} + \mathrm{\#
+of\ false\ positive} }$. The \textit{Recall} measure for the positive label is
+defined as $R_{pos} = \frac{\mathrm{\# of\ true\ positive}}{\mathrm{\# of\ true\
+positive} + \mathrm{\# of\ false\ negative} }$. $P_{neg}$ and $R_{neg}$ can be
 calculated in a similar fashion.
+
+Accuracy is used as a secondary performance measure. While more intuitive, it
+is not used as a primary evaluation measure due to it's tendency to be biased
+by uneven numbers of examples particular labels in the dataset. Accuracy,
+henceforth referred to as $Acc$, can be calculate with the following formula:
+
+\begin{equation}
+    Acc = \frac{\mathrm{\# of\ true\ positive} + \mathrm{\# of\ true\ negative}}{N}
+\end{equation}
+
+Where $N$ is equal to the total number of documents in the \textit{test set}.
 
 \subsection{Improving Performance Measurement}
 \label{ssection:performancemeasurement}
@@ -393,8 +402,6 @@ calculated in a similar fashion.
             Since the Naive Bayes classifier does not use a \textit{validation set},
             40\% of the partitions are designated as part of the
             \textit{test set}
-
-            %TODO is this clear?
 
         \begin{enumerate}
 
@@ -425,6 +432,8 @@ achieved is \textbf{50.72}.
 \subsection{Experimental Results}
 \label{ssection:results}
 
+%TODO change the label names
+
 The following experiments examine the results of the Maximum Entropy classifier
 and the Naive Bayes classifier with various feature selection methods turned on
 or off. The `Baseline' experiment refers to no feature selection. The `Just
@@ -444,15 +453,15 @@ positive, neutral, negative examples as well as an overall average.
 
 \begin{table}[H]
     \begin{center}
-    \begin{tabular}{|c||r|r|r|r|}
+    \begin{tabular}{|r||c|c|c|c|}
         \hline
         Description        & Positive & Neutral & Negative & Overall \\
         \hline
-        All                & 14.85    & 14.06   & 15.10    & 14.49 \\
+        Baseline           & 20.65    & 20.45   & 20.96    & 20.58 \\
         Just Stopwords     & 17.13    & 16.86   & 17.41    & 17.04 \\
         Just Uncommon      & 18.43    & 17.87   & 18.85    & 18.21 \\
         Just Normalization & 19.65    & 19.16   & 20.06    & 19.46 \\
-        Baseline           & 20.65    & 20.45   & 20.96    & 20.58 \\
+        All                & 14.85    & 14.06   & 15.10    & 14.49 \\
         \hline
     \end{tabular}
     \end{center}
@@ -460,8 +469,6 @@ positive, neutral, negative examples as well as an overall average.
     average number of features per Tweet in each experiment.}
     \label{table:numfeatures}
 \end{table}
-
-%TODO check these results
 
 Interestingly `negative' Tweets contain more features then `positive' Tweets
 which, in turn, contain more features than `neutral' tweets. Normalization does
@@ -473,17 +480,19 @@ feature `\#NUM' after normalization).
 
 \subsubsection{Maximum Entropy Classifier}
 
+%TODO finish accuracy
+
 \begin{table}[H]
     \begin{center}
-    \begin{tabular}{|r||c|c|c|}
+    \begin{tabular}{|r||c|c|c|c|c|}
         \hline
-        Description    & $\mu F$ & $\sigma F$ & $\delta\ \mu F$ \\
+        Description    & $\mu F$ & $\sigma F$ & $\delta\ \mu F$ & $\mu Acc$ & $\sigma Acc$ \\
         \hline
-        All            & \textbf{50.96} & 1.93 &  2.59 \\
-        Just Stopwords & 48.27   & 1.83 & -0.10 \\
-        Just Uncommon  & 49.02   & 1.96 &  0.65 \\
-        Just Normalize & 49.55   & 2.10 &  1.18 \\
-        Baseline       & 48.37   & 2.15 & - \\
+        Baseline       & 48.37   & 2.15 & -     & & \\
+        Just Stopwords & 48.27   & 1.83 & -0.10 & 62.07 & 1.69 \\
+        Just Uncommon  & 49.02   & 1.96 &  0.65 & 62.47 & 1.91 \\
+        Just Normalize & 49.55   & 2.10 &  1.18 & 63.57 & 1.75 \\
+        All            & \textbf{50.96} & 1.93 &  2.59 & \textbf{63.82} & 0.91 \\
         \hline
     \end{tabular}
     \end{center}
@@ -514,17 +523,19 @@ removed if each only occur once.
 
 \subsubsection{Naive Bayes Classifier}
 
+%TODO finish table
+
 \begin{table}[H]
     \begin{center}
-    \begin{tabular}{|r||c|c|c|}
+    \begin{tabular}{|r||c|c|c|c|c|}
         \hline
-        Description    & $\mu F$ & $\sigma F$ & $\delta\ \mu F$ \\
+        Description    & $\mu F$ & $\sigma F$ & $\delta\ \mu F$ & $\mu Acc$ & $\sigma Acc$ \\
         \hline
-        All            & 49.28  & 0.81 &  1.17 \\
-        Just Stopwords & 47.29  & 0.76 & -0.82 \\
-        Just Uncommon  & 48.34  & 1.11 &  0.23 \\
-        Just Normalize & \textbf{49.44} & 1.00 & 1.33\\
-        Baseline       & 48.11  & 0.74 & - \\
+        Baseline       & 48.11  & 0.74 & - & & \\
+        Just Stopwords & 47.29  & 0.76 & -0.82 & & \\
+        Just Uncommon  & 48.34  & 1.11 &  0.23 & & \\
+        Just Normalize & \textbf{49.44} & 1.00 & 1.33 & & \\
+        All            & 49.28  & 0.81 &  1.17 & & \\
         \hline
     \end{tabular}
     \end{center}
@@ -541,8 +552,6 @@ removed if each only occur once.
     \label{figure:bayes}
     \end{center}
 \end{figure}
-
-% TODO Student T-test
 
 \subsection{Most Informative Features}
 \label{ssection:informativefeatures}
@@ -795,8 +804,6 @@ wget https://github.com/hockeybuggy/twitter-sentiment/archive/dist.zip -O tsent.
 unzip tsent.zip
 cd tsent
 \end{Verbatim}
-
-% TODO test this and make a dist branch
 
     \item \textbf{Install Prerequisites} - If \textit{python 2.7},
         \textit{pip}, and \textit{flex} are not installed, they can be
