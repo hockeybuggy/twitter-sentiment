@@ -54,6 +54,6 @@ be run via the make file:
     make crossfolds-b111 # Naive Bayes with cross-val & feature selection
     make crossfolds      # Run all of the cross-validation experiments
 
-[github-repo]: https://github.com/hockeybuggy/semantic_evalhere.
-[zip-file]: https://github.com/hockeybuggy/semantic_eval/archive/master.zip
+[github-repo]: https://github.com/hockeybuggy/twitter-sentiment/tree/dist
+[zip-file]: https://github.com/hockeybuggy/twitter-sentiment/archive/master.zip
 
