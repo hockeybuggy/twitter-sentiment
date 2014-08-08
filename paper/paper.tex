@@ -174,10 +174,10 @@ There are many established methods of selecting features such as document
 frequency, which is simply the number of documents that a word occurs at least
 once in. Document frequency has the added benefit of not requiring a class
 labels to select features. While document frequency is the only method employed
-for this project, many other methods exist, such as Gini Index, Information Gain,
-and $\chi^{2}$-statistic \cite{Aggarwal2012}. Each of these more complex
-methods rely on the class label in the training set in order to determine how
-well the feature discriminates between classes.
+for this project, many other methods exist, such as Gini Index, Information
+Gain, and $\chi^{2}$-statistic \cite{Aggarwal2012}. Each of these more complex
+methods rely on the class label in the \textit{training set} in order to
+determine how well the feature discriminates between classes.
 
 \section{Our Implementation}
 \label{section:implementation}
@@ -365,16 +365,17 @@ defined as $R_{pos} = \frac{\mathrm{\# of\ true\ positive}}{\mathrm{\# of\ true\
 positive} + \mathrm{\# of\ false\ negative} }$. $P_{neg}$ and $R_{neg}$ can be
 calculated in a similar fashion.
 
-Accuracy is used as a secondary performance measure. While more intuitive, it
-is not used as a primary evaluation measure due to it's tendency to be biased
-by uneven numbers of examples particular labels in the dataset. Accuracy,
-henceforth referred to as $Acc$, can be calculate with the following formula:
+Accuracy is used as a secondary performance measure. Accuracy, henceforth
+referred to as $Acc$, can be calculate with the following formula:
 
 \begin{equation}
     Acc = \frac{\mathrm{\# of\ true\ positive} + \mathrm{\# of\ true\ negative}}{N}
 \end{equation}
 
 Where $N$ is equal to the total number of documents in the \textit{test set}.
+While more intuitive, it is not used as the primary evaluation measure due to
+it's tendency to be biased by uneven numbers of examples of particular labels
+in the dataset.
 
 \subsection{Improving Performance Measurement}
 \label{ssection:performancemeasurement}
@@ -421,7 +422,7 @@ Where $N$ is equal to the total number of documents in the \textit{test set}.
 \label{ssection:baseline}
 
 The baseline for this project is established by running the Maximum Entropy
-classifier without any stopword removal, uncommon word removal (words with a
+classifier without any stopword removal, rare word removal (words with a
 document frequency $<$ 1), Or feature normalization. The F-score that is
 achieved is \textbf{50.72}.
 
