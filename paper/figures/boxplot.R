@@ -3,7 +3,7 @@ library(ggplot2)
 
 xlab <- "Experiment"
 ylab <- "F-score"
-groups <- c("Baseline", "Only Stopword Removal", "Onle Rare Word Removal", "Only Normalization", "All Feature Selections")
+groups <- c("Baseline", "Only Stopword Removal", "Only Rare Word Removal", "Only Normalization", "All Feature Selections")
 palette <- c("#999999", "#84B237", "#6E98FF", "#B24932", "#F0E442")
 
 
@@ -18,6 +18,7 @@ p = p + scale_y_continuous(ylab, limits=c(0.35, 0.55))
 p = p + ggtitle(chart_title)
 p = p + scale_fill_manual(values=palette, guide=FALSE)
 p = p + theme_minimal()
+p = p + theme(axis.text.x = element_text(angle=15))
 
 p # Draw that sucker
 ggsave("maxent_boxplot.png")
@@ -34,6 +35,7 @@ p = p + scale_y_continuous(ylab, limits=c(0.35, 0.55))
 p = p + ggtitle(chart_title)
 p = p + scale_fill_manual(values=palette, guide=FALSE)
 p = p + theme_minimal()
+p = p + theme(axis.text.x = element_text(angle=15))
 
 p # Draw that sucker
 ggsave("bayes_boxplot.png")
