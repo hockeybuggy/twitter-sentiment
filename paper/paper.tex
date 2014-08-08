@@ -51,10 +51,6 @@ Second Reader:
 
 Professor Xining Li
 
-\vspace{1.5cm}
-
-Draft 5 %TODO ditch this
-
 \end{center}
 
 \newpage
@@ -432,16 +428,15 @@ achieved is \textbf{50.72}.
 \subsection{Experimental Results}
 \label{ssection:results}
 
-%TODO change the label names
-
 The following experiments examine the results of the Maximum Entropy classifier
 and the Naive Bayes classifier with various feature selection methods turned on
-or off. The `Baseline' experiment refers to no feature selection. The `Just
-Stopwords' experiment refers the only removing stopwords. The `Just Uncommon'
-experiment refers to only removing words with a document frequency of one. The
-`Just Normalization' experiment refers to only applying feature normalization
-mechanisms. The `All' experiment refers to testing the classifier with all of
-the previous feature selection methods turned on.
+or off. The `Baseline' experiment refers to no feature selection. The `Only
+Stopword Removal' experiment refers the only removing stopwords as feature
+selection. The `Only Rare Word Removal' experiment refers to only removing
+words with a document frequency of 1. The `Only Normalization' experiment
+refers to only applying feature normalization mechanisms. The `All Feature
+Selection' experiment refers to testing the classifier with all of the previous
+feature selection methods turned on.
 
 \subsubsection{Number of Features}
 \label{ssection:numfeatures}
@@ -455,13 +450,13 @@ positive, neutral, negative examples as well as an overall average.
     \begin{center}
     \begin{tabular}{|r||c|c|c|c|}
         \hline
-        Description        & Positive & Neutral & Negative & Overall \\
+        Description            & Positive & Neutral & Negative & Overall \\
         \hline
-        Baseline           & 20.65    & 20.45   & 20.96    & 20.58 \\
-        Just Stopwords     & 17.13    & 16.86   & 17.41    & 17.04 \\
-        Just Uncommon      & 18.43    & 17.87   & 18.85    & 18.21 \\
-        Just Normalization & 19.65    & 19.16   & 20.06    & 19.46 \\
-        All                & 14.85    & 14.06   & 15.10    & 14.49 \\
+        Baseline               & 20.65    & 20.45   & 20.96    & 20.58 \\
+        Only Stopword Removal  & 17.13    & 16.86   & 17.41    & 17.04 \\
+        Only Rare Word Removal & 18.43    & 17.87   & 18.85    & 18.21 \\
+        Only Normalization     & 19.65    & 19.16   & 20.06    & 19.46 \\
+        All Feature Selections & 14.85    & 14.06   & 15.10    & 14.49 \\
         \hline
     \end{tabular}
     \end{center}
@@ -480,19 +475,17 @@ feature `\#NUM' after normalization).
 
 \subsubsection{Maximum Entropy Classifier}
 
-%TODO finish accuracy
-
 \begin{table}[H]
     \begin{center}
     \begin{tabular}{|r||c|c|c|c|c|}
         \hline
         Description    & $\mu F$ & $\sigma F$ & $\delta\ \mu F$ & $\mu Acc$ & $\sigma Acc$ \\
         \hline
-        Baseline       & 48.37   & 2.15 & -     & & \\
-        Just Stopwords & 48.27   & 1.83 & -0.10 & 62.07 & 1.69 \\
-        Just Uncommon  & 49.02   & 1.96 &  0.65 & 62.47 & 1.91 \\
-        Just Normalize & 49.55   & 2.10 &  1.18 & 63.57 & 1.75 \\
-        All            & \textbf{50.96} & 1.93 &  2.59 & \textbf{63.82} & 0.91 \\
+        Baseline               & 48.37   & 2.15 &     - & \textbf{63.89} & 1.13 \\
+        Only Stopword Removal  & 48.27   & 1.83 & -0.10 & 62.07 & 1.69 \\
+        Only Rare Word Removal & 49.02   & 1.96 &  0.65 & 62.47 & 1.91 \\
+        Only Normalization     & 49.55   & 2.10 &  1.18 & 63.57 & 1.75 \\
+        All Feature Selections & \textbf{50.96}  & 1.93  &  2.59 & 63.82 & 0.91 \\
         \hline
     \end{tabular}
     \end{center}
@@ -501,14 +494,14 @@ feature `\#NUM' after normalization).
     \label{table:maxent-results}
 \end{table}
 
-As Table \ref{table:maxent-results} shows, the `All' experiment provides the
-best results over the baseline. The `Just Stopwords' experiment actually
-provides slightly worse results then the baseline indicating that in context of
-Tweets with so few features in each example every feature counts. The `Just
-Uncommon' experiment does not provide very significant gains when used alone.
-This is potentially due to the fact that without normalization turned,
-features such as `just' are `Just' are determined to be different and may be
-removed if each only occur once.
+As Table \ref{table:maxent-results} shows, the `All Feature Selections'
+experiment provides the best results over the baseline. The `Only Stopword
+Removal' experiment actually provides slightly worse results then the baseline
+indicating that in context of Tweets with so few features in each example every
+feature counts. The `Only Rare Words Removal ' experiment does not provide very
+significant gains when used alone.  This is potentially due to the fact that
+without normalization turned, features such as `just' are `Just' are determined
+to be different and may be removed if each only occur once.
 
 \begin{figure}[H]
     \begin{center}
@@ -519,11 +512,7 @@ removed if each only occur once.
     \end{center}
 \end{figure}
 
-% TODO make serif?
-
 \subsubsection{Naive Bayes Classifier}
-
-%TODO finish table
 
 \begin{table}[H]
     \begin{center}
@@ -531,11 +520,11 @@ removed if each only occur once.
         \hline
         Description    & $\mu F$ & $\sigma F$ & $\delta\ \mu F$ & $\mu Acc$ & $\sigma Acc$ \\
         \hline
-        Baseline       & 48.11  & 0.74 & - & & \\
-        Just Stopwords & 47.29  & 0.76 & -0.82 & & \\
-        Just Uncommon  & 48.34  & 1.11 &  0.23 & & \\
-        Just Normalize & \textbf{49.44} & 1.00 & 1.33 & & \\
-        All            & 49.28  & 0.81 &  1.17 & & \\
+        Baseline               & 48.11  & 0.74 & -     & 53.13 & 1.48 \\
+        Only Stopword Removal  & 47.29  & 0.76 & -0.82 & 52.71 & 1.16 \\
+        Only Rare Word Removal & 48.34  & 1.11 &  0.23 & 53.92 & 1.32 \\
+        Only Normalization     & \textbf{49.44} & 1.00 & 1.33 & \textbf{55.92} & 0.99 \\
+        All Feature Selections & 49.28  & 0.81 &  1.17 & 54.91 & 1.05 \\
         \hline
     \end{tabular}
     \end{center}
@@ -552,6 +541,10 @@ removed if each only occur once.
     \label{figure:bayes}
     \end{center}
 \end{figure}
+
+As Table \ref{table:bayes-results} and Figure \ref{figure:bayes} indicates both
+removing stopwords and removing rare words appear to negatively affect
+performance of the naive bayes classifier.
 
 \subsection{Most Informative Features}
 \label{ssection:informativefeatures}
@@ -609,48 +602,48 @@ table (with out this project's results) can be found in Nakov et al. as Table 9
 
 \begin{table}[H]
     \begin{center}
+        \small
     \begin{tabular}{|r|l|}
         \hline
-        Team       & F \\
+        Team            & F \\
         \hline
-        NRC-Canada & 69.02 \\
-        GU-MLT-LT  & 65.27 \\
-        teragram   & 64.86 \\
-        BOUNCE     & 63.53 \\
-        KLUE       & 63.06 \\
-        AMI\&ERIC  & 62.55 \\
-        FBM        & 61.17 \\
-        AVAYA      & 60.84 \\
-        SAIL       & 60.14 \\
-        UT-DB      & 59.87 \\
-        FBK-irst   & 59.76 \\
-        nlp.cs.aueb.gr & 58.91 \\
-        UNITOR     & 58.27 \\
-        LVIC-LIMSI & 57.14 \\
-        Unigon     & 56.96 \\
-        NILC\_USP  & 56.31 \\
-        DataMining & 55.52 \\
-        ECNUCS     & 55.05 \\
-        nlp.cs.aueb.gr & 54.73 \\
+        NRC-Canada      & 69.02 \\
+        GU-MLT-LT       & 65.27 \\
+        teragram        & 64.86 \\
+        BOUNCE*         & 63.53 \\
+        KLUE*           & 63.06 \\
+        AMI\&ERIC       & 62.55 \\
+        FBM             & 61.17 \\
+        AVAYA           & 60.84 \\
+        SAIL*           & 60.14 \\
+        UT-DB           & 59.87 \\
+        FBK-irst        & 59.76 \\
+        nlp.cs.aueb.gr  & 58.91 \\
+        UNITOR          & 58.27 \\
+        LVIC-LIMSI      & 57.14 \\
+        Unigon          & 56.96 \\
+        NILC\_USP       & 56.31 \\
+        DataMining      & 55.52 \\
+        ECNUCS          & 55.05 \\
+        nlp.cs.aueb.gr  & 54.73 \\
         ASVUniOfLeipzig & 54.56 \\
-        SZTE-NLP   & 54.33 \\
-        CodeX      & 53.89 \\
-        Oasis      & 53.84 \\
-        NTNU       & 53.23 \\
-        UoM        & 51.81 \\
-        \textbf{MaxEnt}& \textbf{50.96} \\
-        SSA-UO     & 50.17 \\
-        SenselyticTeam & 50.10 \\
-        $\ldots$   & $\ldots$ \\
-        9 more teams &  \textless\ 50 \\
+        SZTE-NLP        & 54.33 \\
+        CodeX           & 53.89 \\
+        Oasis           & 53.84 \\
+        NTNU            & 53.23 \\
+        UoM             & 51.81 \\
+        \textbf{MaxEnt} & \textbf{50.96} \\
+        SSA-UO          & 50.17 \\
+        SenselyticTeam  & 50.10 \\
+        \textbf{Naive Bayes} & \textbf{49.44} \\
+        \textit{9 more teams}&  \textless\ 49 \\
         \hline
     \end{tabular}
     \end{center}
-    \caption{Comparison of constrained classifiers sumitted to the SemEval-2013
-        workshop. Sorted by F-score.}
+    \caption{Comparison of constrained classifiers submitted to the SemEval-2013
+        workshop. Sorted by F-score. * denotes other Maximum Entropy classifiers}
     \label{table:comparison}
 \end{table}
-%TODO add naive bayes
 
 \section{Conclusions and Future Work}
 \label{section:conclusionsandfuturework}
@@ -800,9 +793,9 @@ to run on any Unix-like system.
         To download a zip file and open it:
 
 \begin{Verbatim}[fontsize=\footnotesize]
-wget https://github.com/hockeybuggy/twitter-sentiment/archive/dist.zip -O tsent.zip
-unzip tsent.zip
-cd tsent
+wget https://github.com/hockeybuggy/twitter-sentiment/archive/dist.zip
+unzip dist.zip
+cd twitter-sentiment-dist
 \end{Verbatim}
 
     \item \textbf{Install Prerequisites} - If \textit{python 2.7},
@@ -856,35 +849,21 @@ The list of stopwords was acquired online\footnote{www.ranks.nl/stopwords} and i
 as follows:
 
 \begin{Verbatim}[fontsize=\footnotesize]
-        a
-        about
-        an
-        are
-        as
-        at
-        be
-        by
-        com
-        for
-        from
-        how
-        in
-        is
-        it
-        of
-        on
-        or
-        that
-        the
-        this
-        to
-        was
-        what
-        when
-        where
-        who
-        will
-        with
+         a                   of
+         about               on
+         an                  or
+         are                 that
+         as                  the
+         at                  this
+         be                  to
+         by                  was
+         com                 what
+         for                 when
+         from                where
+         how                 who
+         in                  will
+         is                  with
+         it
 \end{Verbatim}
 
 \end{document}
