@@ -55,5 +55,5 @@ be run via the make file:
     make crossfolds      # Run all of the cross-validation experiments
 
 [github-repo]: https://github.com/hockeybuggy/twitter-sentiment/tree/dist
-[zip-file]: https://github.com/hockeybuggy/twitter-sentiment/archive/master.zip
+[zip-file]: https://github.com/hockeybuggy/twitter-sentiment/archive/main.zip
 
